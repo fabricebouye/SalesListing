@@ -1,0 +1,35 @@
+.root-pane {
+    -fx-background-color: white;
+    -fx-background-image: url("corner.png");
+    -fx-background-position: top left;
+    -fx-background-repeat: no-repeat;
+    -fx-padding: 70px 50px 50px 50px;
+    -fx-spacing: 10px;
+    -fx-font-family: serif;
+}
+.label,
+.text {
+    -fx-font-size: 1.4em;        
+}
+.main-text {
+    -fx-font-size: 3.0em;        
+}
+.region-box,
+.language-box {
+    -fx-spacing: 10px;
+    -fx-alignment: CENTER;
+}
+.region-button,
+.language-button {
+    -fx-padding: 0px;
+    -fx-background-color: null;
+    -fx-content-display: text-only;
+    -fx-text-fill: gray;
+}
+.region-button:selected, 
+.language-button:selected {
+    -fx-text-fill: black;
+}
+.cell {
+    -fx-font-size: 1.4em;        
+}
