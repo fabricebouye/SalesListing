@@ -6,6 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" styleClass="root-pane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
-    
-</AnchorPane>
+<VBox id="rootPane" fx:id="rootPane" styleClass="root-pane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
+    <children>
+        <Label fx:id="applicationKeyLabel" text="%application.key.label" styleClass="main-text" />
+        <TextField fx:id="applicationKeyField" />
+    </children>
+</VBox>
