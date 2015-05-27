@@ -11,10 +11,15 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.util.Duration;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
 
@@ -26,6 +31,8 @@ public final class SalesListingController implements Initializable {
 
     @FXML
     private TextField applicationKeyField;
+    @FXML
+    private ListView salesList;
 
     private final Properties settings = new Properties();
 
@@ -46,16 +53,76 @@ public final class SalesListingController implements Initializable {
         final TextFormatter<String> applicationKeyTextFormatter = new ApplicationKeyTextFormatter();
         applicationKeyField.setTextFormatter(applicationKeyTextFormatter);
         final Optional<String> applicationKeyOptional = Optional.ofNullable(settings.getProperty("app.key")); // NOI18N.
-        applicationKeyOptional.ifPresent(applicationKey -> applicationKeyField.setText(applicationKey));
+        applicationKeyOptional.ifPresent(applicationKey -> {
+            applicationKeyField.setText(applicationKey);
+            applicationKeyField.positionCaret(0);
+            applicationKeyField.selectRange(0, 0);
+        });
         applicationKeyField.textProperty().addListener(applicationKeyChangeListener);
     }
 
     /**
-     * Invoqué si la valeur de la clé change.
+     * La pseudo-classe servant de décorateur en cas d'erreur.
+     */
+    private final PseudoClass errorPseudoClass = PseudoClass.getPseudoClass("error"); // NOI18N.
+
+    /**
+     * Invoqué si la valeur de la clé d'application change.
      */
     private final ChangeListener<String> applicationKeyChangeListener = (observable, oldValue, newValue) -> {
-        if (ApplicationKeyUtils.validateApplicationKey(newValue)) {
-
+        final boolean applicationKeyValid = ApplicationKeyUtils.validateApplicationKey(newValue);
+        applicationKeyField.pseudoClassStateChanged(errorPseudoClass, !applicationKeyValid);
+        salesList.setDisable(!applicationKeyValid);
+        if (applicationKeyValid) {
+            settings.setProperty("app.key", newValue); // NOI18N.
+            start();
+        } else {
+            stop();
+            settings.setProperty("app.key", null); // NOI18N.
+            salesList.getItems().clear();
         }
     };
+
+    /**
+     * Le service de mise à jour automatique.
+     */
+    private ScheduledService updateService;
+    /**
+    * Le temps d'attente entre chaque mise à jour automatique.
+    */
+    private Duration updateWaitTime = Duration.minutes(2);
+
+    /**
+     * Démarre le service de mise à jour automatique.
+     */
+    public void start() {
+        if (updateService == null) {
+            updateService = new ScheduledService() {
+
+                @Override
+                protected Task createTask() {
+                    return null;
+                }
+            };
+            updateService.setRestartOnFailure(true);
+            updateService.setPeriod(updateWaitTime);
+            updateService.setOnSucceeded(workerStateEvent -> {
+            });
+            updateService.setOnFailed(workerStateEvent -> {
+            });
+            updateService.setOnCancelled(workerStateEvent -> {
+            });
+        }
+        updateService.restart();
+    }
+
+    /**
+     * Stoppe le service de mise a jour automatique.
+     */
+    public void stop() {
+        if (updateService == null) {
+            return;
+        }
+        updateService.cancel();
+    }
 }
