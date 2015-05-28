@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -20,6 +21,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.Duration;
+import test.data.Sale;
+import test.query.CommerceQuery;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
 
@@ -52,13 +55,13 @@ public final class SalesListingController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         final TextFormatter<String> applicationKeyTextFormatter = new ApplicationKeyTextFormatter();
         applicationKeyField.setTextFormatter(applicationKeyTextFormatter);
+        applicationKeyField.textProperty().addListener(applicationKeyChangeListener);
         final Optional<String> applicationKeyOptional = Optional.ofNullable(settings.getProperty("app.key")); // NOI18N.
         applicationKeyOptional.ifPresent(applicationKey -> {
             applicationKeyField.setText(applicationKey);
             applicationKeyField.positionCaret(0);
             applicationKeyField.selectRange(0, 0);
         });
-        applicationKeyField.textProperty().addListener(applicationKeyChangeListener);
     }
 
     /**
@@ -86,29 +89,39 @@ public final class SalesListingController implements Initializable {
     /**
      * Le service de mise à jour automatique.
      */
-    private ScheduledService updateService;
+    private ScheduledService<List<Sale>> updateService;
     /**
-    * Le temps d'attente entre chaque mise à jour automatique.
-    */
-    private Duration updateWaitTime = Duration.minutes(2);
+     * Le temps d'attente entre chaque mise à jour automatique.
+     */
+    private Duration updateWaitTime = CommerceQuery.SERVER_RETENTION_DURATION;
 
     /**
      * Démarre le service de mise à jour automatique.
      */
     public void start() {
         if (updateService == null) {
-            updateService = new ScheduledService() {
+            updateService = new ScheduledService<List<Sale>>() {
 
                 @Override
-                protected Task createTask() {
-                    return null;
+                protected Task<List<Sale>> createTask() {
+                    return new Task<List<Sale>>() {
+
+                        @Override
+                        protected List<Sale> call() throws Exception {
+                            final String applicationKey = settings.getProperty("app.key");
+                            return CommerceQuery.salesHistory(applicationKey);
+                        }
+                    };
                 }
             };
             updateService.setRestartOnFailure(true);
             updateService.setPeriod(updateWaitTime);
             updateService.setOnSucceeded(workerStateEvent -> {
+                final List<Sale> result = updateService.getValue();
+                salesList.getItems().setAll(result);
             });
             updateService.setOnFailed(workerStateEvent -> {
+                System.err.println(updateService.getException());
             });
             updateService.setOnCancelled(workerStateEvent -> {
             });
