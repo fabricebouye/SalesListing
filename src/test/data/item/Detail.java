@@ -1,4 +1,4 @@
-package test.data;
+package test.data.item;
 
 /**
  * Type de base pour le conteneur de détails.

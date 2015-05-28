@@ -1,4 +1,4 @@
-package test.data;
+package test.data.item;
 
 /**
  * Implementation de l'emplacement d'infusion.

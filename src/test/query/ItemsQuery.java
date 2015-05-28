@@ -2,7 +2,8 @@ package test.query;
 
 import java.io.IOException;
 import javax.json.JsonObject;
-import test.data.Item;
+import test.data.item.Item;
+import test.data.item.ItemFactory;
 
 /**
  * Permet de faire des requêtes sur l'endpoint Items.
@@ -20,10 +21,7 @@ public enum ItemsQuery {
     public Item item(final String languageCode, final int id) throws IOException {
         final String url = String.format("%s?id=%d&lang=%s", basecode, id, languageCode); // NOI18N.
         final JsonObject jsonObject = QueryUtils.queryObject(url);
-        return asItem(jsonObject);
-    }
-
-    public Item asItem(final JsonObject jsonObject) {
-        return null;
+        final Item result = ItemFactory.createItem(id, jsonObject);
+        return result;
     }
 }
