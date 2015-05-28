@@ -1,14 +1,14 @@
 package test.query;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.util.Duration;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import test.data.Sale;
+import test.data.sale.Sale;
+import test.data.sale.SaleFactory;
 import test.text.ApplicationKeyUtils;
 
 /**
@@ -33,11 +33,11 @@ public enum CommerceQuery {
     /**
      * Recupère l'historique des ventes.
      * @param applicationKey La clé d'application.
-     * @return Une {@code List<Sale>}, jamais {@code null}.
+     * @return Une {@code List<Sale>} non-modifiable, jamais {@code null}.
      * @throws IOException En cas d'erreur.
      * @throws IllegalArgumentException Si la clé d'application est {@code null} ou n'est pas valide.
      */
-    public static final List<Sale> salesHistory(final String applicationKey) throws IOException, IllegalArgumentException {
+    public static final List<Sale> listSalesHistory(final String applicationKey) throws IOException, IllegalArgumentException {
         final boolean applicationKeyValid = ApplicationKeyUtils.validateApplicationKey(applicationKey);
         if (!applicationKeyValid) {
             throw new IllegalArgumentException();
@@ -46,18 +46,8 @@ public enum CommerceQuery {
         final JsonArray array = QueryUtils.queryArray(url);
         final List<Sale> result = array.getValuesAs(JsonObject.class)
                 .stream()
-                .map(value -> asSale(value))
+                .map(value -> SaleFactory.createSale(value))
                 .collect(Collectors.toList());
         return Collections.unmodifiableList(result);
-    }
-
-    private static Sale asSale(final JsonObject jsonObject) {
-        final int id = jsonObject.getInt("id"); // NOI18N.
-        final int itemId = jsonObject.getInt("item_id"); // NOI18N.
-        final int price = jsonObject.getInt("price"); // NOI18N.
-        final int quantity = jsonObject.getInt("quantity"); // NOI18N.
-        final String createdStr = jsonObject.getString("created"); // NOI18N.
-        final ZonedDateTime created = ZonedDateTime.parse(createdStr);
-        return new Sale(id, itemId, quantity, price, created);
     }
 }

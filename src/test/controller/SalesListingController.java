@@ -21,7 +21,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.Duration;
-import test.data.Sale;
+import test.data.sale.Sale;
 import test.query.CommerceQuery;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
@@ -35,7 +35,7 @@ public final class SalesListingController implements Initializable {
     @FXML
     private TextField applicationKeyField;
     @FXML
-    private ListView salesList;
+    private ListView<Sale> salesList;
 
     private final Properties settings = new Properties();
 
@@ -108,8 +108,8 @@ public final class SalesListingController implements Initializable {
 
                         @Override
                         protected List<Sale> call() throws Exception {
-                            final String applicationKey = settings.getProperty("app.key");
-                            return CommerceQuery.salesHistory(applicationKey);
+                            final String applicationKey = settings.getProperty("app.key"); // NOI18N.
+                            return CommerceQuery.listSalesHistory(applicationKey);
                         }
                     };
                 }
@@ -118,7 +118,15 @@ public final class SalesListingController implements Initializable {
             updateService.setPeriod(updateWaitTime);
             updateService.setOnSucceeded(workerStateEvent -> {
                 final List<Sale> result = updateService.getValue();
+                final Optional<Sale> oldSelectionOptional = Optional.ofNullable(salesList.getSelectionModel().getSelectedItem());
                 salesList.getItems().setAll(result);
+                // On restaure la sélection si possible.
+                oldSelectionOptional.ifPresent(oldSelection -> {
+                    final Optional<Sale> newSelectionOptional = result.stream()
+                            .filter(sale -> sale.getId() == oldSelection.getId())
+                            .findFirst();
+                    newSelectionOptional.ifPresent(newSelection -> salesList.getSelectionModel().select(newSelection));
+                });
             });
             updateService.setOnFailed(workerStateEvent -> {
                 System.err.println(updateService.getException());
