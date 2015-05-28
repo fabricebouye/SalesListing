@@ -18,6 +18,6 @@ public enum ApplicationKeyUtils {
      * @return {@code True} si le test réussit, {@code false} sinon.
      */
     public static boolean validateApplicationKey(final String value) {
-        return value.matches(APPLICATION_KEY_PATTERN);
+        return (value == null) ? false : value.matches(APPLICATION_KEY_PATTERN);
     }
 }
