@@ -30,6 +30,11 @@ public final class Sale {
         this.created = created;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
+    
     public int getId() {
         return id;
     }
