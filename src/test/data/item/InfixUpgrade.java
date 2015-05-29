@@ -1,5 +1,6 @@
 package test.data.item;
 
+import java.util.List;
 import javafx.util.Pair;
 
 /**
@@ -8,23 +9,47 @@ import javafx.util.Pair;
  */
 public final class InfixUpgrade {
 
+    /**
+     * Définit un attribut.
+     * @author Fabrice Bouyé
+     */
     public enum Attribute {
 
-        CONDITION_DAMAGE,
-        CRIT_DAMAGE,
-        HEALING,
-        POWER,
-        PRECISION,
-        TOUGHNESS,
-        VITALITY,
-        UNKNOWN;
+        CONDITION_DAMAGE("condition_damage"), // NOI18N.
+        CRIT_DAMAGE("crit_damage"), // NOI18N.
+        HEALING("healing"), // NOI18N.
+        POWER("power"), // NOI18N.
+        PRECISION("precision"), // NOI18N.
+        TOUGHNESS("toughness"), // NOI18N.
+        VITALITY("vitality"), // NOI18N.
+        UNKNOWN(null);
+
+        private final String value;
+
+        Attribute(final String value) {
+            this.value = value;
+        }
+
+        public static Attribute find(final String value) {
+            Attribute result = Attribute.UNKNOWN;
+            if (value != null) {
+                for (final Attribute toTest : values()) {
+                    if (value.equals(toTest.value)) {
+                        result = toTest;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 
-    private final Pair<Attribute, Integer>[] attributes;
-    private final Buff buff;
+    List<Pair<Attribute, Integer>> attributes;
+    Buff buff;
 
-    public InfixUpgrade(final Pair<Attribute, Integer>[] attributes, final Buff buff) {
-        this.attributes = attributes;
-        this.buff = buff;
+    /**
+     * Crée une nouvelle instance vide.
+     */
+    public InfixUpgrade() {
     }
 }

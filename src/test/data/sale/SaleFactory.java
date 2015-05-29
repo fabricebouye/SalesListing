@@ -10,7 +10,12 @@ import javax.json.JsonObject;
 public enum SaleFactory {
 
     INSTANCE;
-    
+
+    /**
+     * Crée une instance de la classe {@code Sale}.
+     * @param jsonObject L'objet Json source.
+     * @return Une instance de {@code Sale}, jamais {@code null}.
+     */
     public static Sale createSale(final JsonObject jsonObject) {
         final Sale result = new Sale();
         result.id = jsonObject.getInt("id"); // NOI18N.

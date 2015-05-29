@@ -1,16 +1,17 @@
 package test.data.item;
 
 /**
- *
+ * Implementation d'un buff.
  * @author Fabrice Bouyé
  */
 public final class Buff {
 
-    private final String skillId;
-    private final String description;
+    String skillId;
+    String description;
 
-    public Buff(final String skillId, final String description) {
-        this.skillId = skillId;
-        this.description = description;
+    /**
+     * Crée une nouvelle instance vide.
+     */
+    public Buff() {
     }
 }

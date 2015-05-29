@@ -1,25 +1,46 @@
 package test.data.item;
 
+import java.util.List;
+
 /**
- * Implémente les détails d'une armure.
+ * Implémente les détails d'une pièce armure.
  * @author Fabrice Bouyé
  */
 public final class ArmorDetail extends Detail {
 
     /**
-     * Listes des pièces d'armure.
+     * Liste des pièces d'armure.
      * @author Fabrice Bouyé
      */
     public enum Type {
 
-        BOOTS,
-        COAT,
-        GLOVES,
-        HELM,
-        HELM_AQUATIC,
-        LEGGINS,
-        SHOULDERS,
-        UNKNOWN;
+        BOOTS("boots"), // NOI18N.
+        COAT("coat"), // NOI18N.
+        GLOVES("gloves"), // NOI18N.
+        HELM("helm"), // NOI18N.
+        HELM_AQUATIC("helm_aquatic"), // NOI18N.
+        LEGGINGS("leggings"), // NOI18N.
+        SHOULDERS("shoulders"), // NOI18N.
+        UNKNOWN(null);
+
+        private final String value;
+
+        Type(final String value) {
+            this.value = value;
+        }
+
+        public static Type find(final String value) {
+            Type result = Type.UNKNOWN;
+            if (value != null) {
+                for (final Type toTest : values()) {
+                    if (value.equals(toTest.value)) {
+                        result = toTest;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 
     /**
@@ -28,21 +49,64 @@ public final class ArmorDetail extends Detail {
      */
     public enum WeightClass {
 
-        HEAVY,
-        MEDIUM,
-        LIGHT,
-        CLOTHING,
-        UNKNOWN;
+        HEAVY("heavy"), // NOI18N.
+        MEDIUM("medium"), // NOI18N.
+        LIGHT("light"), // NOI18N.
+        CLOTHING("clothing"), // NOI18N.
+        UNKNOWN(null);
+
+        private final String value;
+
+        WeightClass(final String value) {
+            this.value = value;
+        }
+
+        public static WeightClass find(final String value) {
+            WeightClass result = WeightClass.UNKNOWN;
+            if (value != null) {
+                for (final WeightClass toTest : values()) {
+                    if (value.equals(toTest.value)) {
+                        result = toTest;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 
+    /**
+     * Type de pièce d'armure.
+     */
     Type type;
+    /**
+     * Poids de l'armure.
+     */
     WeightClass weightClass;
+    /**
+     * Valeur de la defense.
+     */
     int defense;
-    InfusionSlot[] infusions;
+    /**
+     * List des emplacement d'infusion.
+     */
+    List<InfusionSlot> infusions;
+    /**
+     * Le modificateur infixe.
+     */
     InfixUpgrade infixUpgrade;
+    /**
+     * L'id du suffixe de l'objet.
+     */
     int suffixItemId;
+    /**
+     * ???
+     */
     int secondarySuffixItemId;
 
+    /**
+     * Crée une nouvelle instance vide.
+     */
     ArmorDetail() {
         super(Item.Type.ARMOR);
     }
