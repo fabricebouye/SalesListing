@@ -1,12 +1,9 @@
 package test.data.item;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonString;
+import test.query.QueryUtils;
 
 /**
  * La fabrique pour les {@code Item}.
@@ -32,27 +29,15 @@ public enum ItemFactory {
         result.level = jsonObject.getInt("level"); // NOI18N.
         result.vendorValue = jsonObject.getInt("vendor_value"); // NOI18N.
         result.defaultSkin = jsonObject.getInt("default_skin"); // NOI18N.
-        final JsonArray jsonFlags = jsonObject.getJsonArray("flags"); // NOI18N.
         // Flags
-        final List<Item.Flag> flags = jsonFlags.getValuesAs(JsonString.class)
-                .stream()
-                .map(jsonString -> Item.Flag.find(jsonString.getString()))
-                .collect(Collectors.toList());
-        result.flags = Collections.unmodifiableList(flags);
+        final JsonArray jsonFlags = jsonObject.getJsonArray("flags"); // NOI18N.
+        result.flags = QueryUtils.jsonStringArrayToList(jsonFlags, Item.Flag::find);
         // Type de jeu.
         final JsonArray jsonGameTypes = jsonObject.getJsonArray("game_types"); // NOI18N.
-        final List<Item.GameType> gameTypes = jsonGameTypes.getValuesAs(JsonString.class)
-                .stream()
-                .map(jsonString -> Item.GameType.find(jsonString.getString()))
-                .collect(Collectors.toList());
-        result.gameTypes = Collections.unmodifiableList(gameTypes);
+        result.gameTypes = QueryUtils.jsonStringArrayToList(jsonGameTypes, Item.GameType::find);
         // Restrictions.
         final JsonArray jsonRestrictions = jsonObject.getJsonArray("restrictions"); // NOI18N.
-        final List<Item.Restriction> restrictions = jsonRestrictions.getValuesAs(JsonString.class)
-                .stream()
-                .map(jsonString -> Item.Restriction.find(jsonString.getString()))
-                .collect(Collectors.toList());
-        result.restrictions = Collections.unmodifiableList(restrictions);
+        result.restrictions = QueryUtils.jsonStringArrayToList(jsonRestrictions, Item.Restriction::find);
         // Détails.
         final Optional<DetailFactory> detailFactoryOptional = Optional.ofNullable(DetailFactory.getInstance(result.type));
         detailFactoryOptional.ifPresent(detailFactory -> {

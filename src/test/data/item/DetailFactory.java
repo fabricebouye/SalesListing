@@ -1,13 +1,10 @@
 package test.data.item;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 import javafx.util.Pair;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonString;
 import test.data.item.InfixUpgrade.Attribute;
+import test.query.QueryUtils;
 
 /**
  * La fabrique abstraite pour les {@code Item}.
@@ -88,11 +85,7 @@ public abstract class DetailFactory {
         result.defense = jsonObject.getInt("defense"); // NOI18N.
         // Infusions.
         final JsonArray jsonInfusions = jsonObject.getJsonArray("infusions"); // NOI18N.
-        final List<InfusionSlot> infusions = jsonInfusions.getValuesAs(JsonObject.class)
-                .stream()
-                .map(jsonInfusion -> createInfusionSlot(jsonInfusion))
-                .collect(Collectors.toList());
-        result.infusions = Collections.unmodifiableList(infusions);
+        result.infusions = QueryUtils.jsonObjectArrayToList(jsonInfusions, DetailFactory::createInfusionSlot);
         // Amélioration infixe.
         final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
         result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
@@ -111,11 +104,7 @@ public abstract class DetailFactory {
         final InfusionSlot result = new InfusionSlot(); // NOI18N.
         result.itemId = jsonObject.getInt("item_id");
         final JsonArray jsonFlags = jsonObject.getJsonArray("flags"); // NOI18N.
-        final List<InfusionSlot.Flag> flags = jsonFlags.getValuesAs(JsonString.class)
-                .stream()
-                .map(jsonFlag -> InfusionSlot.Flag.find(jsonFlag.getString()))
-                .collect(Collectors.toList());
-        result.flags = Collections.unmodifiableList(flags);
+        result.flags = QueryUtils.jsonStringArrayToList(jsonFlags, InfusionSlot.Flag::find);
         return result;
     }
 
@@ -128,16 +117,12 @@ public abstract class DetailFactory {
         final InfixUpgrade result = new InfixUpgrade(); // NOI18N.
         // Attributs.
         final JsonArray jsonFlags = jsonObject.getJsonArray("attribute"); // NOI18N.
-        final List<Pair<Attribute, Integer>> flags = jsonFlags.getValuesAs(JsonArray.class)
-                .stream()
-                .map(array -> {
-                    final String attributeStr = array.getString(0);
-                    final Attribute attribute = InfixUpgrade.Attribute.find(attributeStr);
-                    final int attributeValue = array.getInt(1);
-                    return new Pair<>(attribute, attributeValue);
-                })
-                .collect(Collectors.toList());
-        result.attributes = Collections.unmodifiableList(flags);
+        result.attributes = QueryUtils.jsonArrayArrayToList(jsonFlags, array -> {
+            final String attributeStr = array.getString(0);
+            final Attribute attribute = InfixUpgrade.Attribute.find(attributeStr);
+            final int attributeValue = array.getInt(1);
+            return new Pair<>(attribute, attributeValue);
+        });
         // Buff.
         final JsonObject jsonBuff = jsonObject.getJsonObject("buff"); // NOI18N.
         result.buff = createBuff(jsonBuff);
