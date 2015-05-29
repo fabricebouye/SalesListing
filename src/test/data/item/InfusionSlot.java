@@ -42,6 +42,6 @@ public final class InfusionSlot {
     /**
      * Crée une nouvelle instance vide.
      */
-    public InfusionSlot() {
+    InfusionSlot() {
     }
 }

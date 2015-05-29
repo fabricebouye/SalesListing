@@ -12,6 +12,6 @@ public final class Buff {
     /**
      * Crée une nouvelle instance vide.
      */
-    public Buff() {
+    Buff() {
     }
 }
