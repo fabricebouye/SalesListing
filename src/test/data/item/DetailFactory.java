@@ -29,7 +29,7 @@ public abstract class DetailFactory {
     public abstract Detail createDetail(final JsonObject jsonObject);
 
     /**
-     * Cree une fabrique à {@code Detail}.
+     * Crée une fabrique à {@code Detail}.
      * @param itemType Le type d'objet.
      * @return Une instance de {@code DetailFactory}, peut être {@code null} s'il n'y a pas de fabrique pour ce type d'objet.
      */
@@ -103,7 +103,7 @@ public abstract class DetailFactory {
     }
 
     /**
-     * Cree un emplacement d'infusion.
+     * Crée un emplacement d'infusion.
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code InfusionSlot}, jamais {@code null}.
      */
@@ -120,7 +120,7 @@ public abstract class DetailFactory {
     }
 
     /**
-     * Cree une amélioration infixe.
+     * Crée une amélioration infixe.
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code InfusionSlot}, jamais {@code null}.
      */
@@ -145,7 +145,7 @@ public abstract class DetailFactory {
     }
 
     /**
-     * Cree un buff.
+     * Crée un buff.
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code Buff}, jamais {@code null}.
      */
