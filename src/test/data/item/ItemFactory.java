@@ -54,9 +54,11 @@ public enum ItemFactory {
                 .collect(Collectors.toList());
         result.restrictions = Collections.unmodifiableList(restrictions);
         // Détails.
-        final JsonObject jsonDetail = jsonObject.getJsonObject("details"); // NOI18N.
-        final Optional<DetailFactory> detaitFactoryOptional = Optional.ofNullable(DetailFactory.getInstance(result.type));
-        detaitFactoryOptional.ifPresent(detaitFactory -> result.details = detaitFactory.createDetail(jsonDetail));
+        final Optional<DetailFactory> detailFactoryOptional = Optional.ofNullable(DetailFactory.getInstance(result.type));
+        detailFactoryOptional.ifPresent(detailFactory -> {
+            final JsonObject jsonDetail = jsonObject.getJsonObject("details"); // NOI18N.
+            result.details = detailFactory.createDetail(jsonDetail);
+        });
         return result;
     }
 }
