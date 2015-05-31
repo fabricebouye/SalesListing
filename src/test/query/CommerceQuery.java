@@ -21,7 +21,7 @@ public enum CommerceQuery {
 
     /**
      * La durée de mise en cache sur le serveur est de 5 minutes.
-     * <br/>voir <a href="https://forum-en.guildwars2.com/forum/community/api/Launching-v2-commerce-transactions/first#post5059704">Launching /v2/commerce/transactions</a> par Lawton Campbell.
+     * <br/>voir <a href="https://forum-en.guildwars2.com/forum/community/api/Launching-v2-commerce-transactions/">Launching /v2/commerce/transactions</a> par Lawton Campbell.
      */
     public static Duration SERVER_RETENTION_DURATION = Duration.minutes(5);
 
