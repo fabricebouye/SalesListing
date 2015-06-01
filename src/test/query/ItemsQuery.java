@@ -16,10 +16,10 @@ public enum ItemsQuery {
     /**
      * L'URL de base de cet endpoint.
      */
-    private static final String basecode = "https://api.guildwars2.com/v2/items"; // NOI18N.
+    private static final String BASECODE = "https://api.guildwars2.com/v2/items"; // NOI18N.
 
     public Item item(final String languageCode, final int id) throws IOException {
-        final String url = String.format("%s?id=%d&lang=%s", basecode, id, languageCode); // NOI18N.
+        final String url = String.format("%s?id=%d&lang=%s", BASECODE, id, languageCode); // NOI18N.
         final JsonObject jsonObject = QueryUtils.queryObject(url);
         final Item result = ItemFactory.createItem(id, jsonObject);
         return result;

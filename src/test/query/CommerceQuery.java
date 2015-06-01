@@ -28,7 +28,7 @@ public enum CommerceQuery {
     /**
      * L'URL de base de cet endpoint.
      */
-    private static final String basecode = "https://api.guildwars2.com/v2/commerce"; // NOI18N.
+    private static final String BASECODE = "https://api.guildwars2.com/v2/commerce"; // NOI18N.
 
     /**
      * Recupère l'historique des ventes.
@@ -42,7 +42,7 @@ public enum CommerceQuery {
         if (!applicationKeyValid) {
             throw new IllegalArgumentException();
         }
-        final String url = String.format("%s/transactions/current/sells?access_token=%s", basecode, applicationKey); // NOI18N.
+        final String url = String.format("%s/transactions/current/sells?access_token=%s", BASECODE, applicationKey); // NOI18N.
         final JsonArray array = QueryUtils.queryArray(url);
         final List<Sale> result = array.getValuesAs(JsonObject.class)
                 .stream()
