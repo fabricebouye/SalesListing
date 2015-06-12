@@ -1,6 +1,11 @@
 package test.query;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import test.data.item.Item;
 import test.data.item.ItemFactory;
@@ -23,5 +28,17 @@ public enum ItemsQuery {
         final JsonObject jsonObject = QueryUtils.queryObject(url);
         final Item result = ItemFactory.createItem(id, jsonObject);
         return result;
+    }
+
+    public List<Item> items(final String languageCode, final int... ids) throws IOException {
+        final String url = String.format("%s?ids=%s&lang=%s", BASECODE, QueryUtils.idsToString(ids), languageCode); // NOI18N.
+        final JsonArray jsonArray = QueryUtils.queryArray(url);
+        final Map<JsonObject, Integer> objectToIdMap = IntStream.range(0, ids.length)
+                .boxed()
+                .collect(Collectors.toMap(index -> jsonArray.getJsonObject(index), index -> ids[index]));
+        return QueryUtils.jsonObjectArrayToList(jsonArray, jsonObject -> {
+            final int id = objectToIdMap.get(jsonObject);
+            return ItemFactory.createItem(id, jsonObject);
+        });
     }
 }
