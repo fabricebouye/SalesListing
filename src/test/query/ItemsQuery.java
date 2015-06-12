@@ -23,6 +23,13 @@ public enum ItemsQuery {
      */
     private static final String BASECODE = "https://api.guildwars2.com/v2/items"; // NOI18N.
 
+    /**
+     * Récupère le descriptif d'un objet.
+     * @param languageCode Le code du langage.
+     * @param id L'identifiant de l'objet.
+     * @return Une instance de {@code Item}, jamais {@code null}.
+     * @throws IOException En cas d'erreur.
+     */
     public Item item(final String languageCode, final int id) throws IOException {
         final String url = String.format("%s?id=%d&lang=%s", BASECODE, id, languageCode); // NOI18N.
         final JsonObject jsonObject = QueryUtils.queryObject(url);
@@ -30,6 +37,13 @@ public enum ItemsQuery {
         return result;
     }
 
+    /**
+     * Récupère le descriptif de plusieurs objets.
+     * @param languageCode Le code du langage.
+     * @param ids Les identifiants des l'objet.
+     * @return Une instance de {@code List<Item>} non-modifiable, jamais {@code null}.
+     * @throws IOException En cas d'erreur.
+     */
     public List<Item> items(final String languageCode, final int... ids) throws IOException {
         final String url = String.format("%s?ids=%s&lang=%s", BASECODE, QueryUtils.idsToString(ids), languageCode); // NOI18N.
         final JsonArray jsonArray = QueryUtils.queryArray(url);

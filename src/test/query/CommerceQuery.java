@@ -31,7 +31,7 @@ public enum CommerceQuery {
     private static final String BASECODE = "https://api.guildwars2.com/v2/commerce"; // NOI18N.
 
     /**
-     * Recupère l'historique des ventes.
+     * Récupère l'historique des ventes.
      * @param applicationKey La clé d'application.
      * @return Une {@code List<Sale>} non-modifiable, jamais {@code null}.
      * @throws IOException En cas d'erreur.
