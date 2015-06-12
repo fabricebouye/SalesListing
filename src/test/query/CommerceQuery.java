@@ -43,11 +43,7 @@ public enum CommerceQuery {
             throw new IllegalArgumentException();
         }
         final String url = String.format("%s/transactions/current/sells?access_token=%s", BASECODE, applicationKey); // NOI18N.
-        final JsonArray array = QueryUtils.queryArray(url);
-        final List<Sale> result = array.getValuesAs(JsonObject.class)
-                .stream()
-                .map(value -> SaleFactory.createSale(value))
-                .collect(Collectors.toList());
-        return Collections.unmodifiableList(result);
+        final JsonArray jsonArray = QueryUtils.queryArray(url);
+        return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
     }
 }
