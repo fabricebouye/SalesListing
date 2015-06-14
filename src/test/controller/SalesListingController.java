@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
@@ -22,7 +23,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.Duration;
 import test.data.sale.Sale;
+import test.data.tokeninfo.TokenInfo;
+import test.demo.DemoSupport;
 import test.query.CommerceQuery;
+import test.query.TokenInfoQuery;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
 
@@ -73,19 +77,89 @@ public final class SalesListingController implements Initializable {
      * Invoqué si la valeur de la clé d'application change.
      */
     private final ChangeListener<String> applicationKeyChangeListener = (observable, oldValue, newValue) -> {
-        final boolean applicationKeyValid = ApplicationKeyUtils.validateApplicationKey(newValue);
+            applicationKeyChanged(newValue);
+    };
+
+     /**
+     * Invoqué quand la clé d'application change.
+     * @param applicationKey La nouvelle clé d'application.
+     */
+    private void applicationKeyChanged(final String applicationKey) {
+        final boolean isDemoMode = DemoSupport.isDemoApplicationKey(applicationKey);
+        final boolean applicationKeyValid = isDemoMode ? true : ApplicationKeyUtils.validateApplicationKey(applicationKey);
         applicationKeyField.pseudoClassStateChanged(errorPseudoClass, !applicationKeyValid);
+        stopUpdateService();
         salesList.setDisable(!applicationKeyValid);
         if (applicationKeyValid) {
-            settings.setProperty("app.key", newValue); // NOI18N.
-            start();
+            settings.setProperty("app.key", applicationKey); // NOI18N.
+            checkApplicationKeyAndStartUpdate();
         } else {
-            stop();
-            settings.setProperty("app.key", null); // NOI18N.
-            salesList.getItems().clear();
+            settings.setProperty("app.key", ""); // NOI18N.
+//            messageLabel.setVisible(true);
+//            messageLabel.setText(resources.getString("no.account.label")); // NOI18N.
         }
     };
 
+    /**
+     * Le service qui va vérifier la validité de la clé.
+     */
+    private Service<TokenInfo> applicationKeyCheckService;
+
+    /**
+     * Vérifie les permission de la clé et si ok lance le service de mise à jour.
+     */
+    private void checkApplicationKeyAndStartUpdate() {
+        if (applicationKeyCheckService == null) {
+            applicationKeyCheckService = new Service<TokenInfo>() {
+
+                @Override
+                protected Task<TokenInfo> createTask() {
+                    return new Task<TokenInfo>() {
+
+                        @Override
+                        protected TokenInfo call() throws Exception {
+                            final String applicationKey = settings.getProperty("app.key"); // NOI18N.
+                            final boolean isDemoMode = DemoSupport.isDemoApplicationKey(applicationKey);
+                            final TokenInfo result = isDemoMode ? DemoSupport.tokenInfo() : TokenInfoQuery.tokenInfo(applicationKey);
+                            return result;
+                        }
+                    };
+                }
+            };
+            applicationKeyCheckService.setOnSucceeded(workerStateEvent -> {
+                final TokenInfo result = (TokenInfo) workerStateEvent.getSource().getValue();
+//                accountKeyLabel.setText(result.getName());                
+                final List<TokenInfo.Permission> permissions = result.getPermissions();
+//                final List<Label> permissionsLabel = permissions.stream()
+//                        .map(permission -> {
+//                            final String text = LabelUtils.permissionLabel(resources, permission);
+//                            final Label label = new Label(text);
+//                            label.getStyleClass().add("permission-label");
+//                            return label;
+//                        })
+//                        .collect(Collectors.toList());
+//                applicationKeyPermissionFlow.getChildren().setAll(permissionsLabel);
+                if (permissions.contains(TokenInfo.Permission.ACCOUNT) && permissions.contains(TokenInfo.Permission.TRADINGPOST)) {
+                    startUpdateService();
+                } else {
+//                    messageLabel.setVisible(true);
+//                    messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
+//                    messageLabel.setText(resources.getString("bad.permission.error"));
+                }
+            });
+            applicationKeyCheckService.setOnCancelled(workerStateEvent -> {
+            });
+            applicationKeyCheckService.setOnFailed(workerStateEvent -> {
+//                messageLabel.setVisible(true);
+//                messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
+//                messageLabel.setText(resources.getString("application_key.failed.error"));
+                workerStateEvent.getSource().getException().printStackTrace();
+            });
+        }
+        applicationKeyCheckService.restart();
+    }
+    
+    
     /**
      * Le service de mise à jour automatique.
      */
@@ -98,7 +172,7 @@ public final class SalesListingController implements Initializable {
     /**
      * Démarre le service de mise à jour automatique.
      */
-    public void start() {
+    public void startUpdateService() {
         if (updateService == null) {
             updateService = new ScheduledService<List<Sale>>() {
 
@@ -140,7 +214,7 @@ public final class SalesListingController implements Initializable {
     /**
      * Stoppe le service de mise a jour automatique.
      */
-    public void stop() {
+    public void stopUpdateService() {
         if (updateService == null) {
             return;
         }
