@@ -77,10 +77,10 @@ public final class SalesListingController implements Initializable {
      * Invoqué si la valeur de la clé d'application change.
      */
     private final ChangeListener<String> applicationKeyChangeListener = (observable, oldValue, newValue) -> {
-            applicationKeyChanged(newValue);
+        applicationKeyChanged(newValue);
     };
 
-     /**
+    /**
      * Invoqué quand la clé d'application change.
      * @param applicationKey La nouvelle clé d'application.
      */
@@ -98,7 +98,7 @@ public final class SalesListingController implements Initializable {
 //            messageLabel.setVisible(true);
 //            messageLabel.setText(resources.getString("no.account.label")); // NOI18N.
         }
-    };
+    }
 
     /**
      * Le service qui va vérifier la validité de la clé.
@@ -158,8 +158,7 @@ public final class SalesListingController implements Initializable {
         }
         applicationKeyCheckService.restart();
     }
-    
-    
+
     /**
      * Le service de mise à jour automatique.
      */

@@ -1,0 +1,12 @@
+{
+    "name": "Test",
+    "description": "Test",
+    "type": "upgrade_component",
+    "level": 60,
+    "vendor_value": 12,
+    "default_skin": 1,
+    "flags": [],
+    "game_types": [],
+    "restrictions": [],
+    "details": {}
+}
