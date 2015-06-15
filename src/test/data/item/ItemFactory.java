@@ -19,16 +19,18 @@ public enum ItemFactory {
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code Item}, jamais {@code null}.
      */
-    public static Item createItem(final int id, final JsonObject jsonObject) {
+    public static Item createItem(final JsonObject jsonObject) {
         final Item result = new Item();
-        result.id = id;
+        result.id = jsonObject.getInt("id"); // NOI18N.
         result.name = jsonObject.getString("name"); // NOI18N.
         result.description = jsonObject.getString("description"); // NOI18N.
         final String typeStr = jsonObject.getString("type"); // NOI18N.
         result.type = Item.Type.find(typeStr);
         result.level = jsonObject.getInt("level"); // NOI18N.
+        result.rarity = Item.Rarity.find(jsonObject.getString("rarity")); // NOI18N.
         result.vendorValue = jsonObject.getInt("vendor_value"); // NOI18N.
-        result.defaultSkin = jsonObject.getInt("default_skin"); // NOI18N.
+        result.defaultSkin = jsonObject.containsKey("default_skin") ? jsonObject.getInt("default_skin") : Item.NO_SKIN; // NOI18N.
+        result.icon = jsonObject.getString("icon"); // NOI18N.
         // Flags
         final JsonArray jsonFlags = jsonObject.getJsonArray("flags"); // NOI18N.
         result.flags = QueryUtils.jsonStringArrayToList(jsonFlags, Item.Flag::find);

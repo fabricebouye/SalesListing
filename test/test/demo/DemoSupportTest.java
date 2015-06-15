@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import test.data.account.Account;
+import test.data.item.Item;
 import test.data.sale.Sale;
 import test.data.tokeninfo.TokenInfo;
 
@@ -124,6 +125,29 @@ public class DemoSupportTest {
         assertEquals(1, result.get(3).getQuantity());
         assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(3).getCreated());
         assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(3).getPurchased());
+    }
+    
+    /**
+     * Test de la méthode {@code item}.
+     */
+    @Test
+    public void testItem() throws Exception {
+        System.out.println("item");
+        final Item item = DemoSupport.item(1);
+        assertEquals(24612, item.getId());
+        assertEquals("Superior Sigil of Agony", item.getName());
+        assertEquals(Item.Type.UPGRADE_COMPONENT, item.getType());
+        assertEquals(60, item.getLevel());
+        assertEquals(Item.Rarity.EXOTIC, item.getRarity());
+        assertEquals(216, item.getVendorValue());
+        assertEquals(4, item.getGameTypes().size());
+        assertEquals(true, item.getGameTypes().contains(Item.GameType.ACTIVITY));
+        assertEquals(true, item.getGameTypes().contains(Item.GameType.DUNGEON));
+        assertEquals(true, item.getGameTypes().contains(Item.GameType.PVE));
+        assertEquals(true, item.getGameTypes().contains(Item.GameType.WVW));
+        assertEquals(true, item.getFlags().isEmpty());
+        assertEquals(true, item.getRestrictions().isEmpty());
+        assertEquals("https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png", item.getIcon());
     }
 }
 

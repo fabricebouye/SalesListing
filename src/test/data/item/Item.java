@@ -8,27 +8,29 @@ import java.util.List;
  */
 public final class Item {
 
+    public static final int NO_SKIN = 1;
+
     /**
      * Listes des types d'objets.
      * @author Fabrice Bouyé
      */
     public enum Type {
 
-        ARMOR("armor"), // NOI18N.
-        BACK("back"), // NOI18N.
-        BAG("bag"), // NOI18N.
-        CONSUMABLE("consumable"), // NOI18N.
-        CONTAINER("container"), // NOI18N.
-        CRAFTING_MATERIAL("crafting_material"), // NOI18N.
-        GATHERING("gathering"), // NOI18N.
-        GIZMO("gizmo"), // NOI18N.
-        MINI_PET("mini_pet"), // NOI18N.
-        TOOL("tool"), // NOI18N.
-        TRAIT("trait"), // NOI18N.
-        TRINKET("trinket"), // NOI18N.
-        TROPHY("trophy"), // NOI18N.
-        UPGRADE_COMPONENT("upgrade_component"), // NOI18N.
-        WEAPON("weapon"), // NOI18N.
+        ARMOR("Armor"), // NOI18N.
+        BACK("Back"), // NOI18N.
+        BAG("Bag"), // NOI18N.
+        CONSUMABLE("Consumable"), // NOI18N.
+        CONTAINER("Container"), // NOI18N.
+        CRAFTING_MATERIAL("CraftingMaterial"), // NOI18N.
+        GATHERING("Gathering"), // NOI18N.
+        GIZMO("Gizmo"), // NOI18N.
+        MINI_PET("MiniPet"), // NOI18N.
+        TOOL("Tool"), // NOI18N.
+        TRAIT("Trait"), // NOI18N.
+        TRINKET("Trinket"), // NOI18N.
+        TROPHY("Trophy"), // NOI18N.
+        UPGRADE_COMPONENT("UpgradeComponent"), // NOI18N.
+        WEAPON("Weapon"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -57,14 +59,14 @@ public final class Item {
      */
     public enum Rarity {
 
-        JUNK("junk"), // NOI18N.
-        BASIC("basic"), // NOI18N.
-        FINE("fine"), // NOI18N.
-        MASTERWORK("masterwork"), // NOI18N.
-        RARE("rare"), // NOI18N.
-        EXOTIC("exotic"), // NOI18N.
-        ASCENDED("ascendede"), // NOI18N.
-        LEGENDARY("legendary"), // NOI18N.
+        JUNK("Junk"), // NOI18N.
+        BASIC("Basic"), // NOI18N.
+        FINE("Fine"), // NOI18N.
+        MASTERWORK("Masterwork"), // NOI18N.
+        RARE("Rare"), // NOI18N.
+        EXOTIC("Exotic"), // NOI18N.
+        ASCENDED("Ascendede"), // NOI18N.
+        LEGENDARY("Legendary"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -93,11 +95,12 @@ public final class Item {
      */
     public enum GameType {
 
-        ACTIVITY("activity"), // NOI18N.
-        DUNGEON("dungeon"), // NOI18N.
-        PVE("pve"), // NOI18N.
-        PVP("pvp"), // NOI18N.
-        WVW("wvw"), // NOI18N.
+        ACTIVITY("Activity"), // NOI18N.
+        DUNGEON("Dungeon"), // NOI18N.
+        PVE("Pve"), // NOI18N.
+        PVP("Pvp"), // NOI18N.
+        PVP_LOBBY("PvpLobby"), // NOI18N.
+        WVW("Wvw"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -126,18 +129,18 @@ public final class Item {
      */
     public enum Flag {
 
-        ACCOUNT_BIND_ON_USE("account_bind_on_use"), // NOI18N.
-        ACCOUNT_BOUND("account_bound"), // NOI18N.
-        HIDE_SUFFIX("hide_suffix"), // NOI18N.
-        MONSTER_ONLY("monster_only"), // NOI18N.
-        NO_MYSTIC_FORGE("no_mystic_forge"), // NOI18N.
-        NO_SALVAGE("no_salvage"), // NOI18N.
-        NO_SELL("no_sell"), // NOI18N.
-        NOT_UPGRADEABLE("not_upgradeable"), // NOI18N.
-        NO_UNDERWATER("no_underwater"), // NOI18N.
-        SOULBIND_ON_ACQUIRE("souldbind_on_acquire"), // NOI18N.
-        SOULBIND_ON_USE("soulbind_on_use"), // NOI18N.
-        UNIQUE("unique"), // NOI18N.
+        ACCOUNT_BIND_ON_USE("AccountBindOnUse"), // NOI18N.
+        ACCOUNT_BOUND("AccountBound"), // NOI18N.
+        HIDE_SUFFIX("HideSuffix"), // NOI18N.
+        MONSTER_ONLY("MonsterOnly"), // NOI18N.
+        NO_MYSTIC_FORGE("NoMysticForge"), // NOI18N.
+        NO_SALVAGE("NoSalvage"), // NOI18N.
+        NO_SELL("NoSell"), // NOI18N.
+        NOT_UPGRADEABLE("NotUpgradeable"), // NOI18N.
+        NO_UNDERWATER("NoUnderwater"), // NOI18N.
+        SOULBIND_ON_ACQUIRE("SoulbindOnAcquire"), // NOI18N.
+        SOULBIND_ON_USE("SoulBindOnUse"), // NOI18N.
+        UNIQUE("Unique"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -166,15 +169,15 @@ public final class Item {
      */
     public enum Restriction {
 
-        ASURA("asura"), // NOI18N.
-        CHARR("charr"), // NOI18N.
-        HUMAN("human"), // NOI18N.
-        NORN("norn"), // NOI18N.
-        SYLVARI("sylvari"), // NOI18N.
-        GUARDIAN("guardian"), // NOI18N.
-        MESMER("mesmer"), // NOI18N.
-        RANGER("ranger"), // NOI18N.
-        WARRIOR("warrior"), // NOI18N.
+        ASURA("Asura"), // NOI18N.
+        CHARR("Charr"), // NOI18N.
+        HUMAN("Human"), // NOI18N.
+        NORN("Norn"), // NOI18N.
+        SYLVARI("Sylvari"), // NOI18N.
+        GUARDIAN("Guardian"), // NOI18N.
+        MESMER("Mesmer"), // NOI18N.
+        RANGER("Ranger"), // NOI18N.
+        WARRIOR("Warrior"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -217,6 +220,10 @@ public final class Item {
      */
     int level;
     /**
+     * Rareté de l'objet.
+     */
+    Rarity rarity;
+    /**
      * La valeur de revente de l'objet auprès du marchand
      */
     int vendorValue;
@@ -237,6 +244,10 @@ public final class Item {
      */
     List<Restriction> restrictions;
     /**
+     * L'URL de l'icon de l'objet.
+     */
+    String icon;
+    /**
      * Détails de l'objet.
      */
     Detail details;
@@ -245,5 +256,57 @@ public final class Item {
      * Crée une nouvelle instance vide.
      */
     Item() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
+
+    public int getVendorValue() {
+        return vendorValue;
+    }
+
+    public int getDefaultSkin() {
+        return defaultSkin;
+    }
+
+    public List<Flag> getFlags() {
+        return flags;
+    }
+
+    public List<GameType> getGameTypes() {
+        return gameTypes;
+    }
+
+    public List<Restriction> getRestrictions() {
+        return restrictions;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public Detail getDetails() {
+        return details;
     }
 }
