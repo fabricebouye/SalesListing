@@ -1,5 +1,7 @@
 package test.demo;
 
+import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import test.data.account.Account;
+import test.data.sale.Sale;
 import test.data.tokeninfo.TokenInfo;
 
 /**
@@ -15,22 +18,22 @@ import test.data.tokeninfo.TokenInfo;
  * @author Fabrice Bouyé
  */
 public class DemoSupportTest {
-    
+
     public DemoSupportTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -84,4 +87,43 @@ public class DemoSupportTest {
         assertEquals(true, result.getGuilds().contains("02"));
         assertEquals(true, result.getGuilds().contains("03"));
     }
+
+    /**
+     * Test de la méthode {@code sales}.
+     */
+    @Test
+    public void testSales() throws Exception {
+        System.out.println("sales");
+        final List<Sale> result = DemoSupport.sales();
+        assertEquals(4, result.size());
+        //
+        assertEquals(1, result.get(0).getId());
+        assertEquals(1, result.get(0).getItemId());
+        assertEquals(1500, result.get(0).getPrice());
+        assertEquals(5, result.get(0).getQuantity());
+        assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(0).getCreated());
+        assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(0).getPurchased());
+        //
+        assertEquals(2, result.get(1).getId());
+        assertEquals(102, result.get(1).getItemId());
+        assertEquals(50, result.get(1).getPrice());
+        assertEquals(1, result.get(1).getQuantity());
+        assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(1).getCreated());
+        assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(1).getPurchased());
+        //
+        assertEquals(3, result.get(2).getId());
+        assertEquals(98, result.get(2).getItemId());
+        assertEquals(675, result.get(2).getPrice());
+        assertEquals(2, result.get(2).getQuantity());
+        assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(2).getCreated());
+        assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(2).getPurchased());
+        //
+        assertEquals(4, result.get(3).getId());
+        assertEquals(23, result.get(3).getItemId());
+        assertEquals(14000, result.get(3).getPrice());
+        assertEquals(1, result.get(3).getQuantity());
+        assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(3).getCreated());
+        assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(3).getPurchased());
+    }
 }
+

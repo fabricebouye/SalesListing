@@ -2,9 +2,13 @@ package test.demo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import test.data.account.Account;
 import test.data.account.AccountFactory;
+import test.data.sale.Sale;
+import test.data.sale.SaleFactory;
 import test.data.tokeninfo.TokenInfo;
 import test.data.tokeninfo.TokenInfoFactory;
 import test.query.QueryUtils;
@@ -42,4 +46,10 @@ public enum DemoSupport {
         final JsonObject jsonObject = QueryUtils.queryObject(url.toExternalForm());
         return AccountFactory.createAccount(jsonObject);
     }
+    
+   public static List<Sale> sales() throws IOException {
+       final URL url = DemoSupport.class.getResource("sales.json"); // NOI18N.
+       final JsonArray jsonArray = QueryUtils.queryArray(url.toExternalForm());
+       return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
+   }
 }

@@ -28,6 +28,10 @@ public final class Sale {
      * La date de création de la vente.
      */
     ZonedDateTime created;
+    /**
+     * La date de la vente.
+     */
+    ZonedDateTime purchased;
 
     /**
      * Crée une nouvelle instance.
@@ -48,11 +52,19 @@ public final class Sale {
         return itemId;
     }
 
-    public int quantity() {
+    public int getQuantity() {
         return quantity;
+    }
+    
+    public int getPrice() {
+        return price;
     }
 
     public ZonedDateTime getCreated() {
         return created;
+    }
+
+    public ZonedDateTime getPurchased() {
+        return purchased;
     }
 }
