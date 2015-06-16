@@ -5,12 +5,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
@@ -22,10 +26,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.Duration;
+import test.data.account.Account;
+import test.data.item.Item;
 import test.data.sale.Sale;
 import test.data.tokeninfo.TokenInfo;
 import test.demo.DemoSupport;
 import test.query.CommerceQuery;
+import test.query.ItemsQuery;
 import test.query.TokenInfoQuery;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
@@ -162,27 +169,49 @@ public final class SalesListingController implements Initializable {
     /**
      * Le service de mise à jour automatique.
      */
-    private ScheduledService<List<Sale>> updateService;
+    private ScheduledService<QueryResult> updateService;
     /**
      * Le temps d'attente entre chaque mise à jour automatique.
      */
     private Duration updateWaitTime = CommerceQuery.SERVER_RETENTION_DURATION;
 
     /**
+     * Le résultat de la requête.
+     * @author Fabrice Bouyé
+     */
+    private static class QueryResult {
+
+        Account account;
+        List<Sale> sales;
+        Map<Integer, Item> items;
+    }
+
+    /**
      * Démarre le service de mise à jour automatique.
      */
     public void startUpdateService() {
         if (updateService == null) {
-            updateService = new ScheduledService<List<Sale>>() {
+            updateService = new ScheduledService<QueryResult>() {
 
                 @Override
-                protected Task<List<Sale>> createTask() {
-                    return new Task<List<Sale>>() {
+                protected Task<QueryResult> createTask() {
+                    return new Task<QueryResult>() {
 
                         @Override
-                        protected List<Sale> call() throws Exception {
+                        protected QueryResult call() throws Exception {
                             final String applicationKey = settings.getProperty("app.key"); // NOI18N.
-                            return CommerceQuery.listSalesHistory(applicationKey);
+                            final boolean isDemoMode = DemoSupport.isDemoApplicationKey(applicationKey);
+                            final QueryResult result = new QueryResult();
+                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSalesHistory(applicationKey);
+                            final int[] itemIds = result.sales
+                                    .stream()
+                                    .mapToInt(sale -> sale.getItemId())
+                                    .toArray();
+                            final List<Item> items = isDemoMode ? DemoSupport.items(itemIds) : ItemsQuery.items("fr", itemIds);
+                            final Map<Integer, Item> itemMap = items.stream()
+                                    .collect(Collectors.toMap(item -> item.getId(), Function.identity()));
+                            result.items = Collections.unmodifiableMap(itemMap);
+                            return result;
                         }
                     };
                 }
@@ -190,21 +219,22 @@ public final class SalesListingController implements Initializable {
             updateService.setRestartOnFailure(true);
             updateService.setPeriod(updateWaitTime);
             updateService.setOnSucceeded(workerStateEvent -> {
-                final List<Sale> result = updateService.getValue();
+                final QueryResult result = (QueryResult) workerStateEvent.getSource().getValue();
                 final Optional<Sale> oldSelectionOptional = Optional.ofNullable(salesList.getSelectionModel().getSelectedItem());
-                salesList.getItems().setAll(result);
+                salesList.getItems().setAll(result.sales);
                 // On restaure la sélection si possible.
                 oldSelectionOptional.ifPresent(oldSelection -> {
-                    final Optional<Sale> newSelectionOptional = result.stream()
+                    final Optional<Sale> newSelectionOptional = result.sales
+                            .stream()
                             .filter(sale -> sale.getId() == oldSelection.getId())
                             .findFirst();
                     newSelectionOptional.ifPresent(newSelection -> salesList.getSelectionModel().select(newSelection));
                 });
             });
-            updateService.setOnFailed(workerStateEvent -> {
-                System.err.println(updateService.getException());
-            });
             updateService.setOnCancelled(workerStateEvent -> {
+            });
+            updateService.setOnFailed(workerStateEvent -> {
+                workerStateEvent.getSource().getException().printStackTrace();
             });
         }
         updateService.restart();

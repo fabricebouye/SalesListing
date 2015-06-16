@@ -8,7 +8,7 @@
     "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
     "flags": [],
     "restrictions": [],
-    "id": 24612,
+    "id": 1,
     "icon": "https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png",
     "details": {
         "type": "Sigil",

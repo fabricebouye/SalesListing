@@ -134,7 +134,7 @@ public class DemoSupportTest {
     public void testItem() throws Exception {
         System.out.println("item");
         final Item item = DemoSupport.item(1);
-        assertEquals(24612, item.getId());
+        assertEquals(1, item.getId());
         assertEquals("Superior Sigil of Agony", item.getName());
         assertEquals(Item.Type.UPGRADE_COMPONENT, item.getType());
         assertEquals(60, item.getLevel());
