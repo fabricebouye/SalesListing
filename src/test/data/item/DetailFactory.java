@@ -1,5 +1,7 @@
 package test.data.item;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.util.Pair;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -148,6 +150,15 @@ public abstract class DetailFactory {
      */
     private static UpgradeComponentDetail createUpgradeComponentDetail(final JsonObject jsonObject) {
         final UpgradeComponentDetail result = new UpgradeComponentDetail();
+        result.type = UpgradeComponentDetail.Type.find(jsonObject.getString("type")); // NOI18N.
+        final JsonArray flags = jsonObject.getJsonArray("flags"); // NOI18N.
+        result.flags = QueryUtils.jsonStringArrayToList(flags, UpgradeComponentDetail.Flag::find);
+        //
+        result.infusionUpgradeFlags = Collections.unmodifiableList(new ArrayList<>());
+        // Amélioration infixe.
+//        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
+//        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
+        result.suffix = jsonObject.getString("suffix"); // NOI18N.
         return result;
     }
 }
