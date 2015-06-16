@@ -25,7 +25,7 @@ public enum ItemFactory {
         final Item result = new Item();
         result.id = jsonObject.getInt("id"); // NOI18N.
         result.name = jsonObject.getString("name"); // NOI18N.
-        result.description = jsonObject.getString("description"); // NOI18N.
+        result.description = jsonObject.containsKey("description") ? jsonObject.getString("description") : null; // NOI18N.
         final String typeStr = jsonObject.getString("type"); // NOI18N.
         result.type = Item.Type.find(typeStr);
         result.level = jsonObject.getInt("level"); // NOI18N.
