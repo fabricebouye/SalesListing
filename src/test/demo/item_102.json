@@ -1,26 +1,33 @@
 {
-    "name": "Superior Sigil of Agony",
-    "description": "Double-click to apply to a weapon.",
-    "type": "UpgradeComponent",
-    "level": 60,
-    "rarity": "Exotic",
-    "vendor_value": 216,
+    "name": "Arc long en bois tendre solide de feu",
+    "description": "",
+    "type": "Weapon",
+    "level": 44,
+    "rarity": "Masterwork",
+    "vendor_value": 120,
+    "default_skin": 3942,
     "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
-    "flags": [],
+    "flags": ["SoulBindOnUse"],
     "restrictions": [],
     "id": 102,
-    "icon": "https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png",
+    "icon": "https://render.guildwars2.com/file/C6110F52DF5AFE0F00A56F9E143E9732176DDDE9/65015.png",
     "details": {
-        "type": "Sigil",
-        "flags": ["Axe", "LongBow", "ShortBow", "Dagger", "Focus", "Greatsword", "Hammer", "Harpoon", "Mace", "Pistol", "Rifle", "Scepter", "Shield", "Speargun", "Staff", "Sword", "Torch", "Trident", "Warhorn"],
-        "infusion_upgrade_flags": [],
+        "type": "LongBow",
+        "damage_type": "Physical",
+        "min_power": 385,
+        "max_power": 452,
+        "defense": 0,
+        "infusion_slots": [],
         "infix_upgrade": {
-            "buff": {
-                "skill_id": 9313,
-                "description": "Increase Inflicted Bleeding Duration: 20%"
-            },
-            "attributes": []
+            "attributes": [{
+                    "attribute": "Power",
+                    "modifier": 62
+                }, {
+                    "attribute": "Precision",
+                    "modifier": 44
+                }]
         },
-        "suffix": "of Agony"
+        "suffix_item_id": 24547,
+        "secondary_suffix_item_id": ""
     }
 }

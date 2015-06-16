@@ -1,0 +1,39 @@
+{
+    "name": "Condensateur de fractale (infusé)",
+    "description": "",
+    "type": "Back",
+    "level": 80,
+    "rarity": "Ascended",
+    "vendor_value": 330,
+    "default_skin": 2379,
+    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
+    "flags": ["AccountBound", "HideSuffix", "NoSalvage", "NoSell", "NotUpgradeable", "AccountBindOnUse", "Unique"],
+    "restrictions": [],
+    "id": 37045,
+    "icon": "https://render.guildwars2.com/file/97F9726E527DD5D24F434AD679F15C3CDAF238EA/511808.png",
+    "details": {
+        "infusion_slots": [{
+                "flags": ["Offense"]
+            }, {
+                "flags": [],
+                "item_id": 49428
+            }],
+        "infix_upgrade": {
+            "buff": {
+                "skill_id": 15757,
+                "description": "Puissance +32<br>Robustesse +18<br>Vitalité +18<br>Résistance à l'agonie +5 "
+            },
+            "attributes": [{
+                    "attribute": "Power",
+                    "modifier": 24
+                }, {
+                    "attribute": "Toughness",
+                    "modifier": 17
+                }, {
+                    "attribute": "Vitality",
+                    "modifier": 17
+                }]
+        },
+        "secondary_suffix_item_id": ""
+    }
+}

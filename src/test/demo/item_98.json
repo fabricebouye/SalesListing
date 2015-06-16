@@ -1,26 +1,13 @@
 {
-    "name": "Superior Sigil of Agony",
-    "description": "Double-click to apply to a weapon.",
-    "type": "UpgradeComponent",
-    "level": 60,
+    "name": "Mini-chacalope",
+    "description": "Double-cliquez pour invoquer cette miniature qui vous suivra partout. Vous ne pouvez utiliser qu'une seule miniature à la fois.",
+    "type": "MiniPet",
+    "level": 0,
     "rarity": "Exotic",
-    "vendor_value": 216,
-    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
-    "flags": [],
+    "vendor_value": 5000,
+    "game_types": ["Activity", "Dungeon", "Pve", "PvpLobby", "Wvw"],
+    "flags": ["NoSell"],
     "restrictions": [],
     "id": 98,
-    "icon": "https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png",
-    "details": {
-        "type": "Sigil",
-        "flags": ["Axe", "LongBow", "ShortBow", "Dagger", "Focus", "Greatsword", "Hammer", "Harpoon", "Mace", "Pistol", "Rifle", "Scepter", "Shield", "Speargun", "Staff", "Sword", "Torch", "Trident", "Warhorn"],
-        "infusion_upgrade_flags": [],
-        "infix_upgrade": {
-            "buff": {
-                "skill_id": 9313,
-                "description": "Increase Inflicted Bleeding Duration: 20%"
-            },
-            "attributes": []
-        },
-        "suffix": "of Agony"
-    }
+    "icon": "https://render.guildwars2.com/file/04FF79CB9C292DC4C89C6A1B0A00A2F309E4F270/220503.png"
 }

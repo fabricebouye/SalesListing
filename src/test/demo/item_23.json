@@ -1,26 +1,17 @@
 {
-    "name": "Superior Sigil of Agony",
-    "description": "Double-click to apply to a weapon.",
-    "type": "UpgradeComponent",
-    "level": 60,
-    "rarity": "Exotic",
-    "vendor_value": 216,
-    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
-    "flags": [],
+    "name": "Barre aux baies d'Omnom",
+    "type": "Consumable",
+    "level": 80,
+    "rarity": "Fine",
+    "vendor_value": 33,
+    "game_types": ["Dungeon", "Pve", "Wvw"],
+    "flags": ["NoSell"],
     "restrictions": [],
     "id": 23,
-    "icon": "https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png",
+    "icon": "https://render.guildwars2.com/file/6BD5B65FBC6ED450219EC86DD570E59F4DA3791F/433643.png",
     "details": {
-        "type": "Sigil",
-        "flags": ["Axe", "LongBow", "ShortBow", "Dagger", "Focus", "Greatsword", "Hammer", "Harpoon", "Mace", "Pistol", "Rifle", "Scepter", "Shield", "Speargun", "Staff", "Sword", "Torch", "Trident", "Warhorn"],
-        "infusion_upgrade_flags": [],
-        "infix_upgrade": {
-            "buff": {
-                "skill_id": 9313,
-                "description": "Increase Inflicted Bleeding Duration: 20%"
-            },
-            "attributes": []
-        },
-        "suffix": "of Agony"
+        "type": "Food",
+        "duration_ms": 1800000,
+        "description": "Découverte de magie +30%\nOr trouvé sur les monstres +40%\nExpérience à chaque ennemi tué +10%"
     }
 }

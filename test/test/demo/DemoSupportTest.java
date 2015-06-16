@@ -97,7 +97,7 @@ public class DemoSupportTest {
     public void testSales() throws Exception {
         System.out.println("sales");
         final List<Sale> result = DemoSupport.sales();
-        assertEquals(4, result.size());
+        assertEquals(5, result.size());
         //
         assertEquals(1, result.get(0).getId());
         assertEquals(1, result.get(0).getItemId());
@@ -126,6 +126,13 @@ public class DemoSupportTest {
         assertEquals(1, result.get(3).getQuantity());
         assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(3).getCreated());
         assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(3).getPurchased());
+        //
+        assertEquals(5, result.get(4).getId());
+        assertEquals(732, result.get(4).getItemId());
+        assertEquals(54000, result.get(4).getPrice());
+        assertEquals(1, result.get(4).getQuantity());
+        assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(4).getCreated());
+        assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(4).getPurchased());
     }
 
     /**
@@ -136,7 +143,8 @@ public class DemoSupportTest {
         System.out.println("item");
         final Item item = DemoSupport.item(1);
         assertEquals(1, item.getId());
-        assertEquals("Superior Sigil of Agony", item.getName());
+        assertEquals("Cachet d'agonie supérieur", item.getName());
+        assertEquals("Double-cliquez pour l'appliquer à une arme.", item.getDescription());
         assertEquals(Item.Type.UPGRADE_COMPONENT, item.getType());
         assertEquals(60, item.getLevel());
         assertEquals(Item.Rarity.EXOTIC, item.getRarity());
@@ -152,6 +160,6 @@ public class DemoSupportTest {
         assertEquals(true, item.getDetails() instanceof UpgradeComponentDetail);
         final UpgradeComponentDetail detail = (UpgradeComponentDetail) item.getDetails();
         assertEquals(UpgradeComponentDetail.Type.SIGIL, detail.getType());
-        assertEquals("of Agony", detail.getSuffix());
+        assertEquals("d'agonie", detail.getSuffix());
     }
 }

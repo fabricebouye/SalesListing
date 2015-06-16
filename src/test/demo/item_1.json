@@ -1,6 +1,6 @@
 {
-    "name": "Superior Sigil of Agony",
-    "description": "Double-click to apply to a weapon.",
+    "name": "Cachet d'agonie supérieur",
+    "description": "Double-cliquez pour l'appliquer à une arme.",
     "type": "UpgradeComponent",
     "level": 60,
     "rarity": "Exotic",
@@ -17,10 +17,10 @@
         "infix_upgrade": {
             "buff": {
                 "skill_id": 9313,
-                "description": "Increase Inflicted Bleeding Duration: 20%"
+                "description": "Augmente de 20% la durée des Saignements infligés"
             },
             "attributes": []
         },
-        "suffix": "of Agony"
+        "suffix": "d'agonie"
     }
 }
