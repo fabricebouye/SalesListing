@@ -22,10 +22,10 @@ public enum SaleFactory {
         result.itemId = jsonObject.getInt("item_id"); // NOI18N.
         result.price = jsonObject.getInt("price"); // NOI18N.
         result.quantity = jsonObject.getInt("quantity"); // NOI18N.
-        final String createdStr = jsonObject.getString("created"); // NOI18N.
-        result.created = ZonedDateTime.parse(createdStr);
-        final String purchasedStr = jsonObject.getString("purchased"); // NOI18N.
-        result.purchased = ZonedDateTime.parse(purchasedStr);
+        final String jsonCreated = jsonObject.getString("created"); // NOI18N.
+        result.created = ZonedDateTime.parse(jsonCreated);
+        final String jsonPurchased = jsonObject.getString("purchased"); // NOI18N.
+        result.purchased = ZonedDateTime.parse(jsonPurchased);
         return result;
     }
 }
