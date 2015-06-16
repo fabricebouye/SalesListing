@@ -30,7 +30,7 @@ public enum ItemsQuery {
      * @return Une instance de {@code Item}, jamais {@code null}.
      * @throws IOException En cas d'erreur.
      */
-    public Item item(final String languageCode, final int id) throws IOException {
+    public static Item item(final String languageCode, final int id) throws IOException {
         final String url = String.format("%s?id=%d&lang=%s", BASECODE, id, languageCode); // NOI18N.
         final JsonObject jsonObject = QueryUtils.queryObject(url);
         final Item result = ItemFactory.createItem(jsonObject);
@@ -44,7 +44,7 @@ public enum ItemsQuery {
      * @return Une instance de {@code List<Item>} non-modifiable, jamais {@code null}.
      * @throws IOException En cas d'erreur.
      */
-    public List<Item> items(final String languageCode, final int... ids) throws IOException {
+    public static List<Item> items(final String languageCode, final int... ids) throws IOException {
         final String url = String.format("%s?ids=%s&lang=%s", BASECODE, QueryUtils.idsToString(ids), languageCode); // NOI18N.
         final JsonArray jsonArray = QueryUtils.queryArray(url);
         return QueryUtils.jsonObjectArrayToList(jsonArray, ItemFactory::createItem);
