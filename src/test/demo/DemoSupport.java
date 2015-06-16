@@ -2,7 +2,11 @@ package test.demo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import test.data.account.Account;
@@ -60,5 +64,14 @@ public enum DemoSupport {
         final URL url = DemoSupport.class.getResource(filename);
         final JsonObject jsonObject = QueryUtils.queryObject(url.toExternalForm());
         return ItemFactory.createItem(jsonObject);
+    }
+
+    public static List<Item> items(final int... ids) throws IOException {
+        final List<Item> result = new ArrayList<>(ids.length);
+        for (final int id : ids) {
+            final Item item = item(id);
+            result.add(item);
+        }
+        return Collections.unmodifiableList(result);
     }
 }
