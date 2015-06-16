@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import test.data.account.Account;
 import test.data.item.Item;
+import test.data.item.UpgradeComponentDetail;
 import test.data.sale.Sale;
 import test.data.tokeninfo.TokenInfo;
 
@@ -126,7 +127,7 @@ public class DemoSupportTest {
         assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(3).getCreated());
         assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(3).getPurchased());
     }
-    
+
     /**
      * Test de la méthode {@code item}.
      */
@@ -148,6 +149,9 @@ public class DemoSupportTest {
         assertEquals(true, item.getFlags().isEmpty());
         assertEquals(true, item.getRestrictions().isEmpty());
         assertEquals("https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png", item.getIcon());
+        assertEquals(true, item.getDetails() instanceof UpgradeComponentDetail);
+        final UpgradeComponentDetail detail = (UpgradeComponentDetail) item.getDetails();
+        assertEquals(UpgradeComponentDetail.Type.SIGIL, detail.getType());
+        assertEquals("of Agony", detail.getSuffix());
     }
 }
-
