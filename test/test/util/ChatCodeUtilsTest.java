@@ -36,27 +36,48 @@ public class ChatCodeUtilsTest {
     public void tearDown() {
     }
 
+    final String[] codes = {"AgH1WQAA", "AgH2WQAA", "AgH3WQAA", "AgEAWgAA"};
+    final short[] quantities = {1, 1, 1, 1, 1};
+    final int[] itemIds = {23029, 23030, 23031, 23040};
+    final int[] skinIds = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
+    final int[] upgrade1s = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
+    final int[] upgrade2s = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
+
+    /**
+     * Test de la méthode {@code encodeItem}.
+     */
+    @Test
+    public void testEncodeItem() {
+        System.out.println("encodeItem");
+        IntStream.range(0, codes.length)
+                .forEach(index -> {
+                    final ChatItem item = new ChatItem();
+                    item.quantity = quantities[index];
+                    item.itemId = itemIds[index];
+                    item.skinId = skinIds[index];
+                    item.upgrade1 = upgrade1s[index];
+                    item.upgrade2 = upgrade2s[index];
+                    final String expResult = codes[index];
+                    final String result = ChatCodeUtils.encodeItem(item);
+                    assertEquals(expResult, result);
+                });
+    }
+
     /**
      * Test de la méthode {@code decodeItem}.
      */
     @Test
     public void testDecodeItem() {
-        System.out.println("decode");
-        final String[] codes = {"AgH1WQAA", "AgH2WQAA", "AgH3WQAA", "AgEAWgAA", "AgG8BQEA"};
-        final short[] expQuantities = {1, 1, 1, 1, 1};
-        final int[] expItemIds = {23029, 23030, 23031, 23040, 1};
-        final int[] expSkinIds = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
-        final int[] expUpgrade1s = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
-        final int[] expUpgrade2s = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
+        System.out.println("decodeItem");
         IntStream.range(0, codes.length)
                 .forEach(index -> {
                     try {
                         final String code = codes[index];
-                        final int expQuantity = expQuantities[index];
-                        final int expItemId = expItemIds[index];
-                        final int expSkinId = expSkinIds[index];
-                        final int expUpgrade1 = expUpgrade1s[index];
-                        final int expUpgrade2 = expUpgrade2s[index];
+                        final int expQuantity = quantities[index];
+                        final int expItemId = itemIds[index];
+                        final int expSkinId = skinIds[index];
+                        final int expUpgrade1 = upgrade1s[index];
+                        final int expUpgrade2 = upgrade2s[index];
                         final ChatItem result = ChatCodeUtils.decodeItem(code);
                         assertEquals(expQuantity, result.getQuantity());
                         assertEquals(expItemId, result.getItemId());

@@ -1,7 +1,7 @@
 package test.util;
 
 /**
- *
+ * Un objet par l'interface de chat en jeu.
  * @author Fabrice Bouyé
  */
 public final class ChatItem {
