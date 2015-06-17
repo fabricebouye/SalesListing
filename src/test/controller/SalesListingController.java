@@ -34,6 +34,7 @@ import test.demo.DemoSupport;
 import test.query.CommerceQuery;
 import test.query.ItemsQuery;
 import test.query.TokenInfoQuery;
+import test.scene.renderer.SaleListCell;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
 
@@ -73,6 +74,8 @@ public final class SalesListingController implements Initializable {
             applicationKeyField.positionCaret(0);
             applicationKeyField.selectRange(0, 0);
         });
+        //
+        salesList.setCellFactory(listView -> new SaleListCell());
     }
 
     /**

@@ -9,17 +9,17 @@
 
 <VBox id="rootPane" fx:id="rootPane" styleClass="root-pane" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
     <children>
-        <TextFlow  id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
+        <TextFlow id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
             <children>    
                 <Text id="applicationKeyLabel" fx:id="applicationKeyLabel" text="%application.key.label" styleClass="main-text" />
             </children>    
         </TextFlow>
-        <TextField id="applicationKeyField" fx:id="applicationKeyField" />
+        <TextField id="applicationKeyField" fx:id="applicationKeyField" styleClass="key-field" />
         <TextFlow  id="recentSalesFlow" fx:id="recentSalesFlow" VBox.vgrow="NEVER">
             <children>    
                 <Text id="recentSalesLabel" fx:id="recentSalesLabel" text="%recent.sales.label" styleClass="main-text" />
             </children>    
         </TextFlow>
-        <ListView id="salesList" fx:id="salesList" VBox.vgrow="ALWAYS" />
+        <ListView id="salesList" fx:id="salesList" styleClass="list-view" VBox.vgrow="ALWAYS" />
     </children>
 </VBox>

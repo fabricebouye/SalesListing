@@ -28,6 +28,8 @@ public class SalesListing extends Application {
         scene.getStylesheets().add(cssURL.toExternalForm());
         primaryStage.setTitle(bundle.getString("app.title")); // NOI18N.
         primaryStage.setScene(scene);
+        primaryStage.setWidth(800);
+        primaryStage.setHeight(600);
         primaryStage.show();
     }
 
