@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
 /**
  * @author Fabrice Bouyé
@@ -14,7 +14,7 @@ import javafx.scene.layout.Region;
 public enum LabelUtils {
 
     INSTANCE;
-    
+
     private static final int GOLD_VALUE = 10000;
     private static final int SILVER_VALUE = 100;
 
@@ -31,32 +31,37 @@ public enum LabelUtils {
             final Region goldCoin = new Region();
             goldCoin.getStyleClass().add("coin");
             goldCoin.pseudoClassStateChanged(GOLD_PSEUDO_CLASS, true);
-            final Label goldLabel = new Label(String.valueOf(gold));
-            goldLabel.getStyleClass().add("coin-label");
-            goldLabel.pseudoClassStateChanged(GOLD_PSEUDO_CLASS, true);
-            goldLabel.setGraphic(goldCoin);
-            result.add(goldLabel);
-            result.add(new Label(" "));
+            final Text goldText = new Text(String.valueOf(gold));
+            goldText.getStyleClass().add("coin-label");
+            goldText.pseudoClassStateChanged(GOLD_PSEUDO_CLASS, true);
+            result.add(goldText);
+            result.add(new Text(" "));
+            result.add(goldCoin);
+            result.add(new Text(" "));
         }
         if (silver > 0 || gold > 0) {
             final Region silverCoin = new Region();
             silverCoin.getStyleClass().add("coin");
             silverCoin.pseudoClassStateChanged(SILVER_PSEUDO_CLASS, true);
-            final Label silverLabel = new Label(String.valueOf(silver));
-            silverLabel.getStyleClass().add("coin-label");
-            silverLabel.pseudoClassStateChanged(SILVER_PSEUDO_CLASS, true);
-            silverLabel.setGraphic(silverCoin);
-            result.add(silverLabel);
-            result.add(new Label(" "));
+            final Text silverText = new Text(String.valueOf(silver));
+            silverText.getStyleClass().add("coin-label");
+            silverText.pseudoClassStateChanged(SILVER_PSEUDO_CLASS, true);
+            result.add(silverText);
+            result.add(new Text(" "));
+            result.add(silverCoin);
+            result.add(new Text(" "));
         }
         final Region copperCoin = new Region();
         copperCoin.getStyleClass().add("coin");
         copperCoin.pseudoClassStateChanged(COPPER_PSEUDO_CLASS, true);
-        final Label copperLabel = new Label(String.valueOf(copper));
-        copperLabel.getStyleClass().add("coin-label");
-        copperLabel.pseudoClassStateChanged(COPPER_PSEUDO_CLASS, true);
-        copperLabel.setGraphic(copperCoin);
-        result.add(copperLabel);
+        final Text copperText = new Text(String.valueOf(copper));
+        copperText.getStyleClass().add("coin-label");
+        copperText.pseudoClassStateChanged(COPPER_PSEUDO_CLASS, true);
+        result.add(copperText);
+        result.add(new Text(" "));
+        result.add(copperCoin);
+        // Test.
+        result.add(new Text(" (" + value + ")"));
         //
         return Collections.unmodifiableList(result);
     }

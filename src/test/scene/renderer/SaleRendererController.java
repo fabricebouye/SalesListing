@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import test.data.sale.Sale;
@@ -41,7 +42,6 @@ public final class SaleRendererController implements Initializable {
         if (sale != null) {
             final int price = sale.getPrice();
             priceFlow.getChildren().setAll(LabelUtils.labelsForCoins(price));
-            priceFlow.getChildren().add(new Text("(" + price + ")"));
         }
     }
 

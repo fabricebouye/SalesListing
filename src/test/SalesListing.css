@@ -77,23 +77,30 @@
     -fx-vgap: 10px;
 }
 .coin-label {    
-    -fx-text-fill: -coin-color;
-    -fx-content-display: right;
-}
-.coin-label:gold {    
-    -coin-color: gold;
-}
-.coin-label:silver {    
-    -coin-color: silver;
-}
-.coin-label:copper {    
-    -coin-color: chocolate;
+    -fx-fill: -coin-color;
 }
 .coin {
     -fx-background-color: derive(-coin-color, -20%), derive(-coin-color, 50%), -coin-color;
     -fx-background-radius: 7, 6, 5;
     -fx-background-insets: 0, 1, 2;
-    -fx-padding: 6px;
+    -fx-min-width: 12px;
+    -fx-min-height: 12px;
+    -fx-pref-width: 12px;
+    -fx-pref-height: 12px;
+    -fx-max-width: 12px;
+    -fx-max-height: 12px;
+}
+.coin-label:gold,
+.coin:gold {    
+    -coin-color: gold;
+}
+.coin-label:silver,
+.coin:silver{    
+    -coin-color: silver;
+}
+.coin-label:copper,
+.coin:copper{    
+    -coin-color: chocolate;
 }
 .icon-box {
     -fx-background-color: black, gray;

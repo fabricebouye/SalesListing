@@ -11,17 +11,17 @@
 <GridPane id="rootPane" fx:id="rootPane" styleClass="sale-info" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.scene.renderer.SaleRendererController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="ALWAYS"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="NEVER" />
+        <RowConstraints vgrow="NEVER" />
         <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
    <children>
-      <StackPane id="iconBox" fx:id="iconBox" styleClass="icon-box" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.rowSpan="2" GridPane.valignment="TOP">
+      <StackPane id="iconBox" fx:id="iconBox" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="icon-box" GridPane.rowSpan="2" GridPane.valignment="TOP">
          <children>
-            <ImageView id="icon" fx:id="icon" styleClass="icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView id="icon" fx:id="icon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
          </children>
       </StackPane>
       <TextFlow fx:id="nameFlow" maxHeight="-Infinity" GridPane.columnIndex="1">
@@ -29,7 +29,6 @@
             <Text fx:id="nameLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
          </children>
       </TextFlow>
-      <TextFlow fx:id="descriptionFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextFlow fx:id="priceFlow" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+      <TextFlow fx:id="priceFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>
