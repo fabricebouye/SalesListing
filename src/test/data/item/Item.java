@@ -8,7 +8,8 @@ import java.util.List;
  */
 public final class Item {
 
-    public static final int NO_SKIN = 1;
+    public static final int NO_ID = -1;
+    public static final int NO_SKIN = -1;
 
     /**
      * Listes des types d'objets.

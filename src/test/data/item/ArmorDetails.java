@@ -102,7 +102,7 @@ public final class ArmorDetails extends Details {
     /**
      * ???
      */
-    int secondarySuffixItemId;
+    String secondarySuffixItemId;
 
     /**
      * Crée une nouvelle instance vide.
@@ -110,4 +110,34 @@ public final class ArmorDetails extends Details {
     ArmorDetails() {
         super(Item.Type.ARMOR);
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public WeightClass getWeightClass() {
+        return weightClass;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public List<InfusionSlot> getInfusions() {
+        return infusions;
+    }
+
+    public InfixUpgrade getInfixUpgrade() {
+        return infixUpgrade;
+    }
+
+    public int getSuffixItemId() {
+        return suffixItemId;
+    }
+
+    public String getSecondarySuffixItemId() {
+        return secondarySuffixItemId;
+    }
+    
+    
 }

@@ -97,17 +97,15 @@ public enum ItemFactory {
     private static ArmorDetails createArmorDetails(final JsonObject jsonObject) {
         final ArmorDetails result = new ArmorDetails();
         result.type = ArmorDetails.Type.find(jsonObject.getString("type")); // NOI18N.
-        result.weightClass = ArmorDetails.WeightClass.find(jsonObject.getString("weight-class")); // NOI18N.
+        result.weightClass = ArmorDetails.WeightClass.find(jsonObject.getString("weight_class")); // NOI18N.
         result.defense = jsonObject.getInt("defense"); // NOI18N.
         // Infusions.
-        final JsonArray jsonInfusions = jsonObject.getJsonArray("infusions"); // NOI18N.
-        result.infusions = QueryUtils.jsonObjectArrayToList(jsonInfusions, ItemFactory::createInfusionSlot);
+        result.infusions = jsonObject.containsKey("infusions") ? QueryUtils.jsonObjectArrayToList(jsonObject.getJsonArray("infusions"), ItemFactory::createInfusionSlot) : null;
         // Amélioration infixe.
-        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
-        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
+        result.infixUpgrade = jsonObject.containsKey("infix_upgrade") ? createInfixUpgrade(jsonObject.getJsonObject("infix_upgrade")) : null; // NOI18N.
         //
-        result.suffixItemId = jsonObject.getInt("suffix_item_id"); // NOI18N.
-        result.secondarySuffixItemId = jsonObject.getInt("secondary_suffix_item_id"); // NOI18N.
+        result.suffixItemId = jsonObject.containsKey("suffix_item_id") ? jsonObject.getInt("suffix_item_id") : Item.NO_ID; // NOI18N.
+        result.secondarySuffixItemId = jsonObject.getString("secondary_suffix_item_id"); // NOI18N.
         return result;
     }
 
@@ -118,7 +116,7 @@ public enum ItemFactory {
      */
     private static InfusionSlot createInfusionSlot(final JsonObject jsonObject) {
         final InfusionSlot result = new InfusionSlot(); // NOI18N.
-        result.itemId = jsonObject.getInt("item_id");
+        result.itemId = jsonObject.containsKey("item_id") ? jsonObject.getInt("item_id") : Item.NO_ID;
         final JsonArray jsonFlags = jsonObject.getJsonArray("flags"); // NOI18N.
         result.flags = QueryUtils.jsonStringArrayToList(jsonFlags, InfusionSlot.Flag::find);
         return result;
@@ -169,8 +167,8 @@ public enum ItemFactory {
         //
         result.infusionUpgradeFlags = Collections.unmodifiableList(new ArrayList<>());
         // Amélioration infixe.
-        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
-        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
+        result.infixUpgrade = jsonObject.containsKey("infix_upgrade") ? createInfixUpgrade(jsonObject.getJsonObject("infix_upgrade")) : null; // NOI18N.
+        //
         result.suffix = jsonObject.getString("suffix"); // NOI18N.
         return result;
     }
@@ -191,8 +189,7 @@ public enum ItemFactory {
         final JsonArray jsonInfusionsSlots = jsonObject.getJsonArray("infusion_slots"); // NOI18N.
         result.infusionSlots = QueryUtils.jsonObjectArrayToList(jsonInfusionsSlots, ItemFactory::createInfusionSlot);
         // Amélioration infixe.
-        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
-        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
+        result.infixUpgrade = jsonObject.containsKey("infix_upgrade") ? createInfixUpgrade(jsonObject.getJsonObject("infix_upgrade")) : null; // NOI18N.
         //
         result.suffixItemId = jsonObject.getInt("suffix_item_id"); // NOI18N.
         result.secondarySuffixItemId = jsonObject.getString("secondary_suffix_item_id"); // NOI18N.
