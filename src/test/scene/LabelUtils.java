@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javafx.css.PseudoClass;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
@@ -36,7 +37,7 @@ public enum LabelUtils {
             goldText.pseudoClassStateChanged(GOLD_PSEUDO_CLASS, true);
             result.add(goldText);
             result.add(new Text(" "));
-            result.add(goldCoin);
+            result.add(new Group(goldCoin));
             result.add(new Text(" "));
         }
         if (silver > 0 || gold > 0) {
@@ -48,7 +49,7 @@ public enum LabelUtils {
             silverText.pseudoClassStateChanged(SILVER_PSEUDO_CLASS, true);
             result.add(silverText);
             result.add(new Text(" "));
-            result.add(silverCoin);
+            result.add(new Group(silverCoin));
             result.add(new Text(" "));
         }
         final Region copperCoin = new Region();
@@ -59,7 +60,7 @@ public enum LabelUtils {
         copperText.pseudoClassStateChanged(COPPER_PSEUDO_CLASS, true);
         result.add(copperText);
         result.add(new Text(" "));
-        result.add(copperCoin);
+        result.add(new Group(copperCoin));
         // Test.
         result.add(new Text(" (" + value + ")"));
         //

@@ -26,6 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import test.data.account.Account;
 import test.data.item.Item;
 import test.data.sale.Sale;
@@ -47,7 +48,7 @@ public final class SalesListingController implements Initializable {
     @FXML
     private TextField applicationKeyField;
     @FXML
-    private ListView<Sale> salesList;
+    private ListView<Pair<Sale, Item>> salesList;
 
     private final Properties settings = new Properties();
 
@@ -223,13 +224,18 @@ public final class SalesListingController implements Initializable {
             updateService.setPeriod(updateWaitTime);
             updateService.setOnSucceeded(workerStateEvent -> {
                 final QueryResult result = (QueryResult) workerStateEvent.getSource().getValue();
-                final Optional<Sale> oldSelectionOptional = Optional.ofNullable(salesList.getSelectionModel().getSelectedItem());
-                salesList.getItems().setAll(result.sales);
+                final Optional<Pair<Sale, Item>> oldSelectionOptional = Optional.ofNullable(salesList.getSelectionModel().getSelectedItem());
+                final List<Pair<Sale, Item>> sales = result.sales.stream().map(sale -> {
+                    final int itemId = sale.getItemId();
+                    final Item item = result.items.get(itemId);
+                    return new Pair<>(sale, item);
+                }).collect(Collectors.toList());
+                salesList.getItems().setAll(sales);
                 // On restaure la sélection si possible.
                 oldSelectionOptional.ifPresent(oldSelection -> {
-                    final Optional<Sale> newSelectionOptional = result.sales
+                    final Optional<Pair<Sale, Item>> newSelectionOptional = sales
                             .stream()
-                            .filter(sale -> sale.getId() == oldSelection.getId())
+                            .filter(value -> value.getKey().getId() == oldSelection.getKey().getId())
                             .findFirst();
                     newSelectionOptional.ifPresent(newSelection -> salesList.getSelectionModel().select(newSelection));
                 });

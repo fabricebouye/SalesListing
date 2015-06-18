@@ -7,13 +7,15 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
+import javafx.util.Pair;
+import test.data.item.Item;
 import test.data.sale.Sale;
 
 /**
- * Cellule pour afficher une vente.
+ * Cellule pour afficher une vente (une paire (vente, objet)).
  * @author Fabrice Bouyé
  */
-public final class SaleListCell extends ListCell<Sale> {    
+public final class SaleListCell extends ListCell<Pair<Sale, Item>> {    
     private Node renderer;
     private SaleRendererController controller;
 
@@ -30,13 +32,14 @@ public final class SaleListCell extends ListCell<Sale> {
     }
 
     @Override
-    protected void updateItem(final Sale item, final boolean empty) {
-        super.updateItem(item, empty);
+    protected void updateItem(final Pair<Sale, Item> value, final boolean empty) {
+        super.updateItem(value, empty);
         setText(null);
         Node graphic = null;
-        if (!empty && item != null) {
+        if (!empty && value != null) {
             graphic = renderer;
-            controller.setSale(item);
+            controller.setSale(value.getKey());
+            controller.setItem(value.getValue());
         }
         setGraphic(graphic);
     }

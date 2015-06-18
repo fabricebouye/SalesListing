@@ -8,10 +8,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane id="rootPane" fx:id="rootPane" styleClass="sale-info" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.scene.renderer.SaleRendererController">
+<GridPane id="rootPane" fx:id="rootPane" minWidth="150.0" styleClass="sale-info" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.scene.renderer.SaleRendererController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="ALWAYS"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="75.0" />
+        <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="NEVER" />
@@ -24,11 +25,16 @@
             <ImageView id="icon" fx:id="icon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
          </children>
       </StackPane>
-      <TextFlow fx:id="nameFlow" maxHeight="-Infinity" GridPane.columnIndex="1">
+      <TextFlow id="nameFlow" fx:id="nameFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.valignment="TOP">
          <children>
-            <Text fx:id="nameLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text id="nameLabel" fx:id="nameLabel" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="item-name-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
          </children>
       </TextFlow>
-      <TextFlow fx:id="priceFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextFlow id="purchasedFlow" fx:id="purchasedFlow" maxHeight="-Infinity" GridPane.columnIndex="2" GridPane.valignment="TOP">
+         <children>
+            <Text id="purchasedLabel" fx:id="purchasedLabel" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="date-label" text="Lorem ipsum" />
+         </children>
+      </TextFlow>
+      <TextFlow id="priceFlow" fx:id="priceFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
    </children>
 </GridPane>

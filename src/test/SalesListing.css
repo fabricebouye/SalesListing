@@ -70,25 +70,65 @@
     -fx-text-fill: black;
 }
 .cell {
+    -fx-background-color: null;
+    -fx-border-color: transparent;
+    -fx-border-width: 0px 0px 0px 5px;
     -fx-font-size: 1.4em;        
+    -fx-padding: 0px;
+}
+.cell:hover {
+    -fx-border-color: lightgray;
+}
+.cell:selected {
+    -fx-background-color: null;
+    -fx-border-color: -fx-focus-color;
 }
 .sale-info {
+    -fx-padding: 3px 10px 3px 10px;
     -fx-hgap: 10px;
-    -fx-vgap: 10px;
+    -fx-vgap: 5px;
+}
+.item-name-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.6em;
+}
+.item-name-label:junk {
+    -fx-fill: gray;
+}
+.item-name-label:basic {
+    -fx-fill: skyblue;
+}
+.item-name-label:fine {
+    -fx-fill: derive(skyblue, -20%);
+}
+.item-name-label:masterwork {
+    -fx-fill: derive(green, 30%);
+}
+.item-name-label:rare {
+    -fx-fill: yellow;
+}
+.item-name-label:exotic {
+    -fx-fill: orange;
+}
+.item-name-label:ascended {
+    -fx-fill: derive(deeppink, 40%);
+}
+.item-name-label:legendary {
+    -fx-fill: purple;
+}
+.date-label {
+    -fx-fill: lightgray;
+    -fx-font-size: 1.0em;
 }
 .coin-label {    
     -fx-fill: -coin-color;
+    -fx-font-weight: bolder;
 }
 .coin {
     -fx-background-color: derive(-coin-color, -20%), derive(-coin-color, 50%), -coin-color;
     -fx-background-radius: 7, 6, 5;
     -fx-background-insets: 0, 1, 2;
-    -fx-min-width: 12px;
-    -fx-min-height: 12px;
-    -fx-pref-width: 12px;
-    -fx-pref-height: 12px;
-    -fx-max-width: 12px;
-    -fx-max-height: 12px;
+    -fx-padding: 6px;
 }
 .coin-label:gold,
 .coin:gold {    

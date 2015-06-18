@@ -9,7 +9,7 @@
     "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
     "flags": ["AccountBound", "HideSuffix", "NoSalvage", "NoSell", "NotUpgradeable", "AccountBindOnUse", "Unique"],
     "restrictions": [],
-    "id": 37045,
+    "id": 732,
     "icon": "https://render.guildwars2.com/file/97F9726E527DD5D24F434AD679F15C3CDAF238EA/511808.png",
     "details": {
         "infusion_slots": [{
