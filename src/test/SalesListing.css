@@ -103,7 +103,7 @@
     -fx-fill: gray;
 }
 .item-name-label:basic {
-    -fx-fill: skyblue;
+    -fx-fill: black;
 }
 .item-name-label:fine {
     -fx-fill: cornflowerblue;
