@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import test.data.account.Account;
 import test.data.item.Item;
-import test.data.item.UpgradeComponentDetail;
+import test.data.item.UpgradeComponentDetails;
 import test.data.sale.Sale;
 import test.data.tokeninfo.TokenInfo;
 
@@ -157,9 +157,9 @@ public class DemoSupportTest {
         assertEquals(true, item.getFlags().isEmpty());
         assertEquals(true, item.getRestrictions().isEmpty());
         assertEquals("https://render.guildwars2.com/file/BAF34EB051D118F8A7C1645E0D940ED0660E6269/220658.png", item.getIcon());
-        assertEquals(true, item.getDetails() instanceof UpgradeComponentDetail);
-        final UpgradeComponentDetail detail = (UpgradeComponentDetail) item.getDetails();
-        assertEquals(UpgradeComponentDetail.Type.SIGIL, detail.getType());
+        assertEquals(true, item.getDetails() instanceof UpgradeComponentDetails);
+        final UpgradeComponentDetails detail = (UpgradeComponentDetails) item.getDetails();
+        assertEquals(UpgradeComponentDetails.Type.SIGIL, detail.getType());
         assertEquals("d'agonie", detail.getSuffix());
     }
 }

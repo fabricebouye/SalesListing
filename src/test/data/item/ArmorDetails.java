@@ -6,7 +6,7 @@ import java.util.List;
  * Implémente les détails d'une pièce armure.
  * @author Fabrice Bouyé
  */
-public final class ArmorDetail extends Detail {
+public final class ArmorDetails extends Details {
 
     /**
      * Liste des pièces d'armure.
@@ -107,7 +107,7 @@ public final class ArmorDetail extends Detail {
     /**
      * Crée une nouvelle instance vide.
      */
-    ArmorDetail() {
+    ArmorDetails() {
         super(Item.Type.ARMOR);
     }
 }

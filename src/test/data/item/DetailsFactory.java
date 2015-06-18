@@ -7,12 +7,12 @@ import javax.json.JsonObject;
  * @author Fabrice Bouyé
  */
 @FunctionalInterface
-interface DetailFactory {
+interface DetailsFactory {
 
     /**
      * Crée une instance de la classe {@code Detail}.
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code Detail}, jamais {@code null}.
      */
-    Detail createDetail(final JsonObject jsonObject);
+    Details createDetails(final JsonObject jsonObject);
 }

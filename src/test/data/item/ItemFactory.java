@@ -43,10 +43,10 @@ public enum ItemFactory {
         final JsonArray jsonRestrictions = jsonObject.getJsonArray("restrictions"); // NOI18N.
         result.restrictions = QueryUtils.jsonStringArrayToList(jsonRestrictions, Item.Restriction::find);
         // Détails (optionnel).
-        final Optional<DetailFactory> detailFactoryOptional = Optional.ofNullable(getDetailFactory(result.type));
+        final Optional<DetailsFactory> detailFactoryOptional = Optional.ofNullable(getDetailFactory(result.type));
         detailFactoryOptional.ifPresent(detailFactory -> {
             final JsonObject jsonDetail = jsonObject.getJsonObject("details"); // NOI18N.
-            result.details = detailFactory.createDetail(jsonDetail);
+            result.details = detailFactory.createDetails(jsonDetail);
         });
         return result;
     }
@@ -56,8 +56,8 @@ public enum ItemFactory {
      * @param itemType Le type d'objet.
      * @return Une instance de {@code DetailFactory}, peut être {@code null} s'il n'y a pas de fabrique pour ce type d'objet.
      */
-    private static DetailFactory getDetailFactory(final Item.Type itemType) {
-        DetailFactory result = null;
+    private static DetailsFactory getDetailFactory(final Item.Type itemType) {
+        DetailsFactory result = null;
         if (itemType != null) {
             switch (itemType) {
                 case ARMOR:
@@ -92,10 +92,10 @@ public enum ItemFactory {
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code ArmorDetail}, jamais {@code null}.
      */
-    private static ArmorDetail createArmorDetail(final JsonObject jsonObject) {
-        final ArmorDetail result = new ArmorDetail();
-        result.type = ArmorDetail.Type.find(jsonObject.getString("type")); // NOI18N.
-        result.weightClass = ArmorDetail.WeightClass.find(jsonObject.getString("weight-class")); // NOI18N.
+    private static ArmorDetails createArmorDetail(final JsonObject jsonObject) {
+        final ArmorDetails result = new ArmorDetails();
+        result.type = ArmorDetails.Type.find(jsonObject.getString("type")); // NOI18N.
+        result.weightClass = ArmorDetails.WeightClass.find(jsonObject.getString("weight-class")); // NOI18N.
         result.defense = jsonObject.getInt("defense"); // NOI18N.
         // Infusions.
         final JsonArray jsonInfusions = jsonObject.getJsonArray("infusions"); // NOI18N.
@@ -130,7 +130,7 @@ public enum ItemFactory {
     private static InfixUpgrade createInfixUpgrade(final JsonObject jsonObject) {
         final InfixUpgrade result = new InfixUpgrade(); // NOI18N.
         // Attributs.
-        final JsonArray jsonFlags = jsonObject.getJsonArray("attribute"); // NOI18N.
+        final JsonArray jsonFlags = jsonObject.getJsonArray("attributes"); // NOI18N.
         result.attributes = QueryUtils.jsonArrayArrayToList(jsonFlags, array -> {
             final String attributeStr = array.getString(0);
             final InfixUpgrade.Attribute attribute = InfixUpgrade.Attribute.find(attributeStr);
@@ -138,8 +138,7 @@ public enum ItemFactory {
             return new Pair<>(attribute, attributeValue);
         });
         // Buff.
-        final JsonObject jsonBuff = jsonObject.getJsonObject("buff"); // NOI18N.
-        result.buff = createBuff(jsonBuff);
+        result.buff = jsonObject.containsKey("buff") ? createBuff(jsonObject.getJsonObject("buff")) : null; // NOI18N.
         return result;
     }
 
@@ -150,7 +149,7 @@ public enum ItemFactory {
      */
     private static Buff createBuff(final JsonObject jsonObject) {
         final Buff result = new Buff();
-        result.skillId = jsonObject.getString("skill_id"); // NOI18N.
+        result.skillId = jsonObject.getInt("skill_id"); // NOI18N.
         result.description = jsonObject.getString("description"); // NOI18N.
         return result;
     }
@@ -160,16 +159,16 @@ public enum ItemFactory {
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code UpgradeComponentDetail}, jamais {@code null}.
      */
-    private static UpgradeComponentDetail createUpgradeComponentDetail(final JsonObject jsonObject) {
-        final UpgradeComponentDetail result = new UpgradeComponentDetail();
-        result.type = UpgradeComponentDetail.Type.find(jsonObject.getString("type")); // NOI18N.
+    private static UpgradeComponentDetails createUpgradeComponentDetail(final JsonObject jsonObject) {
+        final UpgradeComponentDetails result = new UpgradeComponentDetails();
+        result.type = UpgradeComponentDetails.Type.find(jsonObject.getString("type")); // NOI18N.
         final JsonArray flags = jsonObject.getJsonArray("flags"); // NOI18N.
-        result.flags = QueryUtils.jsonStringArrayToList(flags, UpgradeComponentDetail.Flag::find);
+        result.flags = QueryUtils.jsonStringArrayToList(flags, UpgradeComponentDetails.Flag::find);
         //
         result.infusionUpgradeFlags = Collections.unmodifiableList(new ArrayList<>());
         // Amélioration infixe.
-//        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
-//        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
+        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
+        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
         result.suffix = jsonObject.getString("suffix"); // NOI18N.
         return result;
     }

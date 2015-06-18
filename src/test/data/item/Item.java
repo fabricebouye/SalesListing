@@ -250,7 +250,7 @@ public final class Item {
     /**
      * Détails de l'objet.
      */
-    Detail details;
+    Details details;
 
     /**
      * Crée une nouvelle instance vide.
@@ -306,7 +306,7 @@ public final class Item {
         return icon;
     }
 
-    public Detail getDetails() {
+    public Details getDetails() {
         return details;
     }
 }

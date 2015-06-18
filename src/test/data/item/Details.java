@@ -4,7 +4,7 @@ package test.data.item;
  * Type de base pour le conteneur de détails des objets.
  * @author Fabrice Bouyé
  */
-public abstract class Detail {
+public abstract class Details {
 
     /**
      * Le type de détails.
@@ -15,7 +15,7 @@ public abstract class Detail {
      * Crée une nouvelle instance.
      * @param itemType Le type de détails.
      */
-    public Detail(final Item.Type itemType) {
+    Details(final Item.Type itemType) {
         this.itemType = itemType;
     }
 

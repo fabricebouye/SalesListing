@@ -6,7 +6,7 @@ import java.util.List;
  * Implémente les détails d'une amélioration (rune, cachet, etc.).
  * @author Fabrice Bouyé
  */
-public final class UpgradeComponentDetail extends Detail {
+public final class UpgradeComponentDetails extends Details {
 
     /**
      * Listes des types d'améliorations.
@@ -104,7 +104,7 @@ public final class UpgradeComponentDetail extends Detail {
     /**
      * Crée une nouvelle instance vide.
      */
-    UpgradeComponentDetail() {
+    UpgradeComponentDetails() {
         super(Item.Type.UPGRADE_COMPONENT);
     }
 
