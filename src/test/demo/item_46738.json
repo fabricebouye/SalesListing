@@ -1,0 +1,13 @@
+{
+    "name": "Lingot d'acier de Deldrimor",
+    "description": "Raffiné à partir de minerai de fer, d'acier, d'acier sombre et de mithrillium.",
+    "type": "CraftingMaterial",
+    "level": 0,
+    "rarity": "Ascended",
+    "vendor_value": 80,
+    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
+    "flags": [],
+    "restrictions": [],
+    "id": 46738,
+    "icon": "https://render.guildwars2.com/file/94DCAE59215C0096449906A81F202B0201FBA85B/631486.png"
+}

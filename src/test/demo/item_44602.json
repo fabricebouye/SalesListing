@@ -1,0 +1,17 @@
+{
+    "name": "Recyclomatique alimenté au cuivre",
+    "description": "Double-cliquez pour convertir en matériaux d'artisanat un objet de votre inventaire. 10% de chance d'avoir des matériaux plus rares. 20% de chance de récupérer des améliorations. Nécessite 3 pièces de cuivre par utilisation.",
+    "type": "Tool",
+    "level": 0,
+    "rarity": "Basic",
+    "vendor_value": 0,
+    "game_types": ["Activity", "Dungeon", "Pve", "Pvp", "PvpLobby", "Wvw"],
+    "flags": ["AccountBound", "NoMysticForge", "NoSalvage", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 44602,
+    "icon": "https://render.guildwars2.com/file/CC2004000FFDFCEF346AAE296FD0E858C0990548/619581.png",
+    "details": {
+        "type": "Salvage",
+        "charges": 1
+    }
+}

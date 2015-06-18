@@ -1,0 +1,17 @@
+{
+    "name": "Pioche de mineur de l'Alliance de la Fusion",
+    "description": "Permet d'extraire tout type de minerai. Usage illimité.",
+    "type": "Gathering",
+    "level": 0,
+    "rarity": "Rare",
+    "vendor_value": 192,
+    "default_skin": 2399,
+    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
+    "flags": ["AccountBound", "NoSalvage", "NoSell", "SoulBindOnUse"],
+    "restrictions": [],
+    "id": 41807,
+    "icon": "https://render.guildwars2.com/file/ACF90CA6BCD9CEEFD4D0DCEF2AA87C97B50BDC56/561815.png",
+    "details": {
+        "type": "Mining"
+    }
+}

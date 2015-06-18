@@ -1,0 +1,20 @@
+{
+    "name": "Lames dorsales trempées dynamiques",
+    "description": "<c=@flavor>Nous avons affronté Scarlet devant nos portes, et ce jour-là, nous l'avons combattue.\n\nNe peut pas être utilisé à la Forge mystique s'il est transmuté.",
+    "type": "Back",
+    "level": 80,
+    "rarity": "Ascended",
+    "vendor_value": 0,
+    "default_skin": 2334,
+    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
+    "flags": ["AccountBound", "NoSalvage", "NoSell", "NotUpgradeable", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 50051,
+    "icon": "https://render.guildwars2.com/file/CADED6EF33A971BFD2403706361F9F4BABC8DC0A/740251.png",
+    "details": {
+        "infusion_slots": [{
+                "flags": ["Offense"]
+            }],
+        "secondary_suffix_item_id": ""
+    }
+}

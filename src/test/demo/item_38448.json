@@ -1,0 +1,13 @@
+{
+    "name": "Chaussette en laine hideuse",
+    "description": "Les chaussettes en laine hideuses peuvent s'échanger contre d'autres récompenses auprès d'un des émissaires spécialisés en échange de cadeaux.",
+    "type": "Trophy",
+    "level": 0,
+    "rarity": "Basic",
+    "vendor_value": 3,
+    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
+    "flags": ["NoSell"],
+    "restrictions": [],
+    "id": 38448,
+    "icon": "https://render.guildwars2.com/file/A314E6A94A6AF4A8EB245F4E5C9DD6CEF62F5958/526314.png"
+}

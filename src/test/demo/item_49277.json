@@ -1,0 +1,16 @@
+{
+    "name": "Tonique de fractale inépuisable",
+    "description": "Ça sent un peu la cire à bois. Utilisez cet objet pour vous transformer en... quelque chose. Vous ne le saurez pas avant d'avoir essayé.",
+    "type": "Gizmo",
+    "level": 0,
+    "rarity": "Exotic",
+    "vendor_value": 0,
+    "game_types": ["Dungeon", "Pve", "PvpLobby", "Wvw"],
+    "flags": ["AccountBound", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 49277,
+    "icon": "https://render.guildwars2.com/file/AE4C703E2B78E5777123132C47B3F0E311ACD35E/681018.png",
+    "details": {
+        "type": "Default"
+    }
+}

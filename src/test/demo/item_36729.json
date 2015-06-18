@@ -1,0 +1,17 @@
+{
+    "name": "Boîte en carapace de karka ancestral",
+    "description": "20 emplacements",
+    "type": "Bag",
+    "level": 0,
+    "rarity": "Exotic",
+    "vendor_value": 256,
+    "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
+    "flags": ["AccountBound", "NoMysticForge", "NoSalvage", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 36729,
+    "icon": "https://render.guildwars2.com/file/CFFC295D57E0423CA5360AD4E669D2DAFCD9E580/511766.png",
+    "details": {
+        "no_sell_or_sort": false,
+        "size": 20
+    }
+}
