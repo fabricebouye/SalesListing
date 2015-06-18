@@ -65,7 +65,7 @@ public final class Item {
         MASTERWORK("Masterwork"), // NOI18N.
         RARE("Rare"), // NOI18N.
         EXOTIC("Exotic"), // NOI18N.
-        ASCENDED("Ascendede"), // NOI18N.
+        ASCENDED("Ascended"), // NOI18N.
         LEGENDARY("Legendary"), // NOI18N.
         UNKNOWN(null);
 
