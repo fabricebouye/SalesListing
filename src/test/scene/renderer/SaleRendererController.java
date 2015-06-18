@@ -1,16 +1,25 @@
 package test.scene.renderer;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import test.data.item.Item;
@@ -22,6 +31,9 @@ import test.scene.LabelUtils;
  * @author Fabrice Bouyé
  */
 public final class SaleRendererController implements Initializable {
+
+    @FXML
+    private GridPane rootPane;
     @FXML
     private Text nameLabel;
     @FXML
@@ -46,7 +58,10 @@ public final class SaleRendererController implements Initializable {
         updateContent(getSale(), getItem());
     };
 
+    private Tooltip tooltip;
+
     private void updateContent(final Sale sale, final Item item) {
+        Tooltip.uninstall(rootPane, tooltip);
         nameLabel.setText(null);
         for (final Item.Rarity rarity : Item.Rarity.values()) {
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(rarity);
@@ -63,9 +78,28 @@ public final class SaleRendererController implements Initializable {
             purchasedLabel.setText(purchased);
             final int price = sale.getPrice();
             priceFlow.getChildren().setAll(LabelUtils.labelsForCoins(price));
+            tooltip = tooltipForItem(item);
+            Tooltip.install(rootPane, tooltip);
         }
     }
-    
+
+    private Tooltip tooltipForItem(final Item item) {
+        final Tooltip result = new Tooltip();
+        try {
+            result.setText(item.getName());
+            final URL fxmlURL = getClass().getResource("ItemRenderer.fxml"); // NOI18N.
+            final FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+            final Node node = fxmlLoader.load();
+            final ItemRendererController controller = fxmlLoader.getController();
+            controller.setItem(item);
+            result.setGraphic(new Group(node));
+            result.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        } catch (IOException ex) {
+            Logger.getLogger(SaleRendererController.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return result;
+    }
+
     private PseudoClass findPseudoClassForRarity(final Item.Rarity rarity) {
         return PseudoClass.getPseudoClass(rarity.name().toLowerCase());
     }

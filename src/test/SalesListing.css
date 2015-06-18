@@ -83,14 +83,21 @@
     -fx-background-color: null;
     -fx-border-color: -fx-focus-color;
 }
-.sale-info {
+.sale-info,
+.item-info {
     -fx-padding: 3px 10px 3px 10px;
     -fx-hgap: 10px;
     -fx-vgap: 5px;
 }
-.item-name-label {
-    -fx-font-weight: bold;
+.item-info {
+    -fx-font-size: 1.0em;
+    -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
+}
+.sale-info > .item-name-label {
     -fx-font-size: 1.6em;
+}
+.item-name-label {
+    -fx-font-weight: bold;    
 }
 .item-name-label:junk {
     -fx-fill: gray;
@@ -115,6 +122,15 @@
 }
 .item-name-label:legendary {
     -fx-fill: purple;
+}
+.item-buff-label {
+    -fx-fill: skyblue;
+}
+.item-description-label {
+    -fx-fill: white;
+}
+.item-level-label {
+    -fx-fill: white;
 }
 .date-label {
     -fx-fill: lightgray;

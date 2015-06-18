@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane id="rootPane" fx:id="rootPane" minWidth="150.0" styleClass="sale-info" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.scene.renderer.SaleRendererController">
+<GridPane id="rootPane" fx:id="rootPane" minWidth="150.0" maxHeight="-Infinity"  styleClass="sale-info" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.scene.renderer.SaleRendererController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="ALWAYS" minWidth="75.0" />
@@ -17,24 +17,23 @@
     <rowConstraints>
         <RowConstraints vgrow="NEVER" />
         <RowConstraints vgrow="NEVER" />
-        <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
-   <children>
-      <StackPane id="iconBox" fx:id="iconBox" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="icon-box" GridPane.rowSpan="2" GridPane.valignment="TOP">
-         <children>
-            <ImageView id="icon" fx:id="icon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
-         </children>
-      </StackPane>
-      <TextFlow id="nameFlow" fx:id="nameFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.valignment="TOP">
-         <children>
-            <Text id="nameLabel" fx:id="nameLabel" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="item-name-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
-         </children>
-      </TextFlow>
-      <TextFlow id="purchasedFlow" fx:id="purchasedFlow" maxHeight="-Infinity" GridPane.columnIndex="2" GridPane.valignment="TOP">
-         <children>
-            <Text id="purchasedLabel" fx:id="purchasedLabel" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="date-label" text="Lorem ipsum" />
-         </children>
-      </TextFlow>
-      <TextFlow id="priceFlow" fx:id="priceFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-   </children>
+    <children>
+        <StackPane id="iconBox" fx:id="iconBox" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="icon-box" GridPane.rowSpan="2" GridPane.valignment="TOP">
+            <children>
+                <ImageView id="icon" fx:id="icon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
+            </children>
+        </StackPane>
+        <TextFlow id="nameFlow" fx:id="nameFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.valignment="TOP">
+            <children>
+                <Text id="nameLabel" fx:id="nameLabel" styleClass="item-name-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
+            </children>
+        </TextFlow>
+        <TextFlow id="purchasedFlow" fx:id="purchasedFlow" maxHeight="-Infinity" GridPane.columnIndex="2" GridPane.valignment="TOP">
+            <children>
+                <Text id="purchasedLabel" fx:id="purchasedLabel" styleClass="date-label" text="Lorem ipsum" />
+            </children>
+        </TextFlow>
+        <TextFlow id="priceFlow" fx:id="priceFlow" maxHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+    </children>
 </GridPane>
