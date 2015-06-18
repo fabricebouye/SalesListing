@@ -26,11 +26,16 @@
                 <ImageView id="icon" fx:id="icon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
             </children>
         </StackPane>
-        <TextFlow id="nameFlow" fx:id="nameFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.valignment="TOP">
+        <VBox id="headerVBox" fx:id="headerVBox" alignment="CENTER_LEFT" GridPane.columnIndex="1">
             <children>
-                <Text id="nameLabel" fx:id="nameLabel" styleClass="item-name-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
+                <TextFlow id="nameFlow" fx:id="nameFlow" textAlignment="JUSTIFY">
+                    <children>
+                        <Text id="nameLabel" fx:id="nameLabel" styleClass="item-name-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
+                    </children>
+                </TextFlow>
+                <TextFlow id="statsFlow" fx:id="statsFlow" textAlignment="JUSTIFY" />
             </children>
-        </TextFlow>
+        </VBox>        
         <TextFlow id="buffFlow" fx:id="buffFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
             <children>
                 <Text id="buffLabel" fx:id="buffLabel" styleClass="item-buff-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />

@@ -126,9 +126,8 @@
 .item-buff-label {
     -fx-fill: skyblue;
 }
-.item-description-label {
-    -fx-fill: white;
-}
+.item-stats-label,
+.item-description-label,
 .item-level-label {
     -fx-fill: white;
 }

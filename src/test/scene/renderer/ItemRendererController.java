@@ -16,6 +16,7 @@ import test.data.item.Details;
 import test.data.item.InfixUpgrade;
 import test.data.item.Item;
 import test.data.item.UpgradeComponentDetails;
+import test.data.item.WeaponDetails;
 import test.scene.LabelUtils;
 
 /**
@@ -26,6 +27,8 @@ public final class ItemRendererController implements Initializable {
 
     @FXML
     private Text nameLabel;
+    @FXML
+    private TextFlow statsFlow;
     @FXML
     private Text buffLabel;
     @FXML
@@ -58,6 +61,7 @@ public final class ItemRendererController implements Initializable {
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(rarity);
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, false);
         }
+        statsFlow.getChildren().clear();
         buffLabel.setText(null);
         descriptionLabel.setText(null);
         levelLabel.setText(null);
@@ -78,6 +82,12 @@ public final class ItemRendererController implements Initializable {
                 final InfixUpgrade infixUpgrade = upgradeComponentDetails.getInfixUpgrade();
                 final Buff buff = infixUpgrade.getBuff();
                 buffLabel.setText(buff.getDescription());
+            } else if (details instanceof WeaponDetails) {
+                final WeaponDetails weaponDetails = (WeaponDetails) details;
+                final String stats = String.format("Puissance %d - %d", weaponDetails.getMinPower(), weaponDetails.getMaxPower());
+                final Text statsLabel = new Text(stats);
+                statsLabel.getStyleClass().add("item-stats-label");
+                statsFlow.getChildren().add(statsLabel);
             }
         }
     }
