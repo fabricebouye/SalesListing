@@ -44,7 +44,7 @@ public final class UpgradeComponentDetails extends Details {
      */
     public enum Flag {
 
-        AXIE("Axe"), // NOI18N.
+        AXE("Axe"), // NOI18N.
         LONG_BOW("LongBow"), // NOI18N.
         DAGGER("Dagger"), // NOI18N.
         FOCUS("Focus"), // NOI18N.
