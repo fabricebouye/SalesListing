@@ -7,7 +7,7 @@
     "game_types": ["Dungeon", "Pve", "Wvw"],
     "flags": ["NoSell"],
     "restrictions": [],
-    "id": 23,
+    "id": 12452,
     "icon": "https://render.guildwars2.com/file/6BD5B65FBC6ED450219EC86DD570E59F4DA3791F/433643.png",
     "details": {
         "type": "Food",

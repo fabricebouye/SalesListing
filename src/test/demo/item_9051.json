@@ -1,0 +1,16 @@
+{
+    "name": "Boîte de pièces d'armure de gladiateur maraudeuse",
+    "description": "Double-cliquez pour déballer un ensemble d'armure de niveau 80.",
+    "type": "Container",
+    "level": 0,
+    "rarity": "Rare",
+    "vendor_value": 192,
+    "game_types": ["Dungeon", "Pve", "Wvw"],
+    "flags": [],
+    "restrictions": [],
+    "id": 9051,
+    "icon": "https://render.guildwars2.com/file/70CA307D3B2B740C71D19CDB20030C51EBE8F6E8/63222.png",
+    "details": {
+        "type": "Default"
+    }
+}

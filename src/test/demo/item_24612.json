@@ -9,7 +9,7 @@
     "game_types": ["Activity", "Dungeon", "Pve", "Wvw"],
     "flags": ["SoulBindOnUse"],
     "restrictions": [],
-    "id": 102,
+    "id": 24612,
     "icon": "https://render.guildwars2.com/file/C6110F52DF5AFE0F00A56F9E143E9732176DDDE9/65015.png",
     "details": {
         "type": "LongBow",
