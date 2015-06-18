@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -61,6 +62,7 @@ public final class ItemRendererController implements Initializable {
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(rarity);
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, false);
         }
+        icon.setImage(null);
         statsFlow.getChildren().clear();
         buffLabel.setText(null);
         descriptionLabel.setText(null);
@@ -68,9 +70,10 @@ public final class ItemRendererController implements Initializable {
         priceFlow.getChildren().clear();
         if (item != null) {
             final String name = item.getName();
-            nameLabel.setText(name);
+            nameLabel.setText(name);            
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
+            icon.setImage(new Image(item.getIcon(), true));
             descriptionLabel.setText(item.getDescription());
             levelLabel.setVisible(item.getLevel() > 0);
             levelLabel.setText(String.format("Niveau requis : %d", item.getLevel()));
@@ -84,7 +87,7 @@ public final class ItemRendererController implements Initializable {
                 buffLabel.setText(buff.getDescription());
             } else if (details instanceof WeaponDetails) {
                 final WeaponDetails weaponDetails = (WeaponDetails) details;
-                final String stats = String.format("Puissance %d - %d", weaponDetails.getMinPower(), weaponDetails.getMaxPower());
+                final String stats = String.format("Puissance d'arme : %d - %d", weaponDetails.getMinPower(), weaponDetails.getMaxPower());
                 final Text statsLabel = new Text(stats);
                 statsLabel.getStyleClass().add("item-stats-label");
                 statsFlow.getChildren().add(statsLabel);

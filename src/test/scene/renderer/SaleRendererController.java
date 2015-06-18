@@ -18,6 +18,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -67,17 +68,19 @@ public final class SaleRendererController implements Initializable {
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(rarity);
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, false);
         }
+        icon.setImage(null);
         purchasedLabel.setText(null);
         priceFlow.getChildren().clear();
         if (sale != null && item != null) {
             final String name = item.getName();
             nameLabel.setText(name);
-            final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());
+            final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());            
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
+            icon.setImage(new Image(item.getIcon(), true));
             final String purchased = sale.getPurchased().format(DATE_FORMATTER);
             purchasedLabel.setText(purchased);
             final int price = sale.getPrice();
-            priceFlow.getChildren().setAll(LabelUtils.labelsForCoins(price));
+            priceFlow.getChildren().setAll(LabelUtils.labelsForCoins(price, true));
             tooltip = tooltipForItem(item);
             Tooltip.install(rootPane, tooltip);
         }
