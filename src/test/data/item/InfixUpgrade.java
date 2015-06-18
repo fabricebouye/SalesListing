@@ -50,6 +50,14 @@ public final class InfixUpgrade {
     /**
      * Crée une nouvelle instance vide.
      */
-    public InfixUpgrade() {
+    InfixUpgrade() {
+    }
+
+    public List<Pair<Attribute, Integer>> getAttributes() {
+        return attributes;
+    }
+
+    public Buff getBuff() {
+        return buff;
     }
 }

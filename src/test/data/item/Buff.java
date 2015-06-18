@@ -6,7 +6,7 @@ package test.data.item;
  */
 public final class Buff {
 
-    String skillId;
+    int skillId;
     String description;
 
     /**
@@ -14,4 +14,12 @@ public final class Buff {
      */
     Buff() {
     }
+
+    public int getSkillId() {
+        return skillId;
+    }
+
+    public String getDescription() {
+        return description;
+    }       
 }

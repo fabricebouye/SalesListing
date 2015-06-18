@@ -44,4 +44,12 @@ public final class InfusionSlot {
      */
     InfusionSlot() {
     }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public List<Flag> getFlags() {
+        return flags;
+    }
 }
