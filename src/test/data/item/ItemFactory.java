@@ -61,7 +61,7 @@ public enum ItemFactory {
         if (itemType != null) {
             switch (itemType) {
                 case ARMOR:
-                    result = ItemFactory::createArmorDetail;
+                    result = ItemFactory::createArmorDetails;
                     break;
                 case BACK:
                 case BAG:
@@ -77,9 +77,11 @@ public enum ItemFactory {
                 case TROPHY:
                     break;
                 case UPGRADE_COMPONENT:
-                    result = ItemFactory::createUpgradeComponentDetail;
+                    result = ItemFactory::createUpgradeComponentDetails;
                     break;
                 case WEAPON:
+                    result = ItemFactory::createWeaponDetails;
+                    break;
                 case UNKNOWN:
                 default:
             }
@@ -92,7 +94,7 @@ public enum ItemFactory {
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code ArmorDetail}, jamais {@code null}.
      */
-    private static ArmorDetails createArmorDetail(final JsonObject jsonObject) {
+    private static ArmorDetails createArmorDetails(final JsonObject jsonObject) {
         final ArmorDetails result = new ArmorDetails();
         result.type = ArmorDetails.Type.find(jsonObject.getString("type")); // NOI18N.
         result.weightClass = ArmorDetails.WeightClass.find(jsonObject.getString("weight-class")); // NOI18N.
@@ -131,10 +133,10 @@ public enum ItemFactory {
         final InfixUpgrade result = new InfixUpgrade(); // NOI18N.
         // Attributs.
         final JsonArray jsonFlags = jsonObject.getJsonArray("attributes"); // NOI18N.
-        result.attributes = QueryUtils.jsonArrayArrayToList(jsonFlags, array -> {
-            final String attributeStr = array.getString(0);
+        result.attributes = QueryUtils.jsonObjectArrayToList(jsonFlags, object -> {
+            final String attributeStr = object.getString("attribute"); // NOI18N.
             final InfixUpgrade.Attribute attribute = InfixUpgrade.Attribute.find(attributeStr);
-            final int attributeValue = array.getInt(1);
+            final int attributeValue = object.getInt("modifier"); // NOI18N.
             return new Pair<>(attribute, attributeValue);
         });
         // Buff.
@@ -159,7 +161,7 @@ public enum ItemFactory {
      * @param jsonObject L'objet Json source.
      * @return Une instance de {@code UpgradeComponentDetail}, jamais {@code null}.
      */
-    private static UpgradeComponentDetails createUpgradeComponentDetail(final JsonObject jsonObject) {
+    private static UpgradeComponentDetails createUpgradeComponentDetails(final JsonObject jsonObject) {
         final UpgradeComponentDetails result = new UpgradeComponentDetails();
         result.type = UpgradeComponentDetails.Type.find(jsonObject.getString("type")); // NOI18N.
         final JsonArray flags = jsonObject.getJsonArray("flags"); // NOI18N.
@@ -170,6 +172,30 @@ public enum ItemFactory {
         final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
         result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
         result.suffix = jsonObject.getString("suffix"); // NOI18N.
+        return result;
+    }
+
+    /**
+     * Crée une instance de la classe {@code UpgradeComponentDetail}.
+     * @param jsonObject L'objet Json source.
+     * @return Une instance de {@code UpgradeComponentDetail}, jamais {@code null}.
+     */
+    private static WeaponDetails createWeaponDetails(final JsonObject jsonObject) {
+        final WeaponDetails result = new WeaponDetails();
+        result.type = WeaponDetails.Type.find(jsonObject.getString("type")); // NOI18N.
+        result.damageType = WeaponDetails.DamageType.find(jsonObject.getString("damage_type")); // NOI18N.
+        result.minPower = jsonObject.getInt("min_power"); // NOI18N.
+        result.maxPower = jsonObject.getInt("max_power"); // NOI18N.
+        result.defense = jsonObject.getInt("defense"); // NOI18N.
+        // Infusions.
+        final JsonArray jsonInfusionsSlots = jsonObject.getJsonArray("infusion_slots"); // NOI18N.
+        result.infusionSlots = QueryUtils.jsonObjectArrayToList(jsonInfusionsSlots, ItemFactory::createInfusionSlot);
+        // Amélioration infixe.
+        final JsonObject jsonInfixUpgrade = jsonObject.getJsonObject("infix_upgrade"); // NOI18N.
+        result.infixUpgrade = createInfixUpgrade(jsonInfixUpgrade);
+        //
+        result.suffixItemId = jsonObject.getInt("suffix_item_id"); // NOI18N.
+        result.secondarySuffixItemId = jsonObject.getString("secondary_suffix_item_id"); // NOI18N.
         return result;
     }
 }
