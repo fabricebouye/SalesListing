@@ -106,22 +106,22 @@
     -fx-fill: skyblue;
 }
 .item-name-label:fine {
-    -fx-fill: derive(skyblue, -20%);
+    -fx-fill: cornflowerblue;
 }
 .item-name-label:masterwork {
     -fx-fill: derive(green, 30%);
 }
 .item-name-label:rare {
-    -fx-fill: yellow;
+    -fx-fill: derive(yellow, -20%);
 }
 .item-name-label:exotic {
     -fx-fill: orange;
 }
 .item-name-label:ascended {
-    -fx-fill: derive(deeppink, 40%);
+    -fx-fill: violet;
 }
 .item-name-label:legendary {
-    -fx-fill: purple;
+    -fx-fill: blueviolet;
 }
 .item-buff-label {
     -fx-fill: skyblue;
@@ -147,7 +147,7 @@
 }
 .coin-label:gold,
 .coin:gold {    
-    -coin-color: gold;
+    -coin-color: derive(gold, -20%);
 }
 .coin-label:silver,
 .coin:silver{    
