@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -33,7 +32,7 @@ public final class ItemRendererController implements Initializable {
     @FXML
     private Text buffLabel;
     @FXML
-    private Text descriptionLabel;
+    private TextFlow descriptionFlow;
     @FXML
     private Text levelLabel;
     @FXML
@@ -48,7 +47,7 @@ public final class ItemRendererController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buffLabel.managedProperty().bind(buffLabel.visibleProperty());
-        descriptionLabel.managedProperty().bind(descriptionLabel.visibleProperty());
+        descriptionFlow.managedProperty().bind(descriptionFlow.visibleProperty());
         levelLabel.managedProperty().bind(levelLabel.visibleProperty());
     }
 
@@ -65,7 +64,7 @@ public final class ItemRendererController implements Initializable {
         icon.setImage(null);
         statsFlow.getChildren().clear();
         buffLabel.setText(null);
-        descriptionLabel.setText(null);
+        descriptionFlow.getChildren().clear();
         levelLabel.setText(null);
         priceFlow.getChildren().clear();
         if (item != null) {
@@ -73,8 +72,8 @@ public final class ItemRendererController implements Initializable {
             nameLabel.setText(name);            
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
-            icon.setImage(new Image(item.getIcon(), true));
-            descriptionLabel.setText(item.getDescription());
+//            icon.setImage(new Image(item.getIcon(), true));
+            descriptionFlow.getChildren().setAll(LabelUtils.labelsForDescription(item.getDescription()));
             levelLabel.setVisible(item.getLevel() > 0);
             levelLabel.setText(String.format("Niveau requis : %d", item.getLevel()));
             final int price = item.getVendorValue();

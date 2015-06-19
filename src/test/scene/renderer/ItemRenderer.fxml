@@ -41,11 +41,7 @@
                 <Text id="buffLabel" fx:id="buffLabel" styleClass="item-buff-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
             </children>
         </TextFlow>
-        <TextFlow id="descriptionFlow" fx:id="descriptionFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
-            <children>
-                <Text id="descriptionLabel" fx:id="descriptionLabel" styleClass="item-description-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
-            </children>
-        </TextFlow>
+        <TextFlow id="descriptionFlow" fx:id="descriptionFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnSpan="2147483647" GridPane.rowIndex="2"/>
         <TextFlow id="levelFlow" fx:id="levelFlow" maxHeight="-Infinity" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
             <children>
                 <Text id="levelLabel" fx:id="levelLabel" styleClass="item-level-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />

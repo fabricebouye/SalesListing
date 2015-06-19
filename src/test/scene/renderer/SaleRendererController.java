@@ -76,7 +76,7 @@ public final class SaleRendererController implements Initializable {
             nameLabel.setText(name);
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());            
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
-            icon.setImage(new Image(item.getIcon(), true));
+//            icon.setImage(new Image(item.getIcon(), true));
             final String purchased = sale.getPurchased().format(DATE_FORMATTER);
             purchasedLabel.setText(purchased);
             final int price = sale.getPrice();
