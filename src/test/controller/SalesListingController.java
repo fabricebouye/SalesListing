@@ -5,26 +5,39 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.Normalizer;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import test.data.account.Account;
@@ -35,6 +48,7 @@ import test.demo.DemoSupport;
 import test.query.CommerceQuery;
 import test.query.ItemsQuery;
 import test.query.TokenInfoQuery;
+import test.scene.LabelUtils;
 import test.scene.renderer.SaleListCell;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
@@ -48,7 +62,38 @@ public final class SalesListingController implements Initializable {
     @FXML
     private TextField applicationKeyField;
     @FXML
-    private ListView<Pair<Sale, Item>> salesList;
+    private ToggleGroup languageSelectionGroup;
+    @FXML
+    private ToggleButton enToggle;
+    @FXML
+    private ToggleButton frToggle;
+    @FXML
+    private ToggleButton deToggle;
+    @FXML
+    private ToggleButton esToggle;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private CheckMenuItem nameCheckItem;
+    @FXML
+    private CheckMenuItem descriptionCheckItem;
+    @FXML
+    private CheckMenuItem rarityCheckItem;
+    @FXML
+    private ListView<Pair<Sale, Item>> salesListView;
+
+    /**
+     * Liste des ventes.
+     */
+    private ObservableList<Pair<Sale, Item>> salesList = FXCollections.observableList(new LinkedList());
+    /**
+     * Liste filtrée des personnages.
+     */
+    private FilteredList<Pair<Sale, Item>> filteredSalesList = new FilteredList<>(salesList);
+    /**
+     * Affiche toutes les ventes.
+     */
+    private final Predicate<Pair<Sale, Item>> allSalesFilter = sale -> true;
 
     private final Properties settings = new Properties();
 
@@ -62,10 +107,32 @@ public final class SalesListingController implements Initializable {
                 Logger.getLogger(SalesListingController.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
+        //
+        filteredSalesList.setPredicate(allSalesFilter);
     }
 
+    private ResourceBundle resources;
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle resources) {
+        this.resources = resources;
+        //
+        enToggle.setUserData("en"); // NOI18N.
+        frToggle.setUserData("fr"); // NOI18N.
+        deToggle.setUserData("de"); // NOI18N.
+        esToggle.setUserData("es"); // NOI18N.
+        settings.setProperty("language.code", (String) languageSelectionGroup.getSelectedToggle().getUserData()); // NOI18N.
+        languageSelectionGroup.selectedToggleProperty().addListener(languageInvalidationListener);
+        //
+        searchField.textProperty().addListener(searchInvalidationListener);
+        //
+        nameCheckItem.setSelected(Boolean.parseBoolean(settings.getProperty("search.filter.name", "true"))); // NOI18N.
+        nameCheckItem.selectedProperty().addListener(searchInvalidationListener);
+        descriptionCheckItem.setSelected(Boolean.parseBoolean(settings.getProperty("search.filter.description", "true"))); // NOI18N.
+        descriptionCheckItem.selectedProperty().addListener(searchInvalidationListener);
+        rarityCheckItem.setSelected(Boolean.parseBoolean(settings.getProperty("search.filter.rarity", "true"))); // NOI18N.
+        rarityCheckItem.selectedProperty().addListener(searchInvalidationListener);
+        //
         final TextFormatter<String> applicationKeyTextFormatter = new ApplicationKeyTextFormatter();
         applicationKeyField.setTextFormatter(applicationKeyTextFormatter);
         applicationKeyField.textProperty().addListener(applicationKeyChangeListener);
@@ -76,7 +143,8 @@ public final class SalesListingController implements Initializable {
             applicationKeyField.selectRange(0, 0);
         });
         //
-        salesList.setCellFactory(listView -> new SaleListCell());
+        salesListView.setItems(filteredSalesList);
+        salesListView.setCellFactory(listView -> new SaleListCell());
     }
 
     /**
@@ -92,6 +160,71 @@ public final class SalesListingController implements Initializable {
     };
 
     /**
+     * Invoqué si la valeur de la valeur de recherche change.
+     */
+    private final InvalidationListener searchInvalidationListener = observable -> {
+        final String searchText = searchField.getText();
+        final String[] criteria = (searchText == null || searchText.trim().isEmpty()) ? null : Arrays.stream(searchText.trim().split("[\\s,;]+")) // NOI18N.
+                .map(this::normalizeForSearch)
+                .collect(Collectors.toList())
+                .toArray(new String[0]);
+        final Predicate<Pair<Sale, Item>> filter = (criteria == null) ? allSalesFilter : character -> filterSale(character, criteria);
+        filteredSalesList.setPredicate(filter);
+    };
+
+    /**
+     * Filtre la liste des ventes.
+     * @param sale La vente à tester.
+     * @param criteria Les critères de recherche.
+     * @return {@code True} si le test réussit, {@code false} sinon.
+     */
+    private boolean filterSale(final Pair<Sale, Item> sale, final String... criteria) {
+        final boolean filterName = nameCheckItem.isSelected();
+        final boolean filterDescription = descriptionCheckItem.isSelected();
+        final boolean filterRarity = rarityCheckItem.isSelected();
+        final String name = filterName ? normalizeForSearch(sale.getValue().getName()) : null;
+        final String baseName = (name == null) ? null : normalizeForSearch(name);
+        final String description = filterDescription && sale.getValue().getDescription() != null ? normalizeForSearch(sale.getValue().getDescription()) : null;
+        final String baseDescription = (description == null) ? null : normalizeForSearch(description);
+        final Item.Rarity rarity = filterRarity ? sale.getValue().getRarity() : null;
+        final String baseRarity = (rarity == null) ? null : normalizeForSearch(rarity.name());
+        //
+        boolean result = true;
+        for (final String criterion : criteria) {
+            boolean criterionTest = false;
+            // Teste le nom de l'objet.  
+            if (baseName != null) {
+                final boolean characterFound = baseName.contains(criterion);
+                criterionTest |= characterFound;
+            }
+            // Teste la description de l'objet.  
+            if (baseDescription != null) {
+                final boolean descriptionFound = baseDescription.contains(criterion);
+                criterionTest |= descriptionFound;
+            }
+            // Teste la rareté de l'objet. 
+            if (baseRarity != null) {
+                final boolean rarityFound = baseRarity.contains(criterion);
+                criterionTest |= rarityFound;
+            }
+            //
+            result &= criterionTest;
+        }
+        return result;
+    }
+
+    /**
+     * Normalize la chaine de charactère en retirant les accents et diacritiques.
+     * @param source La chaîne source.
+     * @return Une {@code String}, jamais {@code null}.
+     */
+    private String normalizeForSearch(final String source) {
+        final String nfdNormalizedString = Normalizer.normalize(source.toLowerCase(), Normalizer.Form.NFD);
+        final Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+"); // NOI18N.
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
+
+    /**
      * Invoqué quand la clé d'application change.
      * @param applicationKey La nouvelle clé d'application.
      */
@@ -100,7 +233,7 @@ public final class SalesListingController implements Initializable {
         final boolean applicationKeyValid = isDemoMode ? true : ApplicationKeyUtils.validateApplicationKey(applicationKey);
         applicationKeyField.pseudoClassStateChanged(errorPseudoClass, !applicationKeyValid);
         stopUpdateService();
-        salesList.setDisable(!applicationKeyValid);
+        salesListView.setDisable(!applicationKeyValid);
         if (applicationKeyValid) {
             settings.setProperty("app.key", applicationKey); // NOI18N.
             checkApplicationKeyAndStartUpdate();
@@ -141,15 +274,6 @@ public final class SalesListingController implements Initializable {
                 final TokenInfo result = (TokenInfo) workerStateEvent.getSource().getValue();
 //                accountKeyLabel.setText(result.getName());                
                 final List<TokenInfo.Permission> permissions = result.getPermissions();
-//                final List<Label> permissionsLabel = permissions.stream()
-//                        .map(permission -> {
-//                            final String text = LabelUtils.permissionLabel(resources, permission);
-//                            final Label label = new Label(text);
-//                            label.getStyleClass().add("permission-label");
-//                            return label;
-//                        })
-//                        .collect(Collectors.toList());
-//                applicationKeyPermissionFlow.getChildren().setAll(permissionsLabel);
                 if (permissions.contains(TokenInfo.Permission.ACCOUNT) && permissions.contains(TokenInfo.Permission.TRADINGPOST)) {
                     startUpdateService();
                 } else {
@@ -204,6 +328,7 @@ public final class SalesListingController implements Initializable {
                         @Override
                         protected QueryResult call() throws Exception {
                             final String applicationKey = settings.getProperty("app.key"); // NOI18N.
+                            final String languageCode = settings.getProperty("language.code"); // NOI18N.
                             final boolean isDemoMode = DemoSupport.isDemoApplicationKey(applicationKey);
                             final QueryResult result = new QueryResult();
                             result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSalesHistory(applicationKey);
@@ -211,7 +336,7 @@ public final class SalesListingController implements Initializable {
                                     .stream()
                                     .mapToInt(sale -> sale.getItemId())
                                     .toArray();
-                            final List<Item> items = isDemoMode ? DemoSupport.items(itemIds) : ItemsQuery.items("fr", itemIds);
+                            final List<Item> items = isDemoMode ? DemoSupport.items(itemIds) : ItemsQuery.items(languageCode, itemIds);
                             final Map<Integer, Item> itemMap = items.stream()
                                     .collect(Collectors.toMap(item -> item.getId(), Function.identity()));
                             result.items = Collections.unmodifiableMap(itemMap);
@@ -224,20 +349,20 @@ public final class SalesListingController implements Initializable {
             updateService.setPeriod(updateWaitTime);
             updateService.setOnSucceeded(workerStateEvent -> {
                 final QueryResult result = (QueryResult) workerStateEvent.getSource().getValue();
-                final Optional<Pair<Sale, Item>> oldSelectionOptional = Optional.ofNullable(salesList.getSelectionModel().getSelectedItem());
+                final Optional<Pair<Sale, Item>> oldSelectionOptional = Optional.ofNullable(salesListView.getSelectionModel().getSelectedItem());
                 final List<Pair<Sale, Item>> sales = result.sales.stream().map(sale -> {
                     final int itemId = sale.getItemId();
                     final Item item = result.items.get(itemId);
                     return new Pair<>(sale, item);
                 }).collect(Collectors.toList());
-                salesList.getItems().setAll(sales);
+                salesList.setAll(sales);
                 // On restaure la sélection si possible.
                 oldSelectionOptional.ifPresent(oldSelection -> {
                     final Optional<Pair<Sale, Item>> newSelectionOptional = sales
                             .stream()
                             .filter(value -> value.getKey().getId() == oldSelection.getKey().getId())
                             .findFirst();
-                    newSelectionOptional.ifPresent(newSelection -> salesList.getSelectionModel().select(newSelection));
+                    newSelectionOptional.ifPresent(newSelection -> salesListView.getSelectionModel().select(newSelection));
                 });
             });
             updateService.setOnCancelled(workerStateEvent -> {
@@ -258,4 +383,18 @@ public final class SalesListingController implements Initializable {
         }
         updateService.cancel();
     }
+
+    /**
+     * Invoqué lorsque le langue sélectionné change.
+     */
+    private final InvalidationListener languageInvalidationListener = observable -> {
+        final Toggle selectedLanguageToggle = languageSelectionGroup.getSelectedToggle();
+        final String languageCode = (selectedLanguageToggle == null) ? null : (String) selectedLanguageToggle.getUserData();
+        if (languageCode != null) {
+            settings.setProperty("language.code", languageCode); // NOI18N.
+            if (updateService != null && updateService.isRunning()) {
+                updateService.restart();
+            }
+        }
+    };
 }

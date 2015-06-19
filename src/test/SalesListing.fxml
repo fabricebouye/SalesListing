@@ -30,13 +30,13 @@
                                 <MenuButton id="seachOptionsButton" fx:id="seachOptionsButton" HBox.hgrow="NEVER">
                                     <items>
                                         <CheckMenuItem id="nameCheckItem" fx:id="nameCheckItem" text="%search.citerion.name" />
-                                        <CheckMenuItem id="descriptionItem" fx:id="genderCheckItem" text="%search.citerion.description" />
-                                        <CheckMenuItem id="rarityItem" fx:id="rarityItem" text="%search.citerion.rarity" />
+                                        <CheckMenuItem id="descriptionCheckItem" fx:id="descriptionCheckItem" text="%search.citerion.description" />
+                                        <CheckMenuItem id="rarityCheckItem" fx:id="rarityCheckItem" text="%search.citerion.rarity" />
                                     </items>
                                 </MenuButton>
                             </children>
                         </HBox>
-                        <ListView id="salesList" fx:id="salesList" styleClass="list-view" VBox.vgrow="ALWAYS" />
+                        <ListView id="salesListView" fx:id="salesListView" styleClass="list-view" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
             </children>
