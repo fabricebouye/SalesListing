@@ -1,8 +1,6 @@
 package test.util;
 
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,7 +34,7 @@ public class ChatCodeUtilsTest {
     public void tearDown() {
     }
 
-    final String[] codes = {"AgH1WQAA", "AgH2WQAA", "AgH3WQAA", "AgEAWgAA"};
+    final String[] codes = {"AgH1WQAA", "AgH2WQAA", "AgH3WQAA", "AgEAWgAA"}; // NOI18N.
     final short[] quantities = {1, 1, 1, 1, 1};
     final int[] itemIds = {23029, 23030, 23031, 23040};
     final int[] skinIds = {ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE, ChatCodeUtils.NO_VALUE};
@@ -48,7 +46,7 @@ public class ChatCodeUtilsTest {
      */
     @Test
     public void testEncodeItem() {
-        System.out.println("encodeItem");
+        System.out.println("encodeItem"); // NOI18N.
         IntStream.range(0, codes.length)
                 .forEach(index -> {
                     final ChatItem item = new ChatItem();
@@ -68,7 +66,7 @@ public class ChatCodeUtilsTest {
      */
     @Test
     public void testDecodeItem() {
-        System.out.println("decodeItem");
+        System.out.println("decodeItem"); // NOI18N.
         IntStream.range(0, codes.length)
                 .forEach(index -> {
                     try {
