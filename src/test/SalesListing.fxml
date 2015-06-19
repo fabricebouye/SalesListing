@@ -7,19 +7,54 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox id="rootPane" fx:id="rootPane" styleClass="root-pane" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
+<AnchorPane id="rootPane" fx:id="rootPane" prefHeight="600.0" prefWidth="600.0" styleClass="root-pane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40" fx:controller="test.controller.SalesListingController">
     <children>
-        <TextFlow id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
-            <children>    
-                <Text id="applicationKeyLabel" fx:id="applicationKeyLabel" text="%application.key.label" styleClass="main-text" />
-            </children>    
-        </TextFlow>
-        <TextField id="applicationKeyField" fx:id="applicationKeyField" styleClass="key-field" />
-        <TextFlow  id="recentSalesFlow" fx:id="recentSalesFlow" VBox.vgrow="NEVER">
-            <children>    
-                <Text id="recentSalesLabel" fx:id="recentSalesLabel" text="%recent.sales.label" styleClass="main-text" />
-            </children>    
-        </TextFlow>
-        <ListView id="salesList" fx:id="salesList" styleClass="list-view" VBox.vgrow="ALWAYS" />
+        <VBox styleClass="vbox, sales-pane" fillWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <TextFlow id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
+                    <children>    
+                        <Text id="applicationKeyLabel" fx:id="applicationKeyLabel" styleClass="main-text" text="%application.key.label" />
+                    </children>    
+                </TextFlow>
+                <TextField id="applicationKeyField" fx:id="applicationKeyField" styleClass="key-field" />
+                <VBox styleClass="vbox" VBox.vgrow="ALWAYS" fillWidth="true" >
+                    <children>
+                        <TextFlow id="recentSalesFlow" fx:id="recentSalesFlow" VBox.vgrow="NEVER">
+                            <children>    
+                                <Text id="recentSalesLabel" fx:id="recentSalesLabel" styleClass="main-text" text="%recent.sales.label" />
+                            </children>    
+                        </TextFlow>
+                        <HBox id="searchHBox" fx:id="searchHBox" styleClass="hbox"> 
+                            <children>
+                                <TextField id="searchField" fx:id="searchField" promptText="%search.label" HBox.hgrow="ALWAYS" />
+                                <MenuButton id="seachOptionsButton" fx:id="seachOptionsButton" HBox.hgrow="NEVER">
+                                    <items>
+                                        <CheckMenuItem id="nameCheckItem" fx:id="nameCheckItem" text="%search.citerion.name" />
+                                        <CheckMenuItem id="descriptionItem" fx:id="genderCheckItem" text="%search.citerion.description" />
+                                        <CheckMenuItem id="rarityItem" fx:id="rarityItem" text="%search.citerion.rarity" />
+                                    </items>
+                                </MenuButton>
+                            </children>
+                        </HBox>
+                        <ListView id="salesList" fx:id="salesList" styleClass="list-view" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+        <HBox id="languageBox" fx:id="languageBox" styleClass="language-box" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ToggleButton fx:id="enToggle" mnemonicParsing="false" styleClass="language-button" text="%language.english">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="languageSelectionGroup" />
+                    </toggleGroup>
+                </ToggleButton>
+                <Separator orientation="VERTICAL" prefHeight="-1" />
+                <ToggleButton fx:id="frToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%language.french" toggleGroup="$languageSelectionGroup" />
+                <Separator orientation="VERTICAL" prefHeight="-1" />
+                <ToggleButton fx:id="deToggle" mnemonicParsing="false" styleClass="language-button" text="%language.german" toggleGroup="$languageSelectionGroup" />
+                <Separator orientation="VERTICAL" prefHeight="-1" />
+                <ToggleButton fx:id="esToggle" mnemonicParsing="false" styleClass="language-button" text="%language.spanish" toggleGroup="$languageSelectionGroup" />
+            </children>
+        </HBox>        
     </children>
-</VBox>
+</AnchorPane>
