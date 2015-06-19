@@ -105,6 +105,9 @@
 .item-name-label:basic {
     -fx-fill: black;
 }
+.item-info .item-name-label:basic {
+    -fx-fill: white;
+}
 .item-name-label:fine {
     -fx-fill: cornflowerblue;
 }
@@ -130,6 +133,9 @@
 .item-description-label,
 .item-level-label {
     -fx-fill: white;
+}
+.item-description-label:flavor {
+    -fx-fill: cornflowerblue;
 }
 .date-label {
     -fx-fill: lightgray;
