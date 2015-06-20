@@ -24,8 +24,7 @@ public enum SaleFactory {
         result.quantity = jsonObject.getInt("quantity"); // NOI18N.
         final String jsonCreated = jsonObject.getString("created"); // NOI18N.
         result.created = ZonedDateTime.parse(jsonCreated);
-        final String jsonPurchased = jsonObject.getString("purchased"); // NOI18N.
-        result.purchased = ZonedDateTime.parse(jsonPurchased);
+        result.purchased = jsonObject.containsKey("purchased") ? ZonedDateTime.parse(jsonObject.getString("purchased")) : null; // NOI18N.
         return result;
     }
 }

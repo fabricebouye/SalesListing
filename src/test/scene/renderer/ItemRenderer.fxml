@@ -23,7 +23,7 @@
     <children>
         <StackPane id="iconBox" fx:id="iconBox" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="icon-box" GridPane.valignment="TOP">
             <children>
-                <ImageView id="icon" fx:id="icon" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
+                <ImageView id="icon" fx:id="icon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="icon" />
             </children>
         </StackPane>
         <VBox id="headerVBox" fx:id="headerVBox" alignment="CENTER_LEFT" GridPane.columnIndex="1">
@@ -36,11 +36,7 @@
                 <TextFlow id="statsFlow" fx:id="statsFlow" textAlignment="JUSTIFY" />
             </children>
         </VBox>        
-        <TextFlow id="buffFlow" fx:id="buffFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-            <children>
-                <Text id="buffLabel" fx:id="buffLabel" styleClass="item-buff-label" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
-            </children>
-        </TextFlow>
+        <TextFlow id="buffFlow" fx:id="buffFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnSpan="2147483647" GridPane.rowIndex="1"/>
         <TextFlow id="descriptionFlow" fx:id="descriptionFlow" maxHeight="-Infinity" textAlignment="JUSTIFY" GridPane.columnSpan="2147483647" GridPane.rowIndex="2"/>
         <TextFlow id="levelFlow" fx:id="levelFlow" maxHeight="-Infinity" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
             <children>

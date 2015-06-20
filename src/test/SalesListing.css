@@ -100,6 +100,11 @@
 .sale-info > .item-name-label {
     -fx-font-size: 1.6em;
 }
+.sale-quantity-label {
+    -fx-fill: white;
+    -fx-font-size: 1.1em;
+    -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
+}
 .item-name-label {
     -fx-font-weight: bold;    
 }
@@ -113,7 +118,7 @@
     -fx-fill: white;
 }
 .item-name-label:fine {
-    -fx-fill: cornflowerblue;
+    -fx-fill: derive(royalblue, 20%);
 }
 .item-name-label:masterwork {
     -fx-fill: derive(green, 30%);
@@ -131,7 +136,10 @@
     -fx-fill: blueviolet;
 }
 .item-buff-label {
-    -fx-fill: skyblue;
+    -fx-fill: derive(royalblue, 20%);
+}
+.item-buff-label:reminder {
+    -fx-fill: gray;
 }
 .item-stats-label,
 .item-description-label,
@@ -139,7 +147,7 @@
     -fx-fill: white;
 }
 .item-description-label:flavor {
-    -fx-fill: cornflowerblue;
+    -fx-fill: skyblue;
 }
 .date-label {
     -fx-fill: lightgray;

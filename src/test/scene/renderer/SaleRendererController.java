@@ -2,8 +2,10 @@ package test.scene.renderer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +44,8 @@ public final class SaleRendererController implements Initializable {
     @FXML
     private TextFlow priceFlow;
     @FXML
+    private Text quantityLabel;
+    @FXML
     private ImageView icon;
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT);
@@ -71,14 +75,22 @@ public final class SaleRendererController implements Initializable {
         icon.setImage(null);
         purchasedLabel.setText(null);
         priceFlow.getChildren().clear();
+        quantityLabel.setText(null);
         if (sale != null && item != null) {
             final String name = item.getName();
             nameLabel.setText(name);
-            final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());            
+            final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
-//            icon.setImage(new Image(item.getIcon(), true));
-            final String purchased = sale.getPurchased().format(DATE_FORMATTER);
-            purchasedLabel.setText(purchased);
+            icon.setImage(new Image(item.getIcon(), true));
+            final Optional<ZonedDateTime> purshasedOptional = Optional.ofNullable(sale.getPurchased());
+            purshasedOptional.ifPresent(date -> {
+                final String purchased = date.format(DATE_FORMATTER);
+                purchasedLabel.setText(purchased);
+            });
+            final int quantity = sale.getQuantity();
+            if (quantity > 1) {
+                quantityLabel.setText(String.valueOf(quantity));
+            }
             final int price = sale.getPrice();
             priceFlow.getChildren().setAll(LabelUtils.labelsForCoins(price, true));
             tooltip = tooltipForItem(item);

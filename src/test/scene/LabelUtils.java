@@ -29,7 +29,11 @@ public enum LabelUtils {
     private static final int SILVER_VALUE = 100;
 
     /**
-     * Pseudo-classe appliquée aux pièces d'or.
+     * Pseudo-classe appliquée textes de description.
+     */
+    private static final PseudoClass REMINDER_PSEUDO_CLASS = PseudoClass.getPseudoClass("reminder"); // NOI18N.
+    /**
+     * Pseudo-classe appliquée textes de description.
      */
     private static final PseudoClass FLAVOR_PSEUDO_CLASS = PseudoClass.getPseudoClass("flavor"); // NOI18N.
     /**
@@ -46,6 +50,30 @@ public enum LabelUtils {
     private static final PseudoClass COPPER_PSEUDO_CLASS = PseudoClass.getPseudoClass("copper"); // NOI18N.
 
     /**
+     * Génère les labels utilisés pour afficher la description du buff d'un objet.
+     * @param value La valeur de la description.
+     * @return Une instance de {@code List<Text>} non-modifiable, jamais {@code null}.
+     */
+    public static List<Text> labelsForBuff(final String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return Collections.unmodifiableList(new ArrayList(0));
+        }
+        final String[] tokens = value.split("\\n|(<br>)"); // NOI18N.
+        final List<Text> result = Arrays.stream(tokens)
+                .map(token -> {
+                    final boolean isReminder = token.startsWith("<c=@reminder>"); // NOI18N.
+                    final String text = token.replace("<c=@reminder>", "") // NOI18N.
+                    .replace("</c>", ""); // NOI18N.
+                    final Text label = new Text(text + '\n'); // NOI18N.
+                    label.getStyleClass().add("item-buff-label"); // NOI18N.
+                    label.pseudoClassStateChanged(REMINDER_PSEUDO_CLASS, isReminder);
+                    return label;
+                })
+                .collect(Collectors.toList());
+        return Collections.unmodifiableList(result);
+    }
+
+    /**
      * Génère les labels utilisés pour afficher la description d'un objet.
      * @param value La valeur de la description.
      * @return Une instance de {@code List<Text>} non-modifiable, jamais {@code null}.
@@ -54,11 +82,12 @@ public enum LabelUtils {
         if (value == null || value.trim().isEmpty()) {
             return Collections.unmodifiableList(new ArrayList(0));
         }
-        final String[] tokens = value.split("\\n"); // NOI18N.
+        final String[] tokens = value.split("\\n|(<br>)"); // NOI18N.
         final List<Text> result = Arrays.stream(tokens)
                 .map(token -> {
                     final boolean isFlavor = token.startsWith("<c=@flavor>"); // NOI18N.
-                    final String text = token.replace("<c=@flavor>", ""); // NOI18N.
+                    final String text = token.replace("<c=@flavor>", "") // NOI18N.
+                    .replace("</c>", ""); // NOI18N.
                     final Text label = new Text(text + '\n'); // NOI18N.
                     label.getStyleClass().add("item-description-label"); // NOI18N.
                     label.pseudoClassStateChanged(FLAVOR_PSEUDO_CLASS, isFlavor);

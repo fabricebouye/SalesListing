@@ -42,8 +42,24 @@ public enum CommerceQuery {
         if (!applicationKeyValid) {
             throw new IllegalArgumentException();
         }
-        final String url = String.format("%s/transactions/current/sells?access_token=%s", BASECODE, applicationKey); // NOI18N.
+        final String url = String.format("%s/transactions/history/sells?access_token=%s", BASECODE, applicationKey); // NOI18N.
         final JsonArray jsonArray = QueryUtils.queryArray(url);
         return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
     }
-}
+
+    /**
+     * Récupère les ventes en cours.
+     * @param applicationKey La clé d'application.
+     * @return Une {@code List<Sale>} non-modifiable, jamais {@code null}.
+     * @throws IOException En cas d'erreur.
+     * @throws IllegalArgumentException Si la clé d'application est {@code null} ou n'est pas valide.
+     */
+    public static final List<Sale> listSales(final String applicationKey) throws IOException, IllegalArgumentException {
+        final boolean applicationKeyValid = ApplicationKeyUtils.validateApplicationKey(applicationKey);
+        if (!applicationKeyValid) {
+            throw new IllegalArgumentException();
+        }
+        final String url = String.format("%s/transactions/current/sells?access_token=%s", BASECODE, applicationKey); // NOI18N.
+        final JsonArray jsonArray = QueryUtils.queryArray(url);
+        return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
+    }}

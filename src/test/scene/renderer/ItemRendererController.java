@@ -1,6 +1,8 @@
 package test.scene.renderer;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
@@ -8,6 +10,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -30,7 +34,7 @@ public final class ItemRendererController implements Initializable {
     @FXML
     private TextFlow statsFlow;
     @FXML
-    private Text buffLabel;
+    private TextFlow buffFlow;
     @FXML
     private TextFlow descriptionFlow;
     @FXML
@@ -46,7 +50,7 @@ public final class ItemRendererController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        buffLabel.managedProperty().bind(buffLabel.visibleProperty());
+        buffFlow.managedProperty().bind(buffFlow.visibleProperty());
         descriptionFlow.managedProperty().bind(descriptionFlow.visibleProperty());
         levelLabel.managedProperty().bind(levelLabel.visibleProperty());
     }
@@ -63,27 +67,32 @@ public final class ItemRendererController implements Initializable {
         }
         icon.setImage(null);
         statsFlow.getChildren().clear();
-        buffLabel.setText(null);
+        buffFlow.getChildren().clear();
         descriptionFlow.getChildren().clear();
         levelLabel.setText(null);
         priceFlow.getChildren().clear();
         if (item != null) {
             final String name = item.getName();
-            nameLabel.setText(name);            
+            nameLabel.setText(name);
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
-//            icon.setImage(new Image(item.getIcon(), true));
-            descriptionFlow.getChildren().setAll(LabelUtils.labelsForDescription(item.getDescription()));
+            icon.setImage(new Image(item.getIcon(), true));
+            final List<Text> descriptionLabels = LabelUtils.labelsForDescription(item.getDescription());
+            descriptionFlow.getChildren().setAll(descriptionLabels);
             levelLabel.setVisible(item.getLevel() > 0);
             levelLabel.setText(String.format("Niveau requis : %d", item.getLevel()));
             final int price = item.getVendorValue();
-            priceFlow.getChildren().setAll(LabelUtils.labelsForCoins(price));
+            final List<Node> priceLabels = LabelUtils.labelsForCoins(price);
+            priceFlow.getChildren().setAll(priceLabels);
             final Details details = item.getDetails();
             if (details instanceof UpgradeComponentDetails) {
                 final UpgradeComponentDetails upgradeComponentDetails = (UpgradeComponentDetails) details;
                 final InfixUpgrade infixUpgrade = upgradeComponentDetails.getInfixUpgrade();
-                final Buff buff = infixUpgrade.getBuff();
-                buffLabel.setText(buff.getDescription());
+                final Optional<Buff> buffOptional = Optional.ofNullable(infixUpgrade.getBuff());
+                buffOptional.ifPresent(buff -> {
+                    final List<Text> buffLabels = LabelUtils.labelsForBuff(buff.getDescription());
+                    buffFlow.getChildren().setAll(buffLabels);
+                });
             } else if (details instanceof WeaponDetails) {
                 final WeaponDetails weaponDetails = (WeaponDetails) details;
                 final String stats = String.format("Puissance d'arme : %d - %d", weaponDetails.getMinPower(), weaponDetails.getMaxPower());
