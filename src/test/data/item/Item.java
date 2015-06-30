@@ -139,8 +139,8 @@ public final class Item {
         NO_SELL("NoSell"), // NOI18N.
         NOT_UPGRADEABLE("NotUpgradeable"), // NOI18N.
         NO_UNDERWATER("NoUnderwater"), // NOI18N.
-        SOULBIND_ON_ACQUIRE("SoulbindOnAcquire"), // NOI18N.
-        SOULBIND_ON_USE("SoulBindOnUse"), // NOI18N.
+        SOUL_BIND_ON_ACQUIRE("SoulBindOnAcquire"), // NOI18N.
+        SOUL_BIND_ON_USE("SoulBindOnUse"), // NOI18N.
         UNIQUE("Unique"), // NOI18N.
         UNKNOWN(null);
 
