@@ -14,13 +14,13 @@ public final class ArmorDetails extends Details {
      */
     public enum Type {
 
-        BOOTS("boots"), // NOI18N.
-        COAT("coat"), // NOI18N.
-        GLOVES("gloves"), // NOI18N.
-        HELM("helm"), // NOI18N.
-        HELM_AQUATIC("helm_aquatic"), // NOI18N.
-        LEGGINGS("leggings"), // NOI18N.
-        SHOULDERS("shoulders"), // NOI18N.
+        BOOTS("Boots"), // NOI18N.
+        COAT("Coat"), // NOI18N.
+        GLOVES("Gloves"), // NOI18N.
+        HELM("Helm"), // NOI18N.
+        HELM_AQUATIC("HelmAquatic"), // NOI18N.
+        LEGGINGS("Leggings"), // NOI18N.
+        SHOULDERS("Shoulders"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -138,6 +138,5 @@ public final class ArmorDetails extends Details {
     public String getSecondarySuffixItemId() {
         return secondarySuffixItemId;
     }
-    
-    
+
 }
