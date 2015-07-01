@@ -14,6 +14,8 @@ public final class UpgradeComponentDetails extends Details {
      */
     public enum Type {
 
+        DEFAULT("Default"), // NOI18N.
+        GEM("Gem"), // NOI18N.
         SIGIL("Sigil"), // NOI18N.
         RUNE("Rune"), // NOI18N.
         UNKNOWN(null);
@@ -63,6 +65,10 @@ public final class UpgradeComponentDetails extends Details {
         TORCH("Torch"), // NOI18N.
         TRIDENT("Trident"), // NOI18N.
         WARHORN("Warhorn"), // NOI18N.
+        HEAVY_ARMOR("HeavyArmor"), // NOI18N.
+        MEDIUM_ARMOR("MediumArmor"), // NOI18N.
+        LIGHT_ARMOR("LightArmor"), // NOI18N.
+        TRINKET("Trinket"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
@@ -89,7 +95,7 @@ public final class UpgradeComponentDetails extends Details {
      * Le type d'amélioration.
      */
     Type type;
-    
+
     List<Flag> flags;
     /**
      * Liste des emplacement d'infusion.
@@ -100,7 +106,7 @@ public final class UpgradeComponentDetails extends Details {
      */
     InfixUpgrade infixUpgrade;
     String suffix;
-    
+
     /**
      * Crée une nouvelle instance vide.
      */

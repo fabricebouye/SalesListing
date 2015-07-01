@@ -10,9 +10,9 @@ public final class InfusionSlot {
 
     public enum Flag {
 
-        DEFENSE("defense"), // NOI18N.
-        OFFENSE("offense"), // NOI18N.
-        UTILITY("utility"), // NOI18N.
+        DEFENSE("Defense"), // NOI18N.
+        OFFENSE("Offense"), // NOI18N.
+        UTILITY("Utility"), // NOI18N.
         AGONY(""), // NOI18N.
         UNKNOWN(null);
 

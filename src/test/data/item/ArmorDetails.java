@@ -49,10 +49,10 @@ public final class ArmorDetails extends Details {
      */
     public enum WeightClass {
 
-        HEAVY("heavy"), // NOI18N.
-        MEDIUM("medium"), // NOI18N.
-        LIGHT("light"), // NOI18N.
-        CLOTHING("clothing"), // NOI18N.
+        HEAVY("Heavy"), // NOI18N.
+        MEDIUM("Medium"), // NOI18N.
+        LIGHT("Light"), // NOI18N.
+        CLOTHING("Clothing"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;

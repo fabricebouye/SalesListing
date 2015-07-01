@@ -15,13 +15,13 @@ public final class InfixUpgrade {
      */
     public enum Attribute {
 
-        CONDITION_DAMAGE("condition_damage"), // NOI18N.
-        CRIT_DAMAGE("crit_damage"), // NOI18N.
-        HEALING("healing"), // NOI18N.
-        POWER("power"), // NOI18N.
-        PRECISION("precision"), // NOI18N.
-        TOUGHNESS("toughness"), // NOI18N.
-        VITALITY("vitality"), // NOI18N.
+        CONDITION_DAMAGE("ConditionDamage"), // NOI18N.
+        CRIT_DAMAGE("CritDamage"), // NOI18N.
+        HEALING("Healing"), // NOI18N.
+        POWER("Power"), // NOI18N.
+        PRECISION("Precision"), // NOI18N.
+        TOUGHNESS("Toughness"), // NOI18N.
+        VITALITY("Vitality"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
