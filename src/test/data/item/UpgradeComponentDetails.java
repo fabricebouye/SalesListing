@@ -58,7 +58,7 @@ public final class UpgradeComponentDetails extends Details {
         RIFLE("Rifle"), // NOI18N.
         SCEPTER("Scepter"), // NOI18N.
         SHIELD("Shield"), // NOI18N.
-        SHORT_BOW("ShortBox"), // NOI18N.
+        SHORT_BOW("ShortBow"), // NOI18N.
         SPEARGUN("Speargun"), // NOI18N.
         STAFF("Staff"), // NOI18N.
         SWORD("Sword"), // NOI18N.
