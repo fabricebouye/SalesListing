@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="rootPane" fx:id="rootPane" prefHeight="600.0" prefWidth="600.0" styleClass="root-pane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40" fx:controller="test.controller.SalesListingController">
+<AnchorPane id="rootPane" fx:id="rootPane" prefHeight="600.0" prefWidth="600.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
     <children>
-        <VBox styleClass="vbox, sales-pane" fillWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox fillWidth="true" styleClass="vbox, sales-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <TextFlow id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
                     <children>    
@@ -17,13 +17,34 @@
                     </children>    
                 </TextFlow>
                 <TextField id="applicationKeyField" fx:id="applicationKeyField" styleClass="key-field" />
-                <VBox styleClass="vbox" VBox.vgrow="ALWAYS" fillWidth="true" >
+                <VBox fillWidth="true" styleClass="vbox" VBox.vgrow="ALWAYS">
                     <children>
-                        <TextFlow id="recentSalesFlow" fx:id="recentSalesFlow" VBox.vgrow="NEVER">
-                            <children>    
-                                <Text id="recentSalesLabel" fx:id="recentSalesLabel" styleClass="main-text" text="%recent.sales.label" />
-                            </children>    
-                        </TextFlow>
+                        <HBox>
+                            <children>
+                                <HBox styleClass="language-box">
+                                    <children>
+                                        <ToggleButton fx:id="recentSalesToggle" mnemonicParsing="false" styleClass="language-button" text="%sales.label">
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="salesHistoryGroup" />
+                                            </toggleGroup>
+                                        </ToggleButton>
+                                        <Separator orientation="VERTICAL" prefHeight="-1" />
+                                        <ToggleButton fx:id="recentPurchasesToggle" mnemonicParsing="false" styleClass="language-button" text="%purchases.label" toggleGroup="$salesHistoryGroup" />
+                                    </children>
+                                </HBox>
+                                <HBox styleClass="language-box">
+                                    <children>
+                                        <ToggleButton fx:id="ongoingToggle" mnemonicParsing="false" styleClass="language-button" text="%ongoing.label">
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="salesTimeGroup" />
+                                            </toggleGroup>
+                                        </ToggleButton>
+                                        <Separator orientation="VERTICAL" prefHeight="-1" />
+                                        <ToggleButton fx:id="recentToggle" mnemonicParsing="false" styleClass="language-button" text="%recent.label" toggleGroup="$salesTimeGroup" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
                         <HBox id="searchHBox" fx:id="searchHBox" styleClass="hbox"> 
                             <children>
                                 <TextField id="searchField" fx:id="searchField" promptText="%search.label" HBox.hgrow="ALWAYS" />
