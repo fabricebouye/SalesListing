@@ -2,6 +2,7 @@ package test.data.sale;
 
 import java.time.ZonedDateTime;
 import javax.json.JsonObject;
+import test.query.QueryUtils;
 
 /**
  * La fabrique pour les {@code Sale}.
@@ -24,7 +25,8 @@ public enum SaleFactory {
         result.quantity = jsonObject.getInt("quantity"); // NOI18N.
         final String jsonCreated = jsonObject.getString("created"); // NOI18N.
         result.created = ZonedDateTime.parse(jsonCreated);
-        result.purchased = jsonObject.containsKey("purchased") ? ZonedDateTime.parse(jsonObject.getString("purchased")) : null; // NOI18N.
+        final String jsonPurchased = QueryUtils.fromNullOrMissingString(jsonObject, "purchased"); // NOI18N.
+        result.purchased = (jsonPurchased == null) ? null : ZonedDateTime.parse(jsonPurchased); // NOI18N.
         return result;
     }
 }
