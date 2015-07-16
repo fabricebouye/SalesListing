@@ -144,10 +144,51 @@ public enum QueryUtils {
      * @return Une instance non-modifiable de {@code List<T>}, jamais {@code null}.
      */
     public static <S extends JsonValue, T> List<T> jsonArrayToList(final JsonArray array, final Class<S> sourceClass, final Function<S, T> converter) {
-        final List<T> result = array.getValuesAs(sourceClass)
+        final List<T> result = (array == null || array.isEmpty()) ? Collections.EMPTY_LIST : array.getValuesAs(sourceClass)
                 .stream()
                 .map(converter)
                 .collect(Collectors.toList());
         return Collections.unmodifiableList(result);
+    }
+
+    /**
+     * Récupère une chaine sur une clé qui est potentiellement nulle ou absente.
+     * @param source L'objet JSON source.
+     * @param key La clé.
+     * @return Une instance de {@code String}, peut être {@code null} si la clé est absente ou contient la valeur {@code null}.
+     */
+    public static String fromNullOrMissingString(final JsonObject source, final String key) {
+        return (!source.containsKey(key) || source.isNull(key)) ? null : source.getString(key);
+    }
+
+    /**
+     * Récupère un objet sur une clé qui est potentiellement nulle ou absente.
+     * @param source L'objet JSON source.
+     * @param key La clé.
+     * @return Une instance de {@code JsonObject}, peut être {@code null} si la clé est absente ou contient la valeur {@code null}.
+     */
+    public static JsonObject fromNullOrMissingObject(final JsonObject source, final String key) {
+        return (!source.containsKey(key) || source.isNull(key)) ? null : source.getJsonObject(key);
+    }
+
+    /**
+     * Récupère un tableau sur une clé qui est potentiellement nulle ou absente.
+     * @param source L'objet JSON source.
+     * @param key La clé.
+     * @return Une instance de {@code JsonArray}, peut être {@code null} si la clé est absente ou contient la valeur {@code null}.
+     */
+    public static JsonArray fromNullOrMissingArray(final JsonObject source, final String key) {
+        return (!source.containsKey(key) || source.isNull(key)) ? null : source.getJsonArray(key);
+    }
+
+    /**
+     * Récupère un entier sur une clé qui est potentiellement nulle ou absente.
+     * @param source L'objet JSON source.
+     * @param key La clé.
+     * @param defaultValue La valeur par defaut.
+     * @return Un {@code int}, peut être égal à {@code defaultValue} si la clé est absente ou contient la valeur {@code null}.
+     */
+    public static int fromNullOrMissingInt(final JsonObject source, final String key, final int defaultValue) {
+        return (!source.containsKey(key) || source.isNull(key)) ? defaultValue : source.getInt(key);
     }
 }
