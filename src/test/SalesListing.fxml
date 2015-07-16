@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -9,6 +10,11 @@
 
 <AnchorPane id="rootPane" fx:id="rootPane" prefHeight="600.0" prefWidth="600.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
     <children>
+      <ImageView fx:id="bltcLogo" fitHeight="110.0" preserveRatio="true">
+         <image>
+            <Image url="@BLTCLogo_FR.png" />
+         </image>
+      </ImageView>
         <VBox fillWidth="true" styleClass="vbox, sales-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <TextFlow id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
@@ -21,7 +27,7 @@
                     <children>
                         <HBox>
                             <children>
-                                <HBox styleClass="language-box">
+                                <HBox styleClass="options-box" HBox.hgrow="NEVER">
                                     <children>
                                         <ToggleButton fx:id="recentSalesToggle" mnemonicParsing="false" styleClass="language-button" text="%sales.label">
                                             <toggleGroup>
@@ -32,7 +38,8 @@
                                         <ToggleButton fx:id="recentPurchasesToggle" mnemonicParsing="false" styleClass="language-button" text="%purchases.label" toggleGroup="$salesHistoryGroup" />
                                     </children>
                                 </HBox>
-                                <HBox styleClass="language-box">
+                        <Region HBox.hgrow="ALWAYS" />
+                                <HBox styleClass="options-box" HBox.hgrow="NEVER">
                                     <children>
                                         <ToggleButton fx:id="ongoingToggle" mnemonicParsing="false" styleClass="language-button" text="%ongoing.label">
                                             <toggleGroup>

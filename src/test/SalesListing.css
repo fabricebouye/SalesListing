@@ -1,7 +1,7 @@
 .root-pane {
     -fx-background-color: white;
-    -fx-background-image: url("corner.png");
-    -fx-background-position: top left;
+    -fx-background-image: url("corner.png"), url("black-flag.png");
+    -fx-background-position: top left, bottom right;
     -fx-background-repeat: no-repeat;
     -fx-spacing: 10px;
     -fx-font-family: serif;
@@ -61,6 +61,10 @@
 }
 .language-box {
     -fx-padding: 10px 10px 0px 0px;    
+    -fx-spacing: 10px;
+    -fx-alignment: CENTER;
+}
+.options-box {
     -fx-spacing: 10px;
     -fx-alignment: CENTER;
 }
