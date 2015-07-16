@@ -38,8 +38,11 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import test.SalesListing;
 import test.data.account.Account;
 import test.data.item.Item;
 import test.data.sale.Sale;
@@ -48,7 +51,6 @@ import test.demo.DemoSupport;
 import test.query.CommerceQuery;
 import test.query.ItemsQuery;
 import test.query.TokenInfoQuery;
-import test.scene.LabelUtils;
 import test.scene.renderer.SaleListCell;
 import test.text.ApplicationKeyTextFormatter;
 import test.text.ApplicationKeyUtils;
@@ -58,7 +60,8 @@ import test.text.ApplicationKeyUtils;
  * @author Fabrice Bouyé
  */
 public final class SalesListingController implements Initializable {
-
+    @FXML
+    private ImageView bltcLogo;
     @FXML
     private TextField applicationKeyField;
     @FXML
@@ -391,6 +394,10 @@ public final class SalesListingController implements Initializable {
         final Toggle selectedLanguageToggle = languageSelectionGroup.getSelectedToggle();
         final String languageCode = (selectedLanguageToggle == null) ? null : (String) selectedLanguageToggle.getUserData();
         if (languageCode != null) {
+            final String logoName = String.format("BLTCLogo_%s.png", languageCode.toUpperCase()); // NOI18N.
+            final URL logoURL = SalesListing.class.getResource(logoName);
+            final Image logoImage = new Image(logoURL.toExternalForm());
+            bltcLogo.setImage(logoImage);
             settings.setProperty("language.code", languageCode); // NOI18N.
             if (updateService != null && updateService.isRunning()) {
                 updateService.restart();
