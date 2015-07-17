@@ -11,7 +11,7 @@
 }
 .list-view,
 .list-view:focused {
-    -fx-background-color: null;
+    -fx-background-color: rgba(255, 255, 255, 0.90);
 }
 .list-view .scroll-bar, 
 .list-view .scroll-bar .track {
@@ -154,7 +154,7 @@
     -fx-fill: skyblue;
 }
 .date-label {
-    -fx-fill: lightgray;
+    -fx-fill: gray;
     -fx-font-size: 1.0em;
 }
 .coin-label {    

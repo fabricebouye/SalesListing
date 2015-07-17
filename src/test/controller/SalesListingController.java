@@ -60,6 +60,7 @@ import test.text.ApplicationKeyUtils;
  * @author Fabrice Bouyé
  */
 public final class SalesListingController implements Initializable {
+
     @FXML
     private ImageView bltcLogo;
     @FXML
@@ -82,6 +83,18 @@ public final class SalesListingController implements Initializable {
     private CheckMenuItem descriptionCheckItem;
     @FXML
     private CheckMenuItem rarityCheckItem;
+    @FXML
+    private ToggleGroup salesCategoryGroup;
+    @FXML
+    private ToggleButton sellToggle;
+    @FXML
+    private ToggleButton buyToggle;
+    @FXML
+    private ToggleGroup salesTimeGroup;
+    @FXML
+    private ToggleButton currentToggle;
+    @FXML
+    private ToggleButton historyToggle;
     @FXML
     private ListView<Pair<Sale, Item>> salesListView;
 
@@ -120,12 +133,14 @@ public final class SalesListingController implements Initializable {
     public void initialize(URL url, ResourceBundle resources) {
         this.resources = resources;
         //
-        enToggle.setUserData("en"); // NOI18N.
-        frToggle.setUserData("fr"); // NOI18N.
-        deToggle.setUserData("de"); // NOI18N.
-        esToggle.setUserData("es"); // NOI18N.
         settings.setProperty("language.code", (String) languageSelectionGroup.getSelectedToggle().getUserData()); // NOI18N.
         languageSelectionGroup.selectedToggleProperty().addListener(languageInvalidationListener);
+        //
+        settings.setProperty("sales.category", (String) salesCategoryGroup.getSelectedToggle().getUserData()); // NOI18N.
+        salesCategoryGroup.selectedToggleProperty().addListener(salesInvalidationListener);
+        //
+        settings.setProperty("sales.history", (String) salesTimeGroup.getSelectedToggle().getUserData()); // NOI18N.
+        salesTimeGroup.selectedToggleProperty().addListener(salesInvalidationListener);
         //
         searchField.textProperty().addListener(searchInvalidationListener);
         //
@@ -332,14 +347,45 @@ public final class SalesListingController implements Initializable {
                         protected QueryResult call() throws Exception {
                             final String applicationKey = settings.getProperty("app.key"); // NOI18N.
                             final String languageCode = settings.getProperty("language.code"); // NOI18N.
+                            final String salesCategory = settings.getProperty("sales.category"); // NOI18N.
+                            final String salesHistory = settings.getProperty("sales.history"); // NOI18N.
                             final boolean isDemoMode = DemoSupport.isDemoApplicationKey(applicationKey);
                             final QueryResult result = new QueryResult();
-                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSalesHistory(applicationKey);
+                            System.out.printf("%s - %s - %s", salesCategory, salesHistory, applicationKey).println();
+                            switch (salesCategory) {
+                                case "sell": {
+                                    switch (salesHistory) {
+                                        case "history": {
+                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSalesHistory(applicationKey);
+                                        }
+                                        break;
+                                        case "current": {
+                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSales(applicationKey);
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                                case "buy": {
+                                    switch (salesHistory) {
+                                        case "history": {
+                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listPurchasesHistory(applicationKey);
+                                        }
+                                        break;
+                                        case "current": {
+                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listPurchases(applicationKey);
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                            System.out.println(result.sales);
                             final int[] itemIds = result.sales
                                     .stream()
                                     .mapToInt(sale -> sale.getItemId())
                                     .toArray();
-                            final List<Item> items = isDemoMode ? DemoSupport.items(itemIds) : ItemsQuery.items(languageCode, itemIds);
+                            final List<Item> items = (itemIds.length == 0) ? Collections.EMPTY_LIST : (isDemoMode ? DemoSupport.items(itemIds) : ItemsQuery.items(languageCode, itemIds));
                             final Map<Integer, Item> itemMap = items.stream()
                                     .collect(Collectors.toMap(item -> item.getId(), Function.identity()));
                             result.items = Collections.unmodifiableMap(itemMap);
@@ -399,6 +445,23 @@ public final class SalesListingController implements Initializable {
             final Image logoImage = new Image(logoURL.toExternalForm());
             bltcLogo.setImage(logoImage);
             settings.setProperty("language.code", languageCode); // NOI18N.
+            if (updateService != null && updateService.isRunning()) {
+                updateService.restart();
+            }
+        }
+    };
+
+    /**
+     * Invoqué lorsque le langue sélectionné change.
+     */
+    private final InvalidationListener salesInvalidationListener = observable -> {
+        final Toggle salesCategoryToggle = salesCategoryGroup.getSelectedToggle();
+        final String salesCategory = (salesCategoryToggle == null) ? null : (String) salesCategoryToggle.getUserData();
+        final Toggle salesHistoryToggle = salesTimeGroup.getSelectedToggle();
+        final String salesHistory = (salesHistoryToggle == null) ? null : (String) salesHistoryToggle.getUserData();
+        if (salesCategory != null && salesHistory != null) {
+            settings.setProperty("sales.category", salesCategory); // NOI18N.
+            settings.setProperty("sales.history", salesHistory); // NOI18N.
             if (updateService != null && updateService.isRunning()) {
                 updateService.restart();
             }

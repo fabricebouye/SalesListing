@@ -10,11 +10,11 @@
 
 <AnchorPane id="rootPane" fx:id="rootPane" prefHeight="600.0" prefWidth="600.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.controller.SalesListingController">
     <children>
-      <ImageView fx:id="bltcLogo" fitHeight="110.0" preserveRatio="true">
-         <image>
-            <Image url="@BLTCLogo_FR.png" />
-         </image>
-      </ImageView>
+        <ImageView fx:id="bltcLogo" fitHeight="110.0" preserveRatio="true">
+            <image>
+                <Image url="@BLTCLogo_FR.png" />
+            </image>
+        </ImageView>
         <VBox fillWidth="true" styleClass="vbox, sales-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <TextFlow id="applicationKeyFlow" fx:id="applicationKeyFlow" VBox.vgrow="NEVER">
@@ -29,25 +29,39 @@
                             <children>
                                 <HBox styleClass="options-box" HBox.hgrow="NEVER">
                                     <children>
-                                        <ToggleButton fx:id="recentSalesToggle" mnemonicParsing="false" styleClass="language-button" text="%sales.label">
+                                        <ToggleButton fx:id="sellToggle" mnemonicParsing="false" styleClass="language-button" text="%sales.label" selected="true">
                                             <toggleGroup>
-                                                <ToggleGroup fx:id="salesHistoryGroup" />
+                                                <ToggleGroup fx:id="salesCategoryGroup" />
                                             </toggleGroup>
+                                            <userData>
+                                                <String fx:value="sell"/>
+                                            </userData>                                            
                                         </ToggleButton>
                                         <Separator orientation="VERTICAL" prefHeight="-1" />
-                                        <ToggleButton fx:id="recentPurchasesToggle" mnemonicParsing="false" styleClass="language-button" text="%purchases.label" toggleGroup="$salesHistoryGroup" />
+                                        <ToggleButton fx:id="buyToggle" mnemonicParsing="false" styleClass="language-button" text="%buys.label" toggleGroup="$salesCategoryGroup" >
+                                            <userData>
+                                                <String fx:value="buy"/>
+                                            </userData>
+                                        </ToggleButton>
                                     </children>
                                 </HBox>
-                        <Region HBox.hgrow="ALWAYS" />
+                                <Region HBox.hgrow="ALWAYS" />
                                 <HBox styleClass="options-box" HBox.hgrow="NEVER">
                                     <children>
-                                        <ToggleButton fx:id="ongoingToggle" mnemonicParsing="false" styleClass="language-button" text="%ongoing.label">
+                                        <ToggleButton fx:id="historyToggle" mnemonicParsing="false" styleClass="language-button" text="%history.label"  selected="true">
                                             <toggleGroup>
                                                 <ToggleGroup fx:id="salesTimeGroup" />
                                             </toggleGroup>
+                                            <userData>
+                                                <String fx:value="history"/>
+                                            </userData>
                                         </ToggleButton>
                                         <Separator orientation="VERTICAL" prefHeight="-1" />
-                                        <ToggleButton fx:id="recentToggle" mnemonicParsing="false" styleClass="language-button" text="%recent.label" toggleGroup="$salesTimeGroup" />
+                                        <ToggleButton fx:id="currentToggle" mnemonicParsing="false" styleClass="language-button" text="%current.label" toggleGroup="$salesTimeGroup">
+                                            <userData>
+                                                <String fx:value="current"/>
+                                            </userData>                                            
+                                        </ToggleButton>
                                     </children>
                                 </HBox>
                             </children>
@@ -75,13 +89,28 @@
                     <toggleGroup>
                         <ToggleGroup fx:id="languageSelectionGroup" />
                     </toggleGroup>
+                    <userData>
+                        <String fx:value="en"/>
+                    </userData>                    
                 </ToggleButton>
                 <Separator orientation="VERTICAL" prefHeight="-1" />
-                <ToggleButton fx:id="frToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%language.french" toggleGroup="$languageSelectionGroup" />
+                <ToggleButton fx:id="frToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%language.french" toggleGroup="$languageSelectionGroup" >
+                    <userData>
+                        <String fx:value="fr"/>
+                    </userData>
+                </ToggleButton>
                 <Separator orientation="VERTICAL" prefHeight="-1" />
-                <ToggleButton fx:id="deToggle" mnemonicParsing="false" styleClass="language-button" text="%language.german" toggleGroup="$languageSelectionGroup" />
+                <ToggleButton fx:id="deToggle" mnemonicParsing="false" styleClass="language-button" text="%language.german" toggleGroup="$languageSelectionGroup" >
+                    <userData>
+                        <String fx:value="de"/>
+                    </userData>
+                </ToggleButton>
                 <Separator orientation="VERTICAL" prefHeight="-1" />
-                <ToggleButton fx:id="esToggle" mnemonicParsing="false" styleClass="language-button" text="%language.spanish" toggleGroup="$languageSelectionGroup" />
+                <ToggleButton fx:id="esToggle" mnemonicParsing="false" styleClass="language-button" text="%language.spanish" toggleGroup="$languageSelectionGroup" >
+                    <userData>
+                        <String fx:value="es"/>
+                    </userData>
+                </ToggleButton>
             </children>
         </HBox>        
     </children>
