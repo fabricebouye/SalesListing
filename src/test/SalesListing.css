@@ -75,11 +75,11 @@
 .top-right-box {
     -fx-padding: 10px 10px 0px 0px;    
     -fx-spacing: 10px;
-    -fx-alignment: RIGHT;    
+    -fx-alignment: top-right;    
 }
 .language-box {
     -fx-spacing: 10px;
-    -fx-alignment: CENTER;
+    -fx-alignment: center;
 }
 .account-label {
     -fx-fill: rgb(180, 180, 180);
