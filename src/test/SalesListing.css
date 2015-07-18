@@ -55,14 +55,38 @@
 .key-field:error {
     -fx-base: derive(tomato, 75%);
 }
+.menu-button {
+    -fx-graphic: url("https://account.staticwars.com/img/gear.2ddee163.png");    
+    -fx-background-color: null;
+}
+.permission-label {
+    -fx-graphic: url("https://account.staticwars.com/img/gear.2ddee163.png");
+    -fx-font-family: "Arial";
+    -fx-font-size: 10px;
+}
 .hbox,
 .vbox {
     -fx-spacing: 10px;
 }
-.language-box {
+.flow-pane {
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+}
+.top-right-box {
     -fx-padding: 10px 10px 0px 0px;    
     -fx-spacing: 10px;
+    -fx-alignment: RIGHT;    
+}
+.language-box {
+    -fx-spacing: 10px;
     -fx-alignment: CENTER;
+}
+.account-label {
+    -fx-fill: rgb(180, 180, 180);
+    -fx-font-size: 1.8em;        
+}
+.token-label {
+    -fx-font-size: 1.0em;        
 }
 .options-box {
     -fx-spacing: 10px;

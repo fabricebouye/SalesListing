@@ -23,6 +23,7 @@
                     </children>    
                 </TextFlow>
                 <TextField id="applicationKeyField" fx:id="applicationKeyField" styleClass="key-field" />
+                <FlowPane id="applicationKeyPermissionFlow" fx:id="applicationKeyPermissionFlow" styleClass="flow-pane" />
                 <VBox fillWidth="true" styleClass="vbox" VBox.vgrow="ALWAYS">
                     <children>
                         <HBox>
@@ -83,35 +84,49 @@
                 </VBox>
             </children>
         </VBox>
-        <HBox id="languageBox" fx:id="languageBox" styleClass="language-box" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox  id="topRightBox" fx:id="topRightBox" styleClass="top-right-box" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
             <children>
-                <ToggleButton fx:id="enToggle" mnemonicParsing="false" styleClass="language-button" text="%language.english">
-                    <toggleGroup>
-                        <ToggleGroup fx:id="languageSelectionGroup" />
-                    </toggleGroup>
-                    <userData>
-                        <String fx:value="en"/>
-                    </userData>                    
-                </ToggleButton>
-                <Separator orientation="VERTICAL" prefHeight="-1" />
-                <ToggleButton fx:id="frToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%language.french" toggleGroup="$languageSelectionGroup" >
-                    <userData>
-                        <String fx:value="fr"/>
-                    </userData>
-                </ToggleButton>
-                <Separator orientation="VERTICAL" prefHeight="-1" />
-                <ToggleButton fx:id="deToggle" mnemonicParsing="false" styleClass="language-button" text="%language.german" toggleGroup="$languageSelectionGroup" >
-                    <userData>
-                        <String fx:value="de"/>
-                    </userData>
-                </ToggleButton>
-                <Separator orientation="VERTICAL" prefHeight="-1" />
-                <ToggleButton fx:id="esToggle" mnemonicParsing="false" styleClass="language-button" text="%language.spanish" toggleGroup="$languageSelectionGroup" >
-                    <userData>
-                        <String fx:value="es"/>
-                    </userData>
-                </ToggleButton>
+                <HBox id="languageBox" fx:id="languageBox" styleClass="language-box">
+                    <children>
+                        <ToggleButton fx:id="enToggle" mnemonicParsing="false" styleClass="language-button" text="%language.english">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="languageSelectionGroup" />
+                            </toggleGroup>
+                            <userData>
+                                <String fx:value="en"/>
+                            </userData>                    
+                        </ToggleButton>
+                        <Separator orientation="VERTICAL" prefHeight="-1" />
+                        <ToggleButton fx:id="frToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%language.french" toggleGroup="$languageSelectionGroup" >
+                            <userData>
+                                <String fx:value="fr"/>
+                            </userData>
+                        </ToggleButton>
+                        <Separator orientation="VERTICAL" prefHeight="-1" />
+                        <ToggleButton fx:id="deToggle" mnemonicParsing="false" styleClass="language-button" text="%language.german" toggleGroup="$languageSelectionGroup" >
+                            <userData>
+                                <String fx:value="de"/>
+                            </userData>
+                        </ToggleButton>
+                        <Separator orientation="VERTICAL" prefHeight="-1" />
+                        <ToggleButton fx:id="esToggle" mnemonicParsing="false" styleClass="language-button" text="%language.spanish" toggleGroup="$languageSelectionGroup" >
+                            <userData>
+                                <String fx:value="es"/>
+                            </userData>
+                        </ToggleButton>
+                    </children>
+                </HBox>
+                <TextFlow id="accountFlow" fx:id="accountFlow" VBox.vgrow="NEVER" style="-fx-text-alignment: right;">
+                    <children>    
+                        <Text id="accountLabel" fx:id="accountLabel" styleClass="account-label" />
+                    </children>    
+                </TextFlow>
+                <TextFlow id="accountKeyFlow" fx:id="accountKeyFlow" VBox.vgrow="NEVER" style="-fx-text-alignment: right;">
+                    <children>    
+                        <Text id="accountKeyLabel" fx:id="accountKeyLabel" styleClass="token-label" />
+                    </children>    
+                </TextFlow>
             </children>
-        </HBox>        
+        </VBox>        
     </children>
 </AnchorPane>

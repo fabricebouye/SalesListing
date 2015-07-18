@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javafx.css.PseudoClass;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import test.data.tokeninfo.TokenInfo;
 
 /**
  * Classe utilitaire pour la gestion des labels dans l'interface graphique.
@@ -49,6 +51,11 @@ public enum LabelUtils {
      */
     private static final PseudoClass COPPER_PSEUDO_CLASS = PseudoClass.getPseudoClass("copper"); // NOI18N.
 
+    public static String permissionLabel(final ResourceBundle resources, final TokenInfo.Permission permission) {
+        final String key = String.format("permission.%s.label", permission.name().toLowerCase());
+        return resources.getString(key);
+    }
+    
     /**
      * Génère les labels utilisés pour afficher la description du buff d'un objet.
      * @param value La valeur de la description.
