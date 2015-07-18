@@ -66,13 +66,13 @@ import test.text.ApplicationKeyUtils;
  * @author Fabrice Bouyé
  */
 public final class SalesListingController implements Initializable {
-    
+
     @FXML
     private ImageView bltcLogo;
     @FXML
     private Text accountLabel;
     @FXML
-    private Text accountKeyLabel;    
+    private Text accountKeyLabel;
     @FXML
     private TextField applicationKeyField;
     @FXML
@@ -122,9 +122,9 @@ public final class SalesListingController implements Initializable {
      * Affiche toutes les ventes.
      */
     private final Predicate<Pair<Sale, Item>> allSalesFilter = sale -> true;
-    
+
     private final Properties settings = new Properties();
-    
+
     public SalesListingController() {
         // Chargement du fichier de config si présent.
         final File file = new File("settings.properties"); // NOI18N.
@@ -138,9 +138,9 @@ public final class SalesListingController implements Initializable {
         //
         filteredSalesList.setPredicate(allSalesFilter);
     }
-    
+
     private ResourceBundle resources;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle resources) {
         this.resources = resources;
@@ -264,7 +264,7 @@ public final class SalesListingController implements Initializable {
         applicationKeyField.pseudoClassStateChanged(errorPseudoClass, !applicationKeyValid);
         stopUpdateService();
         salesListView.setDisable(!applicationKeyValid);
-        applicationKeyPermissionFlow.getChildren().clear();        
+        applicationKeyPermissionFlow.getChildren().clear();
         accountLabel.setText(null);
         accountKeyLabel.setText(null);
         if (applicationKeyValid) {
@@ -288,11 +288,11 @@ public final class SalesListingController implements Initializable {
     private void checkApplicationKeyAndStartUpdate() {
         if (applicationKeyCheckService == null) {
             applicationKeyCheckService = new Service<TokenInfo>() {
-                
+
                 @Override
                 protected Task<TokenInfo> createTask() {
                     return new Task<TokenInfo>() {
-                        
+
                         @Override
                         protected TokenInfo call() throws Exception {
                             final String applicationKey = settings.getProperty("app.key"); // NOI18N.
@@ -305,7 +305,7 @@ public final class SalesListingController implements Initializable {
             };
             applicationKeyCheckService.setOnSucceeded(workerStateEvent -> {
                 final TokenInfo result = (TokenInfo) workerStateEvent.getSource().getValue();
-                accountKeyLabel.setText(result.getName());                
+                accountKeyLabel.setText(result.getName());
                 final List<TokenInfo.Permission> permissions = result.getPermissions();
                 final List<Label> permissionsLabel = permissions.stream()
                         .map(permission -> {
@@ -350,7 +350,7 @@ public final class SalesListingController implements Initializable {
      * @author Fabrice Bouyé
      */
     private static class QueryResult {
-        
+
         Account account;
         List<Sale> sales;
         Map<Integer, Item> items;
@@ -362,22 +362,30 @@ public final class SalesListingController implements Initializable {
     public void startUpdateService() {
         if (updateService == null) {
             updateService = new ScheduledService<QueryResult>() {
-                
+
                 @Override
                 protected Task<QueryResult> createTask() {
                     return new Task<QueryResult>() {
-                        
+
                         @Override
                         protected QueryResult call() throws Exception {
+                            final QueryResult result = new QueryResult();
                             final String applicationKey = settings.getProperty("app.key"); // NOI18N.
                             final String languageCode = settings.getProperty("language.code"); // NOI18N.
                             final String salesCategory = settings.getProperty("sales.category"); // NOI18N.
                             final String salesHistory = settings.getProperty("sales.history"); // NOI18N.
                             final boolean isDemoMode = DemoSupport.isDemoApplicationKey(applicationKey);
-                            final QueryResult result = new QueryResult();
-                            result.account = AccountQuery.accountInfo(applicationKey);
+                            if (isCancelled()) {
+                                return null;
+                            }
+                            // Information sur le compte.
+                            result.account = isDemoMode ? DemoSupport.accountInfo() : AccountQuery.accountInfo(applicationKey);
+                            if (isCancelled()) {
+                                return null;
+                            }
+                            // La récupération des infos des objets pouvant être lente, on met à jour le nom du compte dans l'UI immédiatement.
                             Platform.runLater(() -> accountLabel.setText(result.account.getName()));
-                            System.out.printf("%s - %s - %s", salesCategory, salesHistory, applicationKey).println();
+                            // Listing des ventes/achats.
                             switch (salesCategory) {
                                 case "sell": {
                                     switch (salesHistory) {
@@ -406,12 +414,23 @@ public final class SalesListingController implements Initializable {
                                 }
                                 break;
                             }
-                            System.out.println(result.sales);
+                            if (isCancelled()) {
+                                return null;
+                            }
+                            // Récupération des Ids.
                             final int[] itemIds = result.sales
                                     .stream()
                                     .mapToInt(sale -> sale.getItemId())
                                     .toArray();
+                            if (isCancelled()) {
+                                return null;
+                            }
+                            // Récupération des descriptions des objets.
                             final List<Item> items = (itemIds.length == 0) ? Collections.EMPTY_LIST : (isDemoMode ? DemoSupport.items(itemIds) : ItemsQuery.items(languageCode, itemIds));
+                            if (isCancelled()) {
+                                return null;
+                            }
+                            // Génération de la map résultat.
                             final Map<Integer, Item> itemMap = items.stream()
                                     .collect(Collectors.toMap(item -> item.getId(), Function.identity()));
                             result.items = Collections.unmodifiableMap(itemMap);
