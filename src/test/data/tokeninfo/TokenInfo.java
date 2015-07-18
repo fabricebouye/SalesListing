@@ -18,6 +18,7 @@ public final class TokenInfo {
         ACCOUNT("account"),
         CHARACTERS("characters"),
         TRADINGPOST("tradingpost"),
+        INVENTORIES("inventories"),
         UNKNOWN(null);
 
         private final String value;
