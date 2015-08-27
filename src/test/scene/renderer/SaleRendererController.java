@@ -28,6 +28,7 @@ import javafx.scene.text.TextFlow;
 import test.data.item.Item;
 import test.data.sale.Sale;
 import test.scene.LabelUtils;
+import test.text.ImageCache;
 
 /**
  * Controleur du FXML.
@@ -81,7 +82,9 @@ public final class SaleRendererController implements Initializable {
             nameLabel.setText(name);
             final PseudoClass rarityPseudoClass = findPseudoClassForRarity(item.getRarity());
             nameLabel.pseudoClassStateChanged(rarityPseudoClass, true);
-            icon.setImage(new Image(item.getIcon(), true));
+            final String iconUrl = item.getIcon();
+            final Image iconImage = ImageCache.INSTANCE.getImage(iconUrl);
+            icon.setImage(iconImage);
             final Optional<ZonedDateTime> purshasedOptional = Optional.ofNullable(sale.getPurchased());
             purshasedOptional.ifPresent(date -> {
                 final String purchased = date.format(DATE_FORMATTER);

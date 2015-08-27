@@ -204,7 +204,7 @@
     -coin-color: chocolate;
 }
 .icon-box {
-    -fx-background-color: black, gray;
+    -fx-background-color: black, derive(black, 10%);
     -fx-background-insets: 0px, 1px;
 }
 .icon-box .icon {
