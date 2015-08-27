@@ -59,6 +59,24 @@ public enum DemoSupport {
         return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
     }
 
+    public static List<Sale> salesHistory() throws IOException {
+        final URL url = DemoSupport.class.getResource("salesHistory.json"); // NOI18N.
+        final JsonArray jsonArray = QueryUtils.queryArray(url.toExternalForm());
+        return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
+    }
+
+    public static List<Sale> purchases() throws IOException {
+        final URL url = DemoSupport.class.getResource("purchases.json"); // NOI18N.
+        final JsonArray jsonArray = QueryUtils.queryArray(url.toExternalForm());
+        return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
+    }
+
+    public static List<Sale> purchasesHistory() throws IOException {
+        final URL url = DemoSupport.class.getResource("purchasesHistory.json"); // NOI18N.
+        final JsonArray jsonArray = QueryUtils.queryArray(url.toExternalForm());
+        return QueryUtils.jsonObjectArrayToList(jsonArray, SaleFactory::createSale);
+    }
+
     public static Item item(final int id) throws IOException {
         final String filename = String.format("item_%d.json", id); // NOI18N.
         final URL url = DemoSupport.class.getResource(filename);

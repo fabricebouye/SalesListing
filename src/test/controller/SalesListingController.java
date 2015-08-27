@@ -390,7 +390,7 @@ public final class SalesListingController implements Initializable {
                                 case "sell": {
                                     switch (salesHistory) {
                                         case "history": {
-                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSalesHistory(applicationKey);
+                                            result.sales = isDemoMode ? DemoSupport.salesHistory(): CommerceQuery.listSalesHistory(applicationKey);
                                         }
                                         break;
                                         case "current": {
@@ -403,11 +403,11 @@ public final class SalesListingController implements Initializable {
                                 case "buy": {
                                     switch (salesHistory) {
                                         case "history": {
-                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listPurchasesHistory(applicationKey);
+                                            result.sales = isDemoMode ? DemoSupport.purchasesHistory(): CommerceQuery.listPurchasesHistory(applicationKey);
                                         }
                                         break;
                                         case "current": {
-                                            result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listPurchases(applicationKey);
+                                            result.sales = isDemoMode ? DemoSupport.purchases(): CommerceQuery.listPurchases(applicationKey);
                                         }
                                         break;
                                     }

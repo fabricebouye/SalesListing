@@ -97,7 +97,7 @@ public class DemoSupportTest {
     public void testSales() throws Exception {
         System.out.println("sales"); // NOI18N.
         final List<Sale> result = DemoSupport.sales();
-        assertEquals(17, result.size());
+        assertEquals(5, result.size());
         //
         assertEquals(1, result.get(0).getId());
         assertEquals(28445, result.get(0).getItemId());
@@ -133,6 +133,60 @@ public class DemoSupportTest {
         assertEquals(1, result.get(4).getQuantity());
         assertEquals(ZonedDateTime.parse("2015-06-11T10:15:30+01:00"), result.get(4).getCreated()); // NOI18N.
         assertEquals(ZonedDateTime.parse("2015-06-11T17:24:20+00:00"), result.get(4).getPurchased()); // NOI18N.
+    }
+
+    /**
+     * Test de la méthode {@code salesHistory}.
+     */
+    @Test
+    public void testSalesHistory() throws Exception {
+        System.out.println("salesHistory"); // NOI18N.
+        final List<Sale> result = DemoSupport.salesHistory();
+        assertEquals(5, result.size());
+        //
+        assertEquals(1, result.get(0).getId());
+        //
+        assertEquals(2, result.get(1).getId());
+        //
+        assertEquals(3, result.get(2).getId());
+        //
+        assertEquals(4, result.get(3).getId());
+        //
+        assertEquals(5, result.get(4).getId());
+    }
+
+    /**
+     * Test de la méthode {@code purchases}.
+     */
+    @Test
+    public void testPurchases() throws Exception {
+        System.out.println("purchases"); // NOI18N.
+        final List<Sale> result = DemoSupport.purchases();
+        assertEquals(5, result.size());
+        //
+        assertEquals(1, result.get(0).getId());
+        //
+        assertEquals(2, result.get(1).getId());
+        //
+        assertEquals(3, result.get(2).getId());
+        //
+        assertEquals(4, result.get(3).getId());
+        //
+        assertEquals(5, result.get(4).getId());
+    }
+
+    /**
+     * Test de la méthode {@code purchasesHistory}.
+     */
+    @Test
+    public void testHistory() throws Exception {
+        System.out.println("purchasesHistory"); // NOI18N.
+        final List<Sale> result = DemoSupport.purchasesHistory();
+        assertEquals(2, result.size());
+        //
+        assertEquals(1, result.get(0).getId());
+        //
+        assertEquals(2, result.get(1).getId());
     }
 
     /**
