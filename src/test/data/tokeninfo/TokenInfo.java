@@ -19,6 +19,10 @@ public final class TokenInfo {
         CHARACTERS("characters"),
         TRADINGPOST("tradingpost"),
         INVENTORIES("inventories"),
+        WALLET("wallet"),
+        UNLOCKS("unlocks"),
+        PVP("pvp"),
+        BUILDS("builds"),
         UNKNOWN(null);
 
         private final String value;
