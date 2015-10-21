@@ -22,7 +22,7 @@ import test.data.item.Item;
 import test.data.item.UpgradeComponentDetails;
 import test.data.item.WeaponDetails;
 import test.scene.LabelUtils;
-import test.text.ImageCache;
+import test.cache.ImageCache;
 
 /**
  * Controleur du FXML.

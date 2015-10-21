@@ -28,7 +28,7 @@ import javafx.scene.text.TextFlow;
 import test.data.item.Item;
 import test.data.sale.Sale;
 import test.scene.LabelUtils;
-import test.text.ImageCache;
+import test.cache.ImageCache;
 
 /**
  * Controleur du FXML.

@@ -1,4 +1,4 @@
-package test.text;
+package test.cache;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 /**
  * Un cache pour les icones des objets.
- * @author Fabrice
+ * @author Fabrice Bouyé
  */
 public enum ImageCache {
 
