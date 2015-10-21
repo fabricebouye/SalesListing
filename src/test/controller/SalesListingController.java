@@ -262,7 +262,7 @@ public final class SalesListingController implements Initializable {
     private String normalizeForSearch(final String source) {
         final String nfdNormalizedString = Normalizer.normalize(source.toLowerCase(), Normalizer.Form.NFD);
         final Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+"); // NOI18N.
-        return pattern.matcher(nfdNormalizedString).replaceAll("");
+        return pattern.matcher(nfdNormalizedString).replaceAll(""); // NOI18N.
     }
 
     /**
@@ -327,7 +327,7 @@ public final class SalesListingController implements Initializable {
                         .map(permission -> {
                             final String text = LabelUtils.permissionLabel(resources, permission);
                             final Label label = new Label(text);
-                            label.getStyleClass().add("permission-label");
+                            label.getStyleClass().add("permission-label"); // NOI18N.
                             return label;
                         })
                         .collect(Collectors.toList());
@@ -337,7 +337,7 @@ public final class SalesListingController implements Initializable {
                 } else {
                     messageLabel.setVisible(true);
                     messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
-                    messageLabel.setText(resources.getString("bad.permission.error"));
+                    messageLabel.setText(resources.getString("bad.permission.error")); // NOI18N.
                 }
             });
             applicationKeyCheckService.setOnCancelled(workerStateEvent -> {
@@ -345,7 +345,7 @@ public final class SalesListingController implements Initializable {
             applicationKeyCheckService.setOnFailed(workerStateEvent -> {
                 messageLabel.setVisible(true);
                 messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
-                messageLabel.setText(resources.getString("application_key.failed.error"));
+                messageLabel.setText(resources.getString("application_key.failed.error")); // NOI18N.
                 workerStateEvent.getSource().getException().printStackTrace();
             });
         }
@@ -403,26 +403,26 @@ public final class SalesListingController implements Initializable {
                             Platform.runLater(() -> accountLabel.setText(result.account.getName()));
                             // Listing des ventes/achats.
                             switch (salesCategory) {
-                                case "sell": {
+                                case "sell": { // NOI18N.
                                     switch (salesHistory) {
-                                        case "history": {
+                                        case "history": { // NOI18N.
                                             result.sales = isDemoMode ? DemoSupport.salesHistory(): CommerceQuery.listSalesHistory(applicationKey);
                                         }
                                         break;
-                                        case "current": {
+                                        case "current": { // NOI18N.
                                             result.sales = isDemoMode ? DemoSupport.sales() : CommerceQuery.listSales(applicationKey);
                                         }
                                         break;
                                     }
                                 }
                                 break;
-                                case "buy": {
+                                case "buy": { // NOI18N.
                                     switch (salesHistory) {
-                                        case "history": {
+                                        case "history": { // NOI18N.
                                             result.sales = isDemoMode ? DemoSupport.purchasesHistory(): CommerceQuery.listPurchasesHistory(applicationKey);
                                         }
                                         break;
-                                        case "current": {
+                                        case "current": { // NOI18N.
                                             result.sales = isDemoMode ? DemoSupport.purchases(): CommerceQuery.listPurchases(applicationKey);
                                         }
                                         break;
@@ -482,7 +482,7 @@ public final class SalesListingController implements Initializable {
             updateService.setOnFailed(workerStateEvent -> {
                 messageLabel.setVisible(true);
                 messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
-                messageLabel.setText(resources.getString("application_key.failed.error"));
+                messageLabel.setText(resources.getString("application_key.failed.error")); // NOI18N.
                 workerStateEvent.getSource().getException().printStackTrace();
             });
         }
