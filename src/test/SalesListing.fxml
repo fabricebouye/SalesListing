@@ -24,64 +24,74 @@
                 </TextFlow>
                 <TextField id="applicationKeyField" fx:id="applicationKeyField" styleClass="key-field" />
                 <FlowPane id="applicationKeyPermissionFlow" fx:id="applicationKeyPermissionFlow" styleClass="flow-pane" />
-                <VBox fillWidth="true" styleClass="vbox" VBox.vgrow="ALWAYS">
+                <StackPane  VBox.vgrow="ALWAYS">
                     <children>
-                        <HBox>
+                        <VBox id="listingVBox" fx:id="listingVBox" fillWidth="true" styleClass="vbox">
                             <children>
-                                <HBox styleClass="options-box" HBox.hgrow="NEVER">
+                                <HBox>
                                     <children>
-                                        <ToggleButton fx:id="sellToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%sales.label">
-                                            <toggleGroup>
-                                                <ToggleGroup fx:id="salesCategoryGroup" />
-                                            </toggleGroup>
-                                            <userData>
-                                                <String fx:value="sell" />
-                                            </userData>                                            
-                                        </ToggleButton>
-                                        <Separator orientation="VERTICAL" prefHeight="-1" />
-                                        <ToggleButton fx:id="buyToggle" mnemonicParsing="false" styleClass="language-button" text="%buys.label" toggleGroup="$salesCategoryGroup">
-                                            <userData>
-                                                <String fx:value="buy" />
-                                            </userData>
-                                        </ToggleButton>
+                                        <HBox styleClass="options-box" HBox.hgrow="NEVER">
+                                            <children>
+                                                <ToggleButton fx:id="sellToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%sales.label">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="salesCategoryGroup" />
+                                                    </toggleGroup>
+                                                    <userData>
+                                                        <String fx:value="sell" />
+                                                    </userData>                                            
+                                                </ToggleButton>
+                                                <Separator orientation="VERTICAL" prefHeight="-1" />
+                                                <ToggleButton fx:id="buyToggle" mnemonicParsing="false" styleClass="language-button" text="%buys.label" toggleGroup="$salesCategoryGroup">
+                                                    <userData>
+                                                        <String fx:value="buy" />
+                                                    </userData>
+                                                </ToggleButton>
+                                            </children>
+                                        </HBox>
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <HBox styleClass="options-box" HBox.hgrow="NEVER">
+                                            <children>
+                                                <ToggleButton fx:id="historyToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%history.label">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="salesTimeGroup" />
+                                                    </toggleGroup>
+                                                    <userData>
+                                                        <String fx:value="history" />
+                                                    </userData>
+                                                </ToggleButton>
+                                                <Separator orientation="VERTICAL" prefHeight="-1" />
+                                                <ToggleButton fx:id="currentToggle" mnemonicParsing="false" styleClass="language-button" text="%current.label" toggleGroup="$salesTimeGroup">
+                                                    <userData>
+                                                        <String fx:value="current" />
+                                                    </userData>                                            
+                                                </ToggleButton>
+                                            </children>
+                                        </HBox>
                                     </children>
                                 </HBox>
-                                <Region HBox.hgrow="ALWAYS" />
-                                <HBox styleClass="options-box" HBox.hgrow="NEVER">
+                                <HBox id="searchHBox" fx:id="searchHBox" styleClass="hbox"> 
                                     <children>
-                                        <ToggleButton fx:id="historyToggle" mnemonicParsing="false" selected="true" styleClass="language-button" text="%history.label">
-                                            <toggleGroup>
-                                                <ToggleGroup fx:id="salesTimeGroup" />
-                                            </toggleGroup>
-                                            <userData>
-                                                <String fx:value="history" />
-                                            </userData>
-                                        </ToggleButton>
-                                        <Separator orientation="VERTICAL" prefHeight="-1" />
-                                        <ToggleButton fx:id="currentToggle" mnemonicParsing="false" styleClass="language-button" text="%current.label" toggleGroup="$salesTimeGroup">
-                                            <userData>
-                                                <String fx:value="current" />
-                                            </userData>                                            
-                                        </ToggleButton>
+                                        <TextField id="searchField" fx:id="searchField" promptText="%search.label" HBox.hgrow="ALWAYS" />
+                                        <MenuButton id="seachOptionsButton" fx:id="seachOptionsButton" HBox.hgrow="NEVER">
+                                            <items>
+                                                <CheckMenuItem id="nameCheckItem" fx:id="nameCheckItem" text="%search.citerion.name" />
+                                                <CheckMenuItem id="descriptionCheckItem" fx:id="descriptionCheckItem" text="%search.citerion.description" />
+                                                <CheckMenuItem id="rarityCheckItem" fx:id="rarityCheckItem" text="%search.citerion.rarity" />
+                                            </items>
+                                        </MenuButton>
                                     </children>
                                 </HBox>
+                                <ListView id="salesListView" fx:id="salesListView" styleClass="list-view" VBox.vgrow="ALWAYS" />
                             </children>
-                        </HBox>
-                        <HBox id="searchHBox" fx:id="searchHBox" styleClass="hbox"> 
-                            <children>
-                                <TextField id="searchField" fx:id="searchField" promptText="%search.label" HBox.hgrow="ALWAYS" />
-                                <MenuButton id="seachOptionsButton" fx:id="seachOptionsButton" HBox.hgrow="NEVER">
-                                    <items>
-                                        <CheckMenuItem id="nameCheckItem" fx:id="nameCheckItem" text="%search.citerion.name" />
-                                        <CheckMenuItem id="descriptionCheckItem" fx:id="descriptionCheckItem" text="%search.citerion.description" />
-                                        <CheckMenuItem id="rarityCheckItem" fx:id="rarityCheckItem" text="%search.citerion.rarity" />
-                                    </items>
-                                </MenuButton>
-                            </children>
-                        </HBox>
-                        <ListView id="salesListView" fx:id="salesListView" styleClass="list-view" VBox.vgrow="ALWAYS" />
+                        </VBox>
+                        <ProgressIndicator id="progressIndicator" fx:id="progressIndicator" maxHeight="64.0" maxWidth="64.0" />
+                        <TextFlow id="messageFlow" fx:id="messageFlow" maxHeight="-Infinity" styleClass="message-flow" StackPane.alignment="CENTER">
+                            <children>    
+                                <Text id="messageLabel" fx:id="messageLabel" styleClass="message-text" text="%no.account.label" />
+                            </children>    
+                        </TextFlow>
                     </children>
-                </VBox>
+                </StackPane>
             </children>
         </VBox>
         <VBox id="topRightBox" fx:id="topRightBox" styleClass="top-right-box" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

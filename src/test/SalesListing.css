@@ -211,3 +211,12 @@
     -fx-fit-width: 32;
     -fx-fit-height: 32;    
 }
+.message-flow {
+    -fx-text-alignment: center;
+}
+.message-text {
+    -fx-font-size: 3.0em;          
+}
+.message-text:error {
+    -fx-fill: red;
+}

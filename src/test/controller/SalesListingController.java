@@ -35,6 +35,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Toggle;
@@ -43,6 +44,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -109,6 +111,12 @@ public final class SalesListingController implements Initializable {
     private ToggleButton historyToggle;
     @FXML
     private ListView<Pair<Sale, Item>> salesListView;
+    @FXML
+    private VBox listingVBox;
+    @FXML
+    private ProgressIndicator progressIndicator;
+    @FXML
+    private Text messageLabel;
 
     /**
      * Liste des ventes.
@@ -144,6 +152,9 @@ public final class SalesListingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resources) {
         this.resources = resources;
+        //
+        progressIndicator.setVisible(false);
+        listingVBox.setVisible(false);
         //
         settings.setProperty("language.code", (String) languageSelectionGroup.getSelectedToggle().getUserData()); // NOI18N.
         languageSelectionGroup.selectedToggleProperty().addListener(languageInvalidationListener);
@@ -267,13 +278,18 @@ public final class SalesListingController implements Initializable {
         applicationKeyPermissionFlow.getChildren().clear();
         accountLabel.setText(null);
         accountKeyLabel.setText(null);
+        listingVBox.setVisible(false);
+        progressIndicator.setVisible(false);
+        messageLabel.setText(null);
+        messageLabel.setVisible(false);
+        messageLabel.pseudoClassStateChanged(errorPseudoClass, false);
         if (applicationKeyValid) {
             settings.setProperty("app.key", applicationKey); // NOI18N.
             checkApplicationKeyAndStartUpdate();
         } else {
             settings.setProperty("app.key", ""); // NOI18N.
-//            messageLabel.setVisible(true);
-//            messageLabel.setText(resources.getString("no.account.label")); // NOI18N.
+            messageLabel.setVisible(true);
+            messageLabel.setText(resources.getString("no.account.label")); // NOI18N.
         }
     }
 
@@ -319,17 +335,17 @@ public final class SalesListingController implements Initializable {
                 if (permissions.contains(TokenInfo.Permission.ACCOUNT) && permissions.contains(TokenInfo.Permission.TRADINGPOST)) {
                     startUpdateService();
                 } else {
-//                    messageLabel.setVisible(true);
-//                    messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
-//                    messageLabel.setText(resources.getString("bad.permission.error"));
+                    messageLabel.setVisible(true);
+                    messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
+                    messageLabel.setText(resources.getString("bad.permission.error"));
                 }
             });
             applicationKeyCheckService.setOnCancelled(workerStateEvent -> {
             });
             applicationKeyCheckService.setOnFailed(workerStateEvent -> {
-//                messageLabel.setVisible(true);
-//                messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
-//                messageLabel.setText(resources.getString("application_key.failed.error"));
+                messageLabel.setVisible(true);
+                messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
+                messageLabel.setText(resources.getString("application_key.failed.error"));
                 workerStateEvent.getSource().getException().printStackTrace();
             });
         }
@@ -449,6 +465,8 @@ public final class SalesListingController implements Initializable {
                     final Item item = result.items.get(itemId);
                     return new Pair<>(sale, item);
                 }).collect(Collectors.toList());
+                listingVBox.setVisible(true);
+                progressIndicator.setVisible(false);
                 salesList.setAll(sales);
                 // On restaure la sélection si possible.
                 oldSelectionOptional.ifPresent(oldSelection -> {
@@ -462,9 +480,14 @@ public final class SalesListingController implements Initializable {
             updateService.setOnCancelled(workerStateEvent -> {
             });
             updateService.setOnFailed(workerStateEvent -> {
+                messageLabel.setVisible(true);
+                messageLabel.pseudoClassStateChanged(errorPseudoClass, true);
+                messageLabel.setText(resources.getString("application_key.failed.error"));
                 workerStateEvent.getSource().getException().printStackTrace();
             });
         }
+        listingVBox.setVisible(false);
+        progressIndicator.setVisible(true);
         updateService.restart();
     }
 
