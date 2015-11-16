@@ -15,14 +15,15 @@ public final class TokenInfo {
      */
     public enum Permission {
 
-        ACCOUNT("account"),
-        CHARACTERS("characters"),
-        TRADINGPOST("tradingpost"),
-        INVENTORIES("inventories"),
-        WALLET("wallet"),
-        UNLOCKS("unlocks"),
-        PVP("pvp"),
-        BUILDS("builds"),
+        ACCOUNT("account"), // NOI18N.
+        CHARACTERS("characters"), // NOI18N.
+        TRADINGPOST("tradingpost"), // NOI18N.
+        INVENTORIES("inventories"), // NOI18N.
+        WALLET("wallet"), // NOI18N.
+        UNLOCKS("unlocks"), // NOI18N.
+        PVP("pvp"), // NOI18N.
+        BUILDS("builds"), // NOI18N.
+        PROGRESSION("progression"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
