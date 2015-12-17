@@ -56,11 +56,11 @@
     -fx-base: derive(tomato, 75%);
 }
 .menu-button {
-    -fx-graphic: url("https://account.staticwars.com/img/gear.2ddee163.png");    
+    -fx-graphic: url("https://2account.staticwars.com/img/gear.ee9e579f.png");    
     -fx-background-color: null;
 }
 .permission-label {
-    -fx-graphic: url("https://account.staticwars.com/img/gear.2ddee163.png");
+    -fx-graphic: url("https://2account.staticwars.com/img/gear.ee9e579f.png");
     -fx-font-family: "Arial";
     -fx-font-size: 10px;
 }
