@@ -24,6 +24,7 @@ public final class TokenInfo {
         PVP("pvp"), // NOI18N.
         BUILDS("builds"), // NOI18N.
         PROGRESSION("progression"), // NOI18N.
+        GUILDS("guilds"), // NOI18N.
         UNKNOWN(null);
 
         private final String value;
